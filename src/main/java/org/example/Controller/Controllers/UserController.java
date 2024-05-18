@@ -2,9 +2,10 @@ package org.example.Controller.Controllers;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
-import io.jsonwebtoken.Claims;
+import org.example.Controller.Exeptions.InvalidEmailException;
 import org.example.Controller.Exeptions.InvalidPassException;
 import org.example.Controller.Parsers.JwtUtil;
+import org.example.Controller.Parsers.OutPut;
 import org.example.Model.User;
 
 import java.io.IOException;
@@ -16,21 +17,27 @@ public class UserController extends Controller{
     // create
     // update
     // delete
-    public static void creatUser(HttpExchange exchange) throws IOException {
+    public static void createUser(HttpExchange exchange) throws IOException {
         // create user in db
 
         Gson gson = new Gson();
+        String email = "achaji2563@gmail.com";
+        String password = "ashkan1234";
         User user;
+        String response;
 
         try {
-            user = new User("achaji2563@gmail.com", "ashkan",
-                    "chaji", "ashkan1234");
-        }catch (InvalidPassException e) {
-            throw new RuntimeException(e);
+            user = new User(email, "ashkan",
+                    "chaji", password);
+            user.addUserToDB();
+            user.addUserJWT(UserController.createToken(email, password));
+            response = gson.toJson(user);
+        } catch (InvalidPassException | InvalidEmailException e) {
+            OutPut.printInvalidEmailOrPass();
+            return;
         }
 
 
-        String response = gson.toJson(user);
         exchange.sendResponseHeaders(200, response.length());
 
         try (OutputStream stream = exchange.getResponseBody()) {
