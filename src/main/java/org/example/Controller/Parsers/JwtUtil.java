@@ -1,15 +1,11 @@
 package org.example.Controller.Parsers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
-import org.example.Controller.Exeptions.InvalidPassException;
-import org.example.Model.User;
 
 import java.security.Key;
 import java.util.Date;
@@ -48,21 +44,5 @@ public class JwtUtil {
             return null;
         }
     }
-
-//    public static void main(String[] args) throws InvalidPassException {
-//        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//        User user = new User("achaji2563@gmail.com", "2", "3", "4sdhfl67d6f");
-//
-//        String jwt = generateToken(gson.toJson(user));
-//        System.out.println("Generated JWT: " + jwt);
-//
-//        Claims claims = parseToken(jwt);
-//        if (claims != null) {
-//            System.out.println("Subject: " + claims.getSubject());
-//
-//            System.out.println("Issued At: " + claims.getIssuedAt());
-//            System.out.println("Expiration: " + claims.getExpiration());
-//        }
-//    }
 }
 

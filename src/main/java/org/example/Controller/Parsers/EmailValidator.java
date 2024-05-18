@@ -1,5 +1,7 @@
 package org.example.Controller.Parsers;
 
+import org.example.Model.User;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,9 +19,8 @@ public class EmailValidator {
         return matcher.matches();
     }
 
-    // *** needs to be completed ***
     public static boolean isUniqueEmail(String email){
-        return false;
+        return !User.doesUserExist(email);
     }
 }
 

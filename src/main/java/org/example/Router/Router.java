@@ -6,7 +6,7 @@ import org.example.Http.Server;
 public class Router {
     public static void route(Server server){
 
-        server.get("/users", UserController::creatUser);
+        server.get("/users", UserController::createUser);
 
     }
 }
