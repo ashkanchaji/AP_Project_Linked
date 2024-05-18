@@ -33,6 +33,7 @@ public class Education {
         else
             this.additionalInfo = additionalInfo;
         //skill hanooz moonde
+        //tarikh vorood khoroj
     }
 
     public String getCollegeName() {
