@@ -2,6 +2,7 @@ package org.example.Controller.Controllers;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
+import org.example.Controller.DAO.UserDAO;
 import org.example.Controller.Exeptions.InvalidEmailException;
 import org.example.Controller.Exeptions.InvalidPassException;
 import org.example.Controller.Parsers.JwtUtil;
@@ -19,9 +20,20 @@ public class UserController extends Controller{
     // delete
     public static void createUser(HttpExchange exchange) throws IOException {
         // create user in db
+        String response = getResponse();
+        System.out.println(exchange.getRequestMethod());
+        exchange.sendResponseHeaders(200, response.length());
 
+        try (OutputStream stream = exchange.getResponseBody()) {
+            stream.write(response.getBytes());
+        } catch (IOException e){
+            System.out.println(response);
+        }
+    }
+
+    private static String getResponse(){
         Gson gson = new Gson();
-        String email = "achaji2563@gmail.com";
+        String email = "achaji25663@gmail.com";
         String password = "ashkan1234";
         User user;
         String response;
@@ -29,19 +41,13 @@ public class UserController extends Controller{
         try {
             user = new User(email, "ashkan",
                     "chaji", password);
-            user.addUserToDB();
-            user.addUserJWT(UserController.createToken(email, password));
+            UserDAO.addUserToDB(user);
+            UserDAO.addUserJWT(UserController.createToken(email, password), user);
             response = gson.toJson(user);
+            return response;
         } catch (InvalidPassException | InvalidEmailException e) {
             OutPut.printInvalidEmailOrPass();
-            return;
-        }
-
-
-        exchange.sendResponseHeaders(200, response.length());
-
-        try (OutputStream stream = exchange.getResponseBody()) {
-            stream.write(response.getBytes());
+            return "hgdf";
         }
     }
 
