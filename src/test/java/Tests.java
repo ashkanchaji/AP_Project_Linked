@@ -1,13 +1,19 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.jsonwebtoken.Claims;
+import org.example.Controller.DAO.UserDAO;
 import org.example.Controller.DB.MySqlDB;
 import org.example.Controller.Exeptions.InvalidEmailException;
 import org.example.Controller.Exeptions.InvalidPassException;
 import org.example.Model.User;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 
-import java.sql.*;
+import java.net.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.Statement;
 
 import static org.example.Controller.Parsers.JwtUtil.generateToken;
 import static org.example.Controller.Parsers.JwtUtil.parseToken;
@@ -16,7 +22,7 @@ public class Tests {
     @Test
     public void jwtTest() throws InvalidPassException, InvalidEmailException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        User user = new User("achaji2563@gmail.com", "2", "3", "4sdhfl67d6f");
+        User user = new User("achaji25563@gmail.com", "2", "3", "4sdhfl67d6f");
 
         String jwt = generateToken(gson.toJson(user));
         System.out.println("Generated JWT: " + jwt);
@@ -39,7 +45,7 @@ public class Tests {
         // java.sql.SQLIntegrityConstraintViolationException
         try (Statement statement = connection.createStatement()) {
             statement.execute("INSERT INTO `projectlinked`.`users_info` (`email`, `password`, `first_name`, `last_name`)" +
-                    " VALUES ('achaji@gmail.com', 'ach256384', 'ashkan', 'chaji')");
+                    " VALUES ('achajii@gmail.com', 'ach256384', 'ashkan', 'chaji')");
             //statement.executeUpdate("DELETE FROM `projectlinked`.`users_info` WHERE first_name = 'ashkan'");
         }  catch (SQLIntegrityConstraintViolationException e){
             System.out.println("did it still add thow?");
@@ -47,4 +53,41 @@ public class Tests {
             throw new RuntimeException(e);
         }
     }
+
+    @Test
+    public void testCreateTable(){
+        try {
+            User user = new User("achaji2563@gmail.com", "ashkan", "chaji", "ach256384");
+            UserDAO.addUserToDB(user);
+        } catch (InvalidEmailException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidPassException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+//    @Test
+//    @DisplayName("---- adding a user")
+//    public void testcase1() {
+//        try {
+//            URL url = new URL("http://localhost:8080/users");
+//            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+//            con.setRequestMethod("POST");
+//            con.setRequestProperty("Content-Type", "json"); // not needed
+//
+//            con.setDoInput(true); // enables input stream, no need
+//            con.setDoOutput(true); // enables output stream
+//            JsonHandler.sendJsonObject(con.getOutputStream(), new User("Ali", "a1234").toJSON());
+//
+//            if (con.getResponseCode() / 100 == 2) {
+//                System.out.println("test1 result: " + JsonHandler.getJsonObject(con.getInputStream()));
+//            } else {
+//                System.out.println("Server returned HTTP code " + con.getResponseCode());
+//            }
+//            con.disconnect();
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//            throw new AssertionError(e);
+//        }
+//    }
 }

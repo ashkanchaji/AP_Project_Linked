@@ -1,5 +1,6 @@
 package org.example.Controller.Parsers;
 
+import org.example.Controller.DAO.UserDAO;
 import org.example.Model.User;
 
 import java.util.regex.Matcher;
@@ -20,7 +21,7 @@ public class EmailValidator {
     }
 
     public static boolean isUniqueEmail(String email){
-        return !User.doesUserExist(email);
+        return !UserDAO.doesUserExist(email);
     }
 }
 

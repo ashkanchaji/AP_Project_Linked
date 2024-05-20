@@ -7,25 +7,29 @@ import org.example.Controller.Parsers.EmailValidator;
 import org.example.Controller.Parsers.PasswordValidator;
 
 import java.sql.*;
+import java.util.ArrayList;
+
 
 public class User extends Model{
     private String email;
     private String firstName;
     private String lastName;
     private String password;
-    private static final Connection connection = MySqlDB.fetchDB().getConnection();
-    private static final String tableName = "users_info";
-    private static final String createUsersTableSQL = "CREATE TABLE projectlinked.users_info ("
-            + "email VARCHAR(45) PRIMARY KEY, "
-            + "password VARCHAR(45), "
-            + "first_name VARCHAR(20), "
-            + "lastname VARCHAR(40), "
-            + "jwt_hash VARCHAR(1000)"
-            + ")";
+    private String additionalName;
+    private String profilePicture;
+    private String backgroundPicture;
+    private String headline;
+    private String country;
+    private String city;
+    private String profession;
+    private Job currentJob;
+    private ArrayList<Job> previousJobs;
+    private ArrayList<Education> educations;
+
 
     public User(String email, String firstName, String lastName, String password) throws InvalidEmailException, InvalidPassException {
         if (EmailValidator.isValidEmail(email) && EmailValidator.isUniqueEmail(email)){
-            this.email = email;
+            this.email = email.toLowerCase();
         } else {
             throw new InvalidEmailException();
         }
@@ -40,57 +44,7 @@ public class User extends Model{
         this.lastName = lastName;
     }
 
-    public void addUserToDB(){
-        try (Statement statement = connection.createStatement()) {
-            if (!MySqlDB.doesTableExist(connection, tableName)){
-               statement.execute(createUsersTableSQL);
-            }
 
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO " +
-                    MySqlDB.getDBName() + "." + tableName +
-                    " (email, password, first_name, last_name) VALUES (?, ?, ?, ?)");
-
-            preparedStatement.setString(1, this.email);
-            preparedStatement.setString(2, this.password);
-            preparedStatement.setString(3, this.firstName);
-            preparedStatement.setString(4, this.lastName);
-
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e){
-            throw new RuntimeException();
-        }
-    }
-
-    public void addUserJWT(String jwt) {
-        String sql = "UPDATE " + MySqlDB.getDBName() + "." + tableName +
-                " SET jwt_hash = ? WHERE email = ?";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, jwt);
-            preparedStatement.setString(2, this.email);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public static boolean doesUserExist(String email){
-        try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.getResultSet();
-
-            while (resultSet.next()){
-                if (resultSet.getString("email").equals(email)){
-                    return true;
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return false;
-    }
 
     public String getEmail() {
         return email;
