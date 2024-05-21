@@ -2,13 +2,19 @@ package org.example.Model;
 
 import org.example.Controller.Exeptions.characterNumberLimitException;
 
-public class Education {
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+public class  Education extends Model{
     private String collegeName;
     private String major;
+    private LocalDate enterYear;
+    private LocalDate exitYear;
     // field tarikh vorod khorojesh moonde
     private String grade;  // dalili bara int boodanesh nemibinam felan
     private String activitiesInfo;
-    private String skills; // ino fek konam bayad arraylist bezanim.
+    private ArrayList<String> skills; // ino fek konam bayad arraylist bezanim.
     private String additionalInfo;
     public Education(String collegeName , String major , String grade , String activitiesInfo , String skills
      , String additionalInfo) throws characterNumberLimitException {
@@ -52,11 +58,19 @@ public class Education {
         return activitiesInfo;
     }
 
-    public String getSkills() {
+    public ArrayList<String> getSkills() {
         return skills;
     }
 
     public String getAdditionalInfo() {
         return additionalInfo;
+    }
+
+    public LocalDate getEnter() {
+        return enterYear;
+    }
+
+    public LocalDate getExit() {
+        return exitYear;
     }
 }
