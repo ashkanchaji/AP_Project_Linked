@@ -4,7 +4,7 @@ import org.example.Controller.Exeptions.characterNumberLimitException;
 
 import java.util.Date;
 
-public class ContactsInfo {
+public class ContactsInfo extends Model {
     private String link;
     private String email;
     private String phoneNumber;
