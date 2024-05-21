@@ -44,8 +44,6 @@ public class User extends Model{
         this.lastName = lastName;
     }
 
-
-
     public String getEmail() {
         return email;
     }
@@ -76,5 +74,85 @@ public class User extends Model{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAdditionalName() {
+        return additionalName;
+    }
+
+    public void setAdditionalName(String additionalName) {
+        this.additionalName = additionalName;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    public String getBackgroundPicture() {
+        return backgroundPicture;
+    }
+
+    public void setBackgroundPicture(String backgroundPicture) {
+        this.backgroundPicture = backgroundPicture;
+    }
+
+    public String getHeadline() {
+        return headline;
+    }
+
+    public void setHeadline(String headline) {
+        this.headline = headline;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public Job getCurrentJob() {
+        return currentJob;
+    }
+
+    public void setCurrentJob(Job currentJob) {
+        this.currentJob = currentJob;
+    }
+
+    public ArrayList<Job> getPreviousJobs() {
+        return previousJobs;
+    }
+
+    public void setPreviousJobs(ArrayList<Job> previousJobs) {
+        this.previousJobs = previousJobs;
+    }
+
+    public ArrayList<Education> getEducations() {
+        return educations;
+    }
+
+    public void setEducations(ArrayList<Education> educations) {
+        this.educations = educations;
     }
 }
