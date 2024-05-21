@@ -11,49 +11,45 @@ import org.example.Model.User;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class UserController extends Controller{
-    // get all
-    // get one specific entity
-    // create
-    // update
-    // delete
-    public static void createUser(HttpExchange exchange) throws IOException {
-        // create user in db
-        String response = getResponse();
-        System.out.println(exchange.getRequestMethod());
-        exchange.sendResponseHeaders(200, response.length());
+    private static final Gson gson = new Gson();
 
-        try (OutputStream stream = exchange.getResponseBody()) {
-            stream.write(response.getBytes());
-        } catch (IOException e){
-            System.out.println(response);
+    public static String getUsers() throws SQLException {
+        ArrayList<User> users = UserDAO.getUsers();
+        return gson.toJson(users);
+    }
+
+    public static String getUser(String email) throws SQLException {
+        User user = UserDAO.getUser(email);
+        return user == null ? null : gson.toJson(user);
+    }
+
+    public static void createUser (String json) throws SQLException{
+        User user = gson.fromJson(json, User.class);
+
+        if (UserDAO.doesUserExist(user.getEmail())){
+            UserDAO.updateUser(user);
+        } else {
+            UserDAO.saveUser(user);
         }
     }
 
-    private static String getResponse(){
-        Gson gson = new Gson();
-        String email = "achaji25663@gmail.com";
-        String password = "ashkan1234";
-        User user;
-        String response;
+    public static void updateUser(String json) throws SQLException {
+        User user = gson.fromJson(json, User.class);
 
-        try {
-            user = new User(email, "ashkan",
-                    "chaji", password);
-            UserDAO.addUserToDB(user);
-            UserDAO.addUserJWT(UserController.createToken(email, password), user);
-            response = gson.toJson(user);
-            return response;
-        } catch (InvalidPassException | InvalidEmailException e) {
-            OutPut.printInvalidEmailOrPass();
-            return "hgdf";
-        }
+        UserDAO.updateUser(user);
     }
 
-    public static String createToken(String email, String password){
-        String subject = email.concat(":" + password);
+    public static void deleteUser(String json) throws SQLException {
+        User user = gson.fromJson(json, User.class);
 
-        return JwtUtil.generateToken(subject);
+        UserDAO.deleteUser(user);
+    }
+
+    public static void deleteUsers() throws SQLException {
+        UserDAO.deleteUsers();
     }
 }

@@ -58,10 +58,12 @@ public class Tests {
     public void testCreateTable(){
         try {
             User user = new User("achaji2563@gmail.com", "ashkan", "chaji", "ach256384");
-            UserDAO.addUserToDB(user);
+            UserDAO.saveUser(user);
         } catch (InvalidEmailException e) {
             throw new RuntimeException(e);
         } catch (InvalidPassException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

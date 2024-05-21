@@ -44,5 +44,11 @@ public class JwtUtil {
             return null;
         }
     }
+
+    public static String createToken(String email, String password){
+        String subject = email.concat(":" + password);
+
+        return generateToken(subject);
+    }
 }
 
