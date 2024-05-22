@@ -1,7 +1,7 @@
 package org.example.Controller.Exeptions;
 
-public class characterNumberLimitException extends Exception {
-    public characterNumberLimitException(){
+public class CharacterNumberLimitException extends Exception {
+    public CharacterNumberLimitException(){
         super("The number of characters exceeds the limit");
     }
 }

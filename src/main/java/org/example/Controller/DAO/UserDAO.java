@@ -22,12 +22,12 @@ public class UserDAO extends DAO{
             + "first_name VARCHAR(20), "
             + "last_name VARCHAR(40), "
             + "jwt_hash VARCHAR(1000), "
-            + "additional_name VARCHAR(20), "
+            + "additional_name VARCHAR(40), "
             + "profile_picture_path VARCHAR(1000), "
             + "background_picture_path VARCHAR(1000), "
-            + "headline VARCHAR(200), "
-            + "country VARCHAR(20), "
-            + "city VARCHAR(20), "
+            + "headline VARCHAR(220), "
+            + "country VARCHAR(60), "
+            + "city VARCHAR(60), "
             + "profession VARCHAR(60)"
             + ")";
 
@@ -71,7 +71,6 @@ public class UserDAO extends DAO{
                 User user = returnUser(resultSet);
 
                 users.add(user);
-
             }
         } catch (InvalidPassException | InvalidEmailException e) {
             throw new RuntimeException();
@@ -118,6 +117,7 @@ public class UserDAO extends DAO{
                 "profession = ? WHERE email = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(12, user.getEmail());
             executePreparedStatement(ps, user);
         }
     }

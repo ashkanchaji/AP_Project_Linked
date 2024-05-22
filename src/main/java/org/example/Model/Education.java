@@ -1,76 +1,127 @@
 package org.example.Model;
 
-import org.example.Controller.Exeptions.characterNumberLimitException;
+import org.example.Controller.Exeptions.CharacterNumberLimitException;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class  Education extends Model{
+    private String email;
     private String collegeName;
     private String major;
-    private LocalDate enterYear;
-    private LocalDate exitYear;
-    // field tarikh vorod khorojesh moonde
-    private String grade;  // dalili bara int boodanesh nemibinam felan
+    private Date enterYear; // these are mysql date wrapper types
+    private Date exitYear; //
+    private String grade;
     private String activitiesInfo;
-    private ArrayList<String> skills; // ino fek konam bayad arraylist bezanim.
+    private ArrayList<String> skills;
     private String additionalInfo;
-    public Education(String collegeName , String major , String grade , String activitiesInfo , String skills
-     , String additionalInfo) throws characterNumberLimitException {
+    public Education(String email, String collegeName , String major ,Date enterYear, Date exitYear ,
+                     String grade , String activitiesInfo , ArrayList<String> skills
+                    , String additionalInfo) throws CharacterNumberLimitException {
+        this.email = email;
         if (collegeName.length() > 40)
-            throw  new characterNumberLimitException();
+            throw  new CharacterNumberLimitException();
         else
             this.collegeName = collegeName;
         if (major.length() > 40)
-            throw  new characterNumberLimitException();
+            throw  new CharacterNumberLimitException();
         else
             this.major = major;
         if (grade.length() > 40)
-            throw new characterNumberLimitException();
+            throw new CharacterNumberLimitException();
         else
             this.grade = grade;
         if (activitiesInfo.length() > 500)
-            throw new characterNumberLimitException();
+            throw new CharacterNumberLimitException();
         else
             this.activitiesInfo = activitiesInfo;
+        if (skills != null && !skills.isEmpty()){
+            for (String skill : skills){
+                if (skill.length() > 40)
+                    throw new CharacterNumberLimitException();
+            }
+        }
+        else {
+            this.skills = skills;
+        }
         if (additionalInfo.length() > 1000)
-            throw  new characterNumberLimitException();
+            throw  new CharacterNumberLimitException();
         else
             this.additionalInfo = additionalInfo;
-        //skill hanooz moonde
-        //tarikh vorood khoroj
+
+        this.enterYear = enterYear;
+        this.exitYear = exitYear;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getCollegeName() {
         return collegeName;
     }
 
+    public void setCollegeName(String collegeName) {
+        this.collegeName = collegeName;
+    }
+
     public String getMajor() {
         return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public Date getEnterYear() {
+        return enterYear;
+    }
+
+    public void setEnterYear(Date enterYear) {
+        this.enterYear = enterYear;
+    }
+
+    public Date getExitYear() {
+        return exitYear;
+    }
+
+    public void setExitYear(Date exitYear) {
+        this.exitYear = exitYear;
     }
 
     public String getGrade() {
         return grade;
     }
 
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
     public String getActivitiesInfo() {
         return activitiesInfo;
+    }
+
+    public void setActivitiesInfo(String activitiesInfo) {
+        this.activitiesInfo = activitiesInfo;
     }
 
     public ArrayList<String> getSkills() {
         return skills;
     }
 
+    public void setSkills(ArrayList<String> skills) {
+        this.skills = skills;
+    }
+
     public String getAdditionalInfo() {
         return additionalInfo;
     }
 
-    public LocalDate getEnter() {
-        return enterYear;
-    }
-
-    public LocalDate getExit() {
-        return exitYear;
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
     }
 }
