@@ -89,7 +89,7 @@ public class JobDAO extends DAO{
             statement.executeUpdate();
         }
     }
-    public static void deleteAllJob() throws SQLException {
+    public static void deleteAllJobs() throws SQLException {
         String query = "DELETE FROM " + tablePath;
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.executeUpdate();
