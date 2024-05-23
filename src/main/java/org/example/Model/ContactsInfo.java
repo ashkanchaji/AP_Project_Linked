@@ -2,11 +2,11 @@ package org.example.Model;
 
 import org.example.Controller.Exeptions.CharacterNumberLimitException;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class ContactsInfo extends Model {
-    private String link;
     private String email;
+    private String link;
     private String phoneNumber;
     private String phoneType;  //home-work-mobile
     private String address;
@@ -14,7 +14,7 @@ public class ContactsInfo extends Model {
     //سیاست نمایش تولد
     private String contactUs; //rah ertebati ani
 
-    public ContactsInfo(String link, String email, String phoneNumber, String phoneType, String address, Date birthday, String contactUs) throws CharacterNumberLimitException {
+    public ContactsInfo(String email, String link, String phoneNumber, String phoneType, String address, Date birthday, String contactUs) throws CharacterNumberLimitException {
         if (link.length() > 40)
             throw new CharacterNumberLimitException();
         else
@@ -31,7 +31,7 @@ public class ContactsInfo extends Model {
             this.phoneType = phoneType;
         else
             throw  new CharacterNumberLimitException();
-        if (address.length() > 40)
+        if (address.length() > 220)
             this.address = address;
         else
             throw new CharacterNumberLimitException();
