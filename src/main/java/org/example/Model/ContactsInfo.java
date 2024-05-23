@@ -8,7 +8,7 @@ public class ContactsInfo extends Model {
     private String email;
     private String link;
     private String phoneNumber;
-    private String phoneType;  // home-work-mobile
+    private String phoneType;  //home-work-mobile
     private String address;
     private Date birthday;
     //سیاست نمایش تولد
