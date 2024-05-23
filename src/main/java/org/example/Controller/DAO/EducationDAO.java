@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class EducationDAO extends DAO{
     private static final String tableName = "educations";
     private static final String tablePath = MySqlDB.getDBName() + "." + tableName;
-    private static final String createUsersTableSQL = "CREATE TABLE IF NOT EXISTS "
+    private static final String createEducationTableSQL = "CREATE TABLE IF NOT EXISTS "
             + tablePath + " ("
             + "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, "
             + "email VARCHAR(45) , "
@@ -71,7 +71,7 @@ public class EducationDAO extends DAO{
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             if (!MySqlDB.doesTableExist(connection, tableName)){
                 try (Statement stmt = connection.createStatement()) {
-                    stmt.execute(createUsersTableSQL);
+                    stmt.execute(createEducationTableSQL);
                 }
             }
             executePreparedStatement(ps, education);

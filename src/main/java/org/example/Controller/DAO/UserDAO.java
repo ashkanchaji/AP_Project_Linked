@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class UserDAO extends DAO{
     private static final String tableName = "users_info";
     private static final String tablePath = MySqlDB.getDBName() + "." + tableName;
-    private static final String createUsersTableSQL = "CREATE TABLE "
+    private static final String createUsersTableSQL = "CREATE TABLE IF NOT EXISTS "
             + tablePath + " ("
             + "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, "
             + "email VARCHAR(45), "
