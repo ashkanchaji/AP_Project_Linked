@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 public class ContactsInfoDAO extends DAO{
 
-    private static final String tableName = "ContactsInfo";
+    private static final String tableName = "contacts_info";
     private static final String tablePath = MySqlDB.getDBName() + "." + tableName;
-    private static final String createContactsInfoTableSQL = "CREATE TABLE IF NOT EXISTS "
+    private static final String createContactsTableSQL = "CREATE TABLE IF NOT EXISTS "
             + tablePath + " ("
             + "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, "
             + "email VARCHAR(45) , "
@@ -65,7 +65,7 @@ public class ContactsInfoDAO extends DAO{
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             if (!MySqlDB.doesTableExist(connection, tableName)){
                 try (Statement stmt = connection.createStatement()) {
-                    stmt.execute(createContactsInfoTableSQL);
+                    stmt.execute(createContactsTableSQL);
                 }
             }
             executePreparedStatement(ps, contactsInfo);
