@@ -2,11 +2,13 @@ package org.example.Controller.Controllers;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
+import org.example.Controller.DAO.EducationDAO;
 import org.example.Controller.DAO.UserDAO;
 import org.example.Controller.Exeptions.InvalidEmailException;
 import org.example.Controller.Exeptions.InvalidPassException;
 import org.example.Controller.Parsers.JwtUtil;
 import org.example.Controller.Parsers.OutPut;
+import org.example.Model.Education;
 import org.example.Model.User;
 
 import java.io.IOException;
@@ -52,4 +54,39 @@ public class UserController extends Controller{
     public static void deleteUsers() throws SQLException {
         UserDAO.deleteUsers();
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static String getEducation (String email) throws SQLException {
+        Education education = EducationDAO.getEducation(email);
+        return education == null ? null : gson.toJson(education);
+    }
+
+    public static String getAllEducations () throws SQLException {
+        ArrayList<Education> educations = EducationDAO.getAllEducation();
+        return gson.toJson(educations);
+    }
+
+    public static void createEducation (String json) throws SQLException {
+        Education education = gson.fromJson(json, Education.class);
+
+        if (!UserDAO.doesUserExist(education.getEmail())) throw new SQLException("User does not exist");
+
+        if (EducationDAO.getEducation(education.getEmail()) == null){
+            EducationDAO.saveEducation(education);
+        } else {
+            EducationDAO.updateEducation(education);
+        }
+    }
+
+    public static void deleteEducation (String json) throws SQLException {
+        Education education = gson.fromJson(json, Education.class);
+        EducationDAO.deleteEducation(education);
+    }
+
+    public static void deleteAllEducations () throws SQLException {
+        EducationDAO.deleteAllEducations();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
