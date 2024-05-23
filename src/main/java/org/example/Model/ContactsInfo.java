@@ -23,6 +23,10 @@ public class ContactsInfo extends Model {
             this.email = email;
         else
             throw  new CharacterNumberLimitException();
+        if (link.length() > 40)
+            throw new CharacterNumberLimitException();
+        else
+            this.link = link;
         if (phoneNumber.length() > 40)
             this.phoneNumber = phoneNumber;
         else
