@@ -17,13 +17,12 @@ import java.util.ArrayList;
 public class JobDAO extends DAO{
     private static final String tableName = "jobs_info";
     private static final String tablePath = MySqlDB.getDBName() + "." + tableName;
-    private static final String createUsersTableSQL = "CREATE TABLE "
+    private static final String createJobsTableSQL = "CREATE TABLE "
             + tablePath + " ("
             + "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, "
             + "email VARCHAR(45), "
             + "name VARCHAR(40), "
             + "location VARCHAR(40), "                        //enterYear & exitYear typesh Date e
-            + "earning INT, "
             + "additional_info VARCHAR(1000), "
             + "skills VARCHAR(1000)"
             + ")";
@@ -63,13 +62,13 @@ public class JobDAO extends DAO{
     }
     public static void saveJob (Job job) throws SQLException {
         String query = "INSERT INTO " + tablePath +
-                "(email ,name, location, earning, additional_info, skills) " +
-                "VALUES (? ,?, ?, ? ,? ,?)";
+                "(email ,name, location, additional_info, skills) " +
+                "VALUES (? ,?, ?, ? ,?)";
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             if (!MySqlDB.doesTableExist(connection, tableName)){
                 try (Statement stmt = connection.createStatement()) {
-                    stmt.execute(createUsersTableSQL);
+                    stmt.execute(createJobsTableSQL);
                 }
             }
             executePreparedStatement(ps, job);
@@ -77,9 +76,9 @@ public class JobDAO extends DAO{
     }
     public static void updateJob(Job job) throws SQLException {
         String query = "UPDATE " + tablePath +
-                " SET  email = ?, name = ?, location = ?, earning = ? , additional_info = ? , skills = ?,WHERE email = ?";
+                " SET  email = ?, name = ?, location = ?, earning = ? , additional_info = ? , skills = ? WHERE email = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(10, job.getEmail());
+            ps.setString(7, job.getEmail());
             executePreparedStatement(ps, job);
         }
     }
@@ -90,7 +89,7 @@ public class JobDAO extends DAO{
             statement.executeUpdate();
         }
     }
-    public static void deleteAllJob() throws SQLException {
+    public static void deleteAllJobs() throws SQLException {
         String query = "DELETE FROM " + tablePath;
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.executeUpdate();
