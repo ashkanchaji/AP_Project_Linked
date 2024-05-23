@@ -14,15 +14,15 @@ public class ContactsInfo extends Model {
     //سیاست نمایش تولد
     private String contactUs; //rah ertebati ani
 
-    public ContactsInfo(String link, String email, String phoneNumber, String phoneType, String address, Date birthday, String contactUs) throws CharacterNumberLimitException {
-        if (link.length() > 40)
-            throw new CharacterNumberLimitException();
-        else
-            this.link = link;
+    public ContactsInfo(String email, String link , String phoneNumber, String phoneType, String address, Date birthday, String contactUs) throws CharacterNumberLimitException {
         if (email.length() > 40)
             this.email = email;
         else
             throw  new CharacterNumberLimitException();
+        if (link.length() > 40)
+            throw new CharacterNumberLimitException();
+        else
+            this.link = link;
         if (phoneNumber.length() > 40)
             this.phoneNumber = phoneNumber;
         else
@@ -31,7 +31,7 @@ public class ContactsInfo extends Model {
             this.phoneType = phoneType;
         else
             throw  new CharacterNumberLimitException();
-        if (address.length() > 40)
+        if (address.length() > 220)
             this.address = address;
         else
             throw new CharacterNumberLimitException();
