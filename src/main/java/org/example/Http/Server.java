@@ -35,13 +35,17 @@ public class Server {
         return httpServer;
     }
 
-    public void get(String path, HttpHandler handler) {
+    public void handleValidRequests(String path, HttpHandler handler) {
         server.createContext(path, (exchange) -> {
-            if (exchange.getRequestMethod().equals("GET")) {
+            if (exchange.getRequestMethod().equals("GET") ||
+                    exchange.getRequestMethod().equals("DELETE") ||
+                    exchange.getRequestMethod().equals("POST") ||
+                    exchange.getRequestMethod().equals("PUT")) {
                 handler.handle(exchange);
             } else {
                 ErrorController.methodNotSupported(exchange);
             }
         });
     }
+
 }

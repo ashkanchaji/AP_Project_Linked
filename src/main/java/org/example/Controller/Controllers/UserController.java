@@ -32,7 +32,7 @@ public class UserController extends Controller{
     public static void createUser (String json) throws SQLException{
         User user = gson.fromJson(json, User.class);
 
-        if (UserDAO.doesUserExist(user.getEmail())){
+        if (UserDAO.getUser(user.getEmail()) != null){
             UserDAO.updateUser(user);
         } else {
             UserDAO.saveUser(user);
@@ -70,7 +70,7 @@ public class UserController extends Controller{
     public static void createEducation (String json) throws SQLException {
         Education education = gson.fromJson(json, Education.class);
 
-        if (!UserDAO.doesUserExist(education.getEmail())) throw new SQLException("User does not exist");
+        if (!UserDAO.doesUserExist(education.getEmail())) throw new SQLException("User does not exist"); // ***
 
         if (EducationDAO.getEducation(education.getEmail()) == null){
             EducationDAO.saveEducation(education);

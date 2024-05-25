@@ -54,7 +54,7 @@ public class UserDAO extends DAO{
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return false;
         }
 
         return false;
@@ -99,7 +99,8 @@ public class UserDAO extends DAO{
         String query = "INSERT INTO " + tablePath +
                 "(email, password, first_name, last_name, additional_name, " +
                 "profile_picture_path, background_picture_path, headline, country, city, profession) " +
-                "VALUES (? ? ? ? ? ? ? ? ? ? ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             if (!MySqlDB.doesTableExist(connection, tableName)){
                 try (Statement stmt = connection.createStatement()) {
@@ -122,6 +123,7 @@ public class UserDAO extends DAO{
         }
     }
 
+    // should check for password validation
     public static void deleteUser (User user) throws SQLException{
         String query = "DELETE FROM " + tablePath +" WHERE email = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -143,14 +145,14 @@ public class UserDAO extends DAO{
         User user = new User(resultSet.getString("email"),
                 resultSet.getString("first_name"),
                 resultSet.getString("last_name"),
-                resultSet.getString("password"));
-        user.setAdditionalName(resultSet.getString("additional_name"));
-        user.setProfilePicture(resultSet.getString("profile_picture_path"));
-        user.setBackgroundPicture(resultSet.getString("background_picture_path"));
-        user.setHeadline(resultSet.getString("headline"));
-        user.setCountry(resultSet.getString("country"));
-        user.setCity(resultSet.getString("city"));
-        user.setProfession(resultSet.getString("profession"));
+                resultSet.getString("password"),
+                resultSet.getString("additional_name"),
+                resultSet.getString("profile_picture_path"),
+                resultSet.getString("background_picture_path"),
+                resultSet.getString("headline"),
+                resultSet.getString("country"),
+                resultSet.getString("city"),
+                resultSet.getString("profession"));
 
         return user;
     }

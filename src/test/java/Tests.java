@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.jsonwebtoken.Claims;
+import org.example.Controller.Controllers.UserController;
 import org.example.Controller.DAO.UserDAO;
 import org.example.Controller.DB.MySqlDB;
 import org.example.Controller.Exeptions.InvalidEmailException;
@@ -56,14 +57,21 @@ public class Tests {
 
     @Test
     public void testCreateTable(){
+        Gson gson = new Gson();
+
+//        try {
+//            String response = UserController.getUsers();
+//
+//            System.out.println(response);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
         try {
-            User user = new User("achaji2563@gmail.com", "ashkan", "chaji", "ach256384");
-            UserDAO.saveUser(user);
-        } catch (InvalidEmailException e) {
-            throw new RuntimeException(e);
+            User user = new User("achaji25631@gmail.com", "ashkan", "chaji", "ach256384");
+            System.out.println(gson.toJson(user));
         } catch (InvalidPassException e) {
             throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (InvalidEmailException e) {
             throw new RuntimeException(e);
         }
     }
