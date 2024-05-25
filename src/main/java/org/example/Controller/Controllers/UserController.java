@@ -79,9 +79,8 @@ public class UserController extends Controller{
         }
     }
 
-    public static void deleteEducation (String json) throws SQLException {
-        Education education = gson.fromJson(json, Education.class);
-        EducationDAO.deleteEducation(education);
+    public static void deleteEducation (String email) throws SQLException {
+        EducationDAO.deleteEducation(email);
     }
 
     public static void deleteAllEducations () throws SQLException {
