@@ -44,6 +44,20 @@ public class User extends Model{
         this.lastName = lastName;
     }
 
+    public User(String email, String firstName, String lastName, String password, String additionalName, String profilePicture, String backgroundPicture, String headline, String country, String city, String profession) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.additionalName = additionalName;
+        this.profilePicture = profilePicture;
+        this.backgroundPicture = backgroundPicture;
+        this.headline = headline;
+        this.country = country;
+        this.city = city;
+        this.profession = profession;
+    }
+
     public String getEmail() {
         return email;
     }

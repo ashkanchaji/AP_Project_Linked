@@ -1,38 +1,57 @@
 package org.example.Handlers;
 
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
+import org.example.Controller.Controllers.ErrorController;
 import org.example.Controller.Controllers.UserController;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.sql.SQLException;
 
-public class UserHandler implements HttpHandler {
-    @Override
-    public void handle(HttpExchange exchange) throws IOException{
+public class UserHandler extends Handler {
+
+    public static void handleUser(HttpExchange exchange) throws IOException{
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
         String response = "";
         String[] splitPath = path.split("/");
 
-        switch (method){
-            // should handle return specific user and ...
-            case "GET":
-                try {
-                    response = UserController.getUsers();
-                } catch (SQLException e) { // handle all sql exceptions
-                    throw new RuntimeException(e);
-                }
-                break;
-            case "POST":
-                break;
-            case "PUT":
-                break;
-            case "DELETE":
-                break;
-            default:
-                break;
+        try {
+            switch (method){
+                // should handle return specific user and ...
+                case "GET":
+                    if (splitPath.length >= 3){
+                        String email = splitPath[splitPath.length - 1];
+                        String userJson = UserController.getUser(email);
+                        response = userJson == null ? "No such user found!" : userJson;
+                    } else {
+                        response = UserController.getUsers();
+                    }
+                    break;
+                case "DELETE":
+                    if (splitPath.length >= 3){
+                        String userJson = splitPath[splitPath.length - 1];
+                        UserController.deleteUser(userJson);
+                    } else {
+                        UserController.deleteUsers();
+                    }
+                    response = "success"; // but is it really successful ?
+                    break;
+                default:
+//                    String newJsonUser = readRequestBody(exchange.getRequestBody()); // what does request body mean and do ???
+                    String userJson = splitPath[splitPath.length - 1];
+                    switch (method) {
+                        case "POST" :
+                            UserController.createUser(userJson);
+                            break;
+                        case "PUT" :
+                            UserController.updateUser(userJson);
+                            break;
+                    }
+                    response = "success";
+                    break;
+            }
+        } catch (SQLException e) { // handle all sql exceptions
+            e.printStackTrace();
         }
 
         exchange.sendResponseHeaders(200, response.length());
