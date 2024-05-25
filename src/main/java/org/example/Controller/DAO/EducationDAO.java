@@ -88,10 +88,10 @@ public class EducationDAO extends DAO{
         }
     }
 
-    public static void deleteEducation(Education education) throws SQLException {
+    public static void deleteEducation(String email) throws SQLException {
         String query = "DELETE FROM " + tablePath + " WHERE email = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, education.getEmail());
+            statement.setString(1, email);
             statement.executeUpdate();
         }
     }

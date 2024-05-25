@@ -22,7 +22,7 @@ public class JobController extends Controller{
     private static final Gson gson = new Gson();
 
 
-    public static String getEducation (String email) throws SQLException {
+    public static String getJob (String email) throws SQLException {
         Job job = JobDAO.getJob(email);
         return job == null ? null : gson.toJson(job);
     }
