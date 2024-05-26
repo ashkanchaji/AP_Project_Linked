@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Post {
 
-    private String userId;
+    private String postId;
 
     private String text;
 
@@ -16,8 +16,8 @@ public class Post {
 
     private int reposts;
 
-    public Post(String userId , String text , int likes , int comments , Date createdAt , int reposts){
-        this.userId = userId;
+    public Post(String postId , String text , int likes , int comments , Date createdAt , int reposts){
+        this.postId = postId;
         this.text = text;
         this.likes = likes;
         this.comments = comments;
@@ -30,7 +30,7 @@ public class Post {
     }
 
     public String getUserId() {
-        return userId;
+        return postId;
     }
 
     public String getText() {
@@ -55,13 +55,13 @@ public class Post {
 
     @Override
     public String toString(){
-        return "post:" +
-                "{ userId: " + this.userId + "/" +
-                "createdAt: " + this.createdAt + "/"+
-                "text: " + this.text + "/"+
-                "likes: " + this.likes +"/"+
-                "comments: " + this.comments +"/"+
-                "reposts:" + this.reposts + "}";
+        return "(Post):" +
+                "{ PostId: " + this.postId + "/" +
+                "CreatedAt: " + this.createdAt + "/"+
+                "Text: " + this.text + "/"+
+                "Likes: " + this.likes +"/"+
+                "Comments: " + this.comments +"/"+
+                "Reposts:" + this.reposts + "}";
 
     }
 }
