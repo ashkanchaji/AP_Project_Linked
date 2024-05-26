@@ -37,7 +37,7 @@ public class JobHandler extends Handler{
                     response = "success";
                     break;
                 default:
-                    String jobJson = splitPath[splitPath.length - 1];
+                    String jobJson = new String(exchange.getRequestBody().readAllBytes());
                     switch (method) {
                         case "POST" :
                         case "PUT" :
