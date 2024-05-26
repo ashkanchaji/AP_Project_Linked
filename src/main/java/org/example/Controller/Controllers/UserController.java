@@ -2,12 +2,14 @@ package org.example.Controller.Controllers;
 
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
+import org.example.Controller.DAO.ContactsInfoDAO;
 import org.example.Controller.DAO.EducationDAO;
 import org.example.Controller.DAO.UserDAO;
 import org.example.Controller.Exeptions.InvalidEmailException;
 import org.example.Controller.Exeptions.InvalidPassException;
 import org.example.Controller.Parsers.JwtUtil;
 import org.example.Controller.Parsers.OutPut;
+import org.example.Model.ContactsInfo;
 import org.example.Model.Education;
 import org.example.Model.User;
 
@@ -70,7 +72,7 @@ public class UserController extends Controller{
     public static void createEducation (String json) throws SQLException {
         Education education = gson.fromJson(json, Education.class);
 
-        if (!UserDAO.doesUserExist(education.getEmail())) throw new SQLException("User does not exist"); // ***
+        if (UserDAO.getUser(education.getEmail()) == null) throw new SQLException("User does not exist"); // ***
 
         if (EducationDAO.getEducation(education.getEmail()) == null){
             EducationDAO.saveEducation(education);
@@ -88,4 +90,40 @@ public class UserController extends Controller{
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static String getContactInfo (String email) throws SQLException{
+        ContactsInfo contactsInfo = ContactsInfoDAO.getContactsInfo(email);
+        return contactsInfo == null ? null : gson.toJson(contactsInfo);
+    }
+
+    public static String getAllContactInfos () throws SQLException {
+        ArrayList<ContactsInfo> contacts = ContactsInfoDAO.getAllContactsInformations();
+        return gson.toJson(contacts);
+    }
+
+    public static void createContact (String json) throws SQLException{
+        ContactsInfo contactsInfo = gson.fromJson(json, ContactsInfo.class);
+
+        if (UserDAO.getUser(contactsInfo.getEmail()) == null) throw new SQLException("User does not exist"); // ***
+
+        if (ContactsInfoDAO.getContactsInfo(contactsInfo.getEmail()) == null){
+            ContactsInfoDAO.saveContactsInfo(contactsInfo);
+        } else {
+            ContactsInfoDAO.updateContactsInfo(contactsInfo);
+        }
+    }
+
+    public static void updateContacts (String json) throws SQLException {
+        ContactsInfo contactsInfo = gson.fromJson(json, ContactsInfo.class);
+
+        ContactsInfoDAO.updateContactsInfo(contactsInfo);
+    }
+
+    public static void deleteContact (String email) throws SQLException{
+        ContactsInfoDAO.deleteContactsInfo(email);
+    }
+
+    public static void deleteAllContacts () throws SQLException {
+        ContactsInfoDAO.deleteAllContactsInformation();
+    }
 }
