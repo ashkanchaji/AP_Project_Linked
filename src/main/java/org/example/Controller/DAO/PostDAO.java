@@ -1,4 +1,7 @@
 //package org.example.Controller.DAO;
 //
-//public class PostDAO extends GenericDAO {
+//import org.example.Model.Post;
+//
+//public class PostDAO extends GenericDAO<Post> {
+//
 //}

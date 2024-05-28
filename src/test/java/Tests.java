@@ -6,6 +6,8 @@ import org.example.Controller.DAO.UserDAO;
 import org.example.Controller.DB.MySqlDB;
 import org.example.Controller.Exeptions.InvalidEmailException;
 import org.example.Controller.Exeptions.InvalidPassException;
+import org.example.Model.Education;
+import org.example.Model.Job;
 import org.example.Model.User;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -66,14 +68,8 @@ public class Tests {
 //        } catch (SQLException e) {
 //            throw new RuntimeException(e);
 //        }
-        try {
-            User user = new User("achaji25631@gmail.com", "ashkan", "chaji", "ach256384");
-            System.out.println(gson.toJson(user));
-        } catch (InvalidPassException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidEmailException e) {
-            throw new RuntimeException(e);
-        }
+        Education job = new Education("achaji2563@gmail.com", "dfh", "khsd", null, null, null, null, null, null);
+        System.out.println(gson.toJson(job));
     }
 
 //    @Test
