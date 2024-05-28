@@ -15,7 +15,7 @@ public class  Education extends Model{
     private String activitiesInfo;
     private ArrayList<String> skills;
     private String additionalInfo;
-    public Education(String email, String collegeName , String major ,Date enterYear, Date exitYear ,
+    public Education(int type, String email, String collegeName , String major ,Date enterYear, Date exitYear ,
                      String grade , String activitiesInfo , ArrayList<String> skills
                     , String additionalInfo) throws CharacterNumberLimitException {
         this.email = email;
@@ -51,6 +51,18 @@ public class  Education extends Model{
 
         this.enterYear = enterYear;
         this.exitYear = exitYear;
+    }
+
+    public Education(String email, String collegeName, String major, Date enterYear, Date exitYear, String grade, String activitiesInfo, ArrayList<String> skills, String additionalInfo) {
+        this.email = email;
+        this.collegeName = collegeName;
+        this.major = major;
+        this.enterYear = enterYear;
+        this.exitYear = exitYear;
+        this.grade = grade;
+        this.activitiesInfo = activitiesInfo;
+        this.skills = skills;
+        this.additionalInfo = additionalInfo;
     }
 
     public String getEmail() {

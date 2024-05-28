@@ -14,7 +14,7 @@ public class ContactsInfo extends Model {
     //سیاست نمایش تولد
     private String contactUs; //rah ertebati ani
 
-    public ContactsInfo(String email, String link, String phoneNumber, String phoneType, String address, Date birthday, String contactUs) throws CharacterNumberLimitException {
+    public ContactsInfo(int type, String email, String link, String phoneNumber, String phoneType, String address, Date birthday, String contactUs) throws CharacterNumberLimitException {
         if (link.length() > 40)
             throw new CharacterNumberLimitException();
         else
@@ -45,6 +45,16 @@ public class ContactsInfo extends Model {
             this.contactUs = contactUs;
         else
             throw  new CharacterNumberLimitException();
+    }
+
+    public ContactsInfo(String email, String link, String phoneNumber, String phoneType, String address, Date birthday, String contactUs) {
+        this.email = email;
+        this.link = link;
+        this.phoneNumber = phoneNumber;
+        this.phoneType = phoneType;
+        this.address = address;
+        this.birthday = birthday;
+        this.contactUs = contactUs;
     }
 
     public String getLink() {

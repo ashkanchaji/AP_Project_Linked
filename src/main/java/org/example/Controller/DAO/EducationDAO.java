@@ -1,22 +1,17 @@
 package org.example.Controller.DAO;
 
-import org.example.Controller.DB.MySqlDB;
-import org.example.Controller.Exeptions.CharacterNumberLimitException;
 import org.example.Model.Education;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
-public class EducationDAO extends DAO{
-    private static final String tableName = "educations";
-    private static final String tablePath = MySqlDB.getDBName() + "." + tableName;
-    private static final String createEducationTableSQL = "CREATE TABLE IF NOT EXISTS "
+public class EducationDAO extends GenericDAO<Education> {
+    private final String CREATE_EDUCATION_TABLE_SQL = "CREATE TABLE IF NOT EXISTS "
             + tablePath + " ("
             + "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, "
-            + "email VARCHAR(45) , "
+            + "email VARCHAR(45), "
             + "college_name VARCHAR(40), "
             + "major VARCHAR(40), "
             + "enter_year DATE, "
@@ -27,86 +22,14 @@ public class EducationDAO extends DAO{
             + "skills VARCHAR(1000)"
             + ")";
 
-    public static Education getEducation (String email) throws SQLException{
-        Education education = null;
-        String query = "SELECT * FROM " + tablePath + " WHERE email = ?";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, email);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()){
-                education = returnEducation(resultSet);
-            }
-        } catch (CharacterNumberLimitException e) {
-            throw new RuntimeException(e);
-        }
-
-        return education;
+    public EducationDAO() {
+        super("educations");
     }
 
-    public static ArrayList<Education> getAllEducation () throws SQLException {
-        ArrayList<Education> educations = new ArrayList<>();
-        String query = "SELECT * FROM " + tablePath;
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()){
-                Education education = returnEducation(resultSet);
-                educations.add(education);
-            }
-        } catch (CharacterNumberLimitException e) {
-            throw new RuntimeException(e);
-        }
-
-        return educations;
-    }
-
-    public static void saveEducation (Education education) throws SQLException {
-        String query = "INSERT INTO " + tablePath +
-                "(email, college_name, enter_year, exit_year, major, grade, activities, additional_info, skills) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            if (!MySqlDB.doesTableExist(connection, tableName)){
-                try (Statement stmt = connection.createStatement()) {
-                    stmt.execute(createEducationTableSQL);
-                }
-            }
-            executePreparedStatement(ps, education);
-        }
-    }
-
-    public static void updateEducation(Education education) throws SQLException {
-        String query = "UPDATE " + tablePath +
-                " SET email = ?, college_name = ?, major = ?, enter_year = ?, exit_year = ?, grade = ?, " +
-                "activities = ?, skills = ?, additional_info = ? WHERE email = ?";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(10, education.getEmail());
-            executePreparedStatement(ps, education);
-        }
-    }
-
-    public static void deleteEducation(String email) throws SQLException {
-        String query = "DELETE FROM " + tablePath + " WHERE email = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, email);
-            statement.executeUpdate();
-        }
-    }
-
-    public static void deleteAllEducations() throws SQLException {
-        String query = "DELETE FROM " + tablePath;
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.executeUpdate();
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static Education returnEducation(ResultSet resultSet) throws SQLException, CharacterNumberLimitException {
-        return new Education(resultSet.getString("email"),
+    @Override
+    protected Education mapResultSetToEntity(ResultSet resultSet) throws SQLException {
+        return new Education(
+                resultSet.getString("email"),
                 resultSet.getString("college_name"),
                 resultSet.getString("major"),
                 resultSet.getDate("enter_year"),
@@ -114,21 +37,67 @@ public class EducationDAO extends DAO{
                 resultSet.getString("grade"),
                 resultSet.getString("activities"),
                 gson.fromJson(resultSet.getString("skills"), arrayListType),
-                resultSet.getString("additional_info"));
+                resultSet.getString("additional_info")
+        );
     }
 
-    private static void executePreparedStatement(PreparedStatement ps, Education education) throws SQLException {
-        ps.setString(1, education.getEmail());
-        ps.setString(2, education.getCollegeName());
-        ps.setString(3, education.getMajor());
-        ps.setDate(4, education.getEnterYear());
-        ps.setDate(5, education.getExitYear());
-        ps.setString(6, education.getGrade());
-        ps.setString(7, education.getActivitiesInfo());
-        ps.setString(8, gson.toJson(education.getSkills()));
-        ps.setString(9, education.getAdditionalInfo());
-
-        ps.executeUpdate();
+    @Override
+    protected String getCreateTableSQL() {
+        return CREATE_EDUCATION_TABLE_SQL;
     }
 
+    public void saveEducation(Education education) throws SQLException {
+        String query = "INSERT INTO " + tablePath +
+                "(email, college_name, major, enter_year, exit_year, grade, activities, additional_info, skills) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        saveEntity(education, query, (ps, e) -> {
+            ps.setString(1, e.getEmail());
+            ps.setString(2, e.getCollegeName());
+            ps.setString(3, e.getMajor());
+            ps.setDate(4, e.getEnterYear());
+            ps.setDate(5, e.getExitYear());
+            ps.setString(6, e.getGrade());
+            ps.setString(7, e.getActivitiesInfo());
+            ps.setString(8, e.getAdditionalInfo());
+            ps.setString(9, gson.toJson(e.getSkills()));
+        });
+    }
+
+    public Education getEducationByEmail(String email) throws SQLException {
+        String query = "SELECT * FROM " + tablePath + " WHERE email = ?";
+        return getEntity(query, email);
+    }
+
+    public ArrayList<Education> getAllEducations() throws SQLException {
+        String query = "SELECT * FROM " + tablePath;
+        return getAllEntities(query);
+    }
+
+    public void updateEducation(Education education) throws SQLException {
+        String query = "UPDATE " + tablePath +
+                " SET college_name = ?, major = ?, enter_year = ?, exit_year = ?, grade = ?, " +
+                "activities = ?, additional_info = ?, skills = ? WHERE email = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, education.getCollegeName());
+            ps.setString(2, education.getMajor());
+            ps.setDate(3, education.getEnterYear());
+            ps.setDate(4, education.getExitYear());
+            ps.setString(5, education.getGrade());
+            ps.setString(6, education.getActivitiesInfo());
+            ps.setString(7, education.getAdditionalInfo());
+            ps.setString(8, gson.toJson(education.getSkills()));
+            ps.setString(9, education.getEmail());
+            ps.executeUpdate();
+        }
+    }
+
+    public void deleteEducationByEmail(String email) throws SQLException {
+        String query = "DELETE FROM " + tablePath + " WHERE email = ?";
+        deleteEntity(query, email);
+    }
+
+    public void deleteAllEducations() throws SQLException {
+        String query = "DELETE FROM " + tablePath;
+        deleteAllEntities(query);
+    }
 }
