@@ -1,5 +1,7 @@
 package org.example.Model;
 
+import org.example.Controller.Exeptions.CharacterNumberLimitException;
+
 import java.util.Date;
 
 public class Post {
@@ -16,9 +18,12 @@ public class Post {
 
     private int reposts;
 
-    public Post(String postId , String text , int likes , int comments , Date createdAt , int reposts){
+    public Post(String postId , String text , int likes , int comments , Date createdAt , int reposts) throws CharacterNumberLimitException {
         this.postId = postId;
-        this.text = text;
+        if (text.length() > 3000)
+            throw  new CharacterNumberLimitException();
+        else
+            this.text = text;
         this.likes = likes;
         this.comments = comments;
         this.createdAt = createdAt;

@@ -1,12 +1,14 @@
 package org.example.Model;
 
+import org.example.Controller.Exeptions.CharacterNumberLimitException;
+
 import java.util.Date;
 
 public class Repost extends Post{
 
     private String repostId;
 
-    public Repost(String postId ,String text , int likes , int comments, Date createdAt , int reposts , String repostId){
+    public Repost(String postId ,String text , int likes , int comments, Date createdAt , int reposts , String repostId) throws CharacterNumberLimitException {
         super(postId ,text , likes ,comments , createdAt , reposts);
         this.repostId = repostId;
     }
