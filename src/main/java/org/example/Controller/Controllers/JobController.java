@@ -23,7 +23,7 @@ public class JobController extends Controller{
 
 
     public static String getJob (String email) throws SQLException {
-        Job job = JobDAO.getJob(email);
+        Job job = JobDAO.getJobByEmail(email);
         return job == null ? null : gson.toJson(job);
     }
 
@@ -37,7 +37,7 @@ public class JobController extends Controller{
 
         if (!UserDAO.doesUserExist(job.getEmail())) throw new SQLException("User does not exist");
 
-        if (JobDAO.getJob(job.getEmail()) == null){
+        if (JobDAO.getJobByEmail(job.getEmail()) == null){
             JobDAO.saveJob(job);
         } else {
             JobDAO.updateJob(job);
@@ -46,7 +46,7 @@ public class JobController extends Controller{
 
     public static void deleteJob (String json) throws SQLException {
         Job job = gson.fromJson(json, Job.class);
-        JobDAO.deleteJob(job);
+        JobDAO.deleteJobByEmail(job.getEmail());
     }
 
     public static void deleteAllJobs () throws SQLException {
