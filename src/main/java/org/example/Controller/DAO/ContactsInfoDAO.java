@@ -80,10 +80,10 @@ public class ContactsInfoDAO extends DAO{
             executePreparedStatement(ps, contactsInfo);
         }
     }
-    public static void deleteContactsInfo(ContactsInfo contactsInfo) throws SQLException {
+    public static void deleteContactsInfo(String email) throws SQLException {
         String query = "DELETE FROM " + tablePath + " WHERE email = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, contactsInfo.getEmail());
+            statement.setString(1, email);
             statement.executeUpdate();
         }
     }
@@ -116,8 +116,4 @@ public class ContactsInfoDAO extends DAO{
         ps.setString(7, contactsInfo.getContactUs());
         ps.executeUpdate();
     }
-
-
-
-
 }
