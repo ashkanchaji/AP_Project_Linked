@@ -6,7 +6,7 @@ import java.sql.Date;
 
 public class Post {
 
-    private String postId;
+    private String posterID;
 
     private String text;
 
@@ -18,8 +18,10 @@ public class Post {
 
     private int reposts;
 
-    public Post(String postId , String text , int likes , int comments , Date createdAt , int reposts) throws CharacterNumberLimitException {
-        this.postId = postId;
+    private String byteFilePath;
+
+    public Post(String posterID, String text , int likes , int comments , Date createdAt , int reposts) throws CharacterNumberLimitException {
+        this.posterID = posterID;
         if (text.length() > 3000)
             throw  new CharacterNumberLimitException();
         else
@@ -35,7 +37,7 @@ public class Post {
     }
 
     public String getUserId() {
-        return postId;
+        return posterID;
     }
 
     public String getText() {
@@ -61,7 +63,7 @@ public class Post {
     @Override
     public String toString(){
         return "(Post):" +
-                "{ PostId: " + this.postId + "/" +
+                "{ PostId: " + this.posterID + "/" +
                 "CreatedAt: " + this.createdAt + "/"+
                 "Text: " + this.text + "/"+
                 "Likes: " + this.likes +"/"+
