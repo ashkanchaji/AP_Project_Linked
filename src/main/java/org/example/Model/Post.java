@@ -32,10 +32,6 @@ public class Post {
         this.reposts = reposts;
     }
 
-    public Post(){
-        //کدهای سال بالایی ها رو دیدم همشون یه کانستراکتور خالی داشتن برا اورلود نمدونم چرا
-    }
-
     public String getUserId() {
         return posterID;
     }

@@ -1,20 +1,11 @@
 package org.example.Controller.Controllers;
 
 import com.google.gson.Gson;
-import com.sun.net.httpserver.HttpExchange;
-import org.example.Controller.DAO.ContactsInfoDAO;
-import org.example.Controller.DAO.EducationDAO;
-import org.example.Controller.DAO.UserDAO;
-import org.example.Controller.Exeptions.InvalidEmailException;
-import org.example.Controller.Exeptions.InvalidPassException;
-import org.example.Controller.Parsers.JwtUtil;
-import org.example.Controller.Parsers.OutPut;
+
 import org.example.Model.ContactsInfo;
 import org.example.Model.Education;
 import org.example.Model.User;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
