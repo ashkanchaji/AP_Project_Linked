@@ -2,7 +2,7 @@ package org.example.Model;
 
 import org.example.Controller.Exeptions.CharacterNumberLimitException;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Post {
 
