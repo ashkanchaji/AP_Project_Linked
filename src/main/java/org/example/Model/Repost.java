@@ -9,7 +9,7 @@ public class Repost extends Post{
     private String repostId;
 
     public Repost(String postId ,String text , int likes , int comments, Date createdAt , int reposts , String repostId) throws CharacterNumberLimitException {
-        super(postId ,text , likes ,comments , createdAt , reposts);
+        super(1, postId ,text , likes ,comments , createdAt , reposts);
         this.repostId = repostId;
     }
 
