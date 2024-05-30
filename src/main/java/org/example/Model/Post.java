@@ -4,7 +4,7 @@ import org.example.Controller.Exeptions.CharacterNumberLimitException;
 
 import java.sql.Date;
 
-public class Post {
+public class Post extends Model{
 
     private String posterID;
 
@@ -79,6 +79,5 @@ public class Post {
                 "Likes: " + this.likes +"/"+
                 "Comments: " + this.comments +"/"+
                 "Reposts:" + this.reposts + "}";
-
     }
 }

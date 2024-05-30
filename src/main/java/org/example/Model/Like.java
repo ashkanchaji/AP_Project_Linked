@@ -1,6 +1,6 @@
 package org.example.Model;
 
-public class Like {
+public class Like extends  Model{
 
     private String liker;
 
@@ -19,6 +19,13 @@ public class Like {
         return liked;
     }
 
+    public void setLiker(String liker) {
+        this.liker = liker;
+    }
+
+    public void setLiked(String liked) {
+        this.liked = liked;
+    }
 
     @Override
     public String toString() {

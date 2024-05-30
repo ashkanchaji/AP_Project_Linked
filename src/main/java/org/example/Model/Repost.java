@@ -17,6 +17,10 @@ public class Repost extends Post{
         return repostId;
     }
 
+    public void setRepostId(String repostId) {
+        this.repostId = repostId;
+    }
+
     @Override
     public String toString(){
         return "(Repost)" +

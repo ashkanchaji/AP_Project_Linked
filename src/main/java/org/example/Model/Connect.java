@@ -2,7 +2,7 @@ package org.example.Model;
 
 import org.example.Controller.Exeptions.CharacterNumberLimitException;
 
-public class Connect {
+public class Connect extends Model {
 
     private  String sender;
 
@@ -29,6 +29,18 @@ public class Connect {
 
     public String getNotes() {
         return notes;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     @Override
