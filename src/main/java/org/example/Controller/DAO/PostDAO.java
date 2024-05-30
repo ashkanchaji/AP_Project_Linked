@@ -2,6 +2,7 @@ package org.example.Controller.DAO;
 
 import org.example.Model.Post;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -65,9 +66,9 @@ public class PostDAO extends AbstractPostDAO<Post> {
         updatePost(post, UPDATE_POST_SQL);
     }
 
-    public void deletePostByEmail(String email) throws SQLException {
-        String query = "DELETE FROM " + tablePath + " WHERE posterID = ?";
-        deletePostByEmail(email, query);
+    public void deletePostByEmail(String email, Date date) throws SQLException {
+        String query = "DELETE FROM " + tablePath + " WHERE posterID = ?, createdAT = ?";
+        deletePostByEmail(email, date, query);
     }
 
     public void deleteAllPosts() throws SQLException {

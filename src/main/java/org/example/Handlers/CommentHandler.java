@@ -1,12 +1,12 @@
 package org.example.Handlers;
 
 import com.sun.net.httpserver.HttpExchange;
-import org.example.Controller.Controllers.JobController;
+import org.example.Controller.Controllers.PostController;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class JobHandler extends Handler {
+public class CommentHandler extends Handler {
     @Override
     protected String handleRequest(String method, String path, HttpExchange exchange) throws SQLException, IOException {
         String[] splitPath = path.split("/");
@@ -15,25 +15,25 @@ public class JobHandler extends Handler {
             case "GET":
                 if (splitPath.length >= 3) {
                     String email = splitPath[splitPath.length - 1];
-                    String jobJson = JobController.getJob(email);
-                    response = jobJson == null ? "No such job info found!" : jobJson;
+                    String commentJson = PostController.getComment(email);
+                    response = commentJson == null ? "No such comment found!" : commentJson;
                 } else {
-                    response = JobController.getAllJobs();
+                    response = PostController.getAllComments();
                 }
                 break;
             case "DELETE":
                 if (splitPath.length >= 3) {
-                    String email = splitPath[splitPath.length - 1];
-                    JobController.deleteJob(email);
+                    String commentJson = new String(exchange.getRequestBody().readAllBytes());
+                    PostController.deleteComment(commentJson);
                 } else {
-                    JobController.deleteAllJobs();
+                    PostController.deleteAllComments();
                 }
                 response = "success";
                 break;
             case "POST":
             case "PUT":
-                String jobJson = readRequestBody(exchange);
-                JobController.createJob(jobJson);
+                String commentJson = readRequestBody(exchange);
+                PostController.createComment(commentJson);
                 response = "success";
                 break;
             default:

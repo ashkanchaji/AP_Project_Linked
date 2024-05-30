@@ -2,6 +2,7 @@ package org.example.Controller.DAO;
 
 import org.example.Model.Post;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -51,8 +52,14 @@ public abstract class AbstractPostDAO<T extends Post> extends GenericDAO<T> {
         }
     }
 
-    public void deletePostByEmail(String email, String query) throws SQLException {
-        deleteEntity(query, email);
+    public void deletePostByEmail(String email, Date date, String query) throws SQLException {
+        checkTableExistence(); // ???
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, email);
+            statement.setDate(2, date);
+            statement.executeUpdate();
+        }
     }
 
     public void deleteAllPosts(String query) throws SQLException {

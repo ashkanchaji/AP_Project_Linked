@@ -84,7 +84,7 @@ public abstract class GenericDAO<T> {
         void prepare(PreparedStatement ps, T entity) throws SQLException;
     }
 
-    private void checkTableExistence() throws SQLException{
+    protected void checkTableExistence() throws SQLException{
         if (!MySqlDB.doesTableExist(connection, tableName)) {
             try (Statement stmt = connection.createStatement()) {
                 stmt.execute(getCreateTableSQL());
