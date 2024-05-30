@@ -2,6 +2,7 @@ package org.example.Controller.DAO;
 
 import org.example.Model.Comment;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -76,9 +77,9 @@ public class CommentDAO extends AbstractPostDAO<Comment> {
         updatePost(comment, UPDATE_COMMENT_SQL);
     }
 
-    public void deleteCommentByEmail(String email) throws SQLException {
-        String query = "DELETE FROM " + tablePath + " WHERE posterID = ?";
-        deleteEntity(query, email);
+    public void deleteCommentByEmail(String email, Date date) throws SQLException {
+        String query = "DELETE FROM " + tablePath + " WHERE posterID = ?, createdAT = ?";
+        deletePostByEmail(email, date, query);
     }
 
     public void deleteAllComments() throws SQLException {

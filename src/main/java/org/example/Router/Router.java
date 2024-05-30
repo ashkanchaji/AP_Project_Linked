@@ -1,16 +1,18 @@
 package org.example.Router;
 
-import org.example.Handlers.EducationHandler;
-import org.example.Handlers.JobHandler;
-import org.example.Handlers.UserHandler;
+import org.example.Handlers.*;
 import org.example.Http.Server;
 
 public class Router {
     public static void route(Server server){
 
-        //server.get("/users", UserController::createUser);
-        server.handleValidRequests("/users", UserHandler::handleUser);
-        server.handleValidRequests("/education", EducationHandler::handleEducation);
-        server.handleValidRequests("/jobs", JobHandler::handleJob);
+        server.handleValidRequests("/users", new UserHandler()::handle);
+        server.handleValidRequests("/education", new EducationHandler()::handle);
+        server.handleValidRequests("/jobs", new JobHandler()::handle);
+        server.handleValidRequests("/contacts", new ContactsHandler()::handle);
+        server.handleValidRequests("/posts", new PostHandler()::handle);
+        server.handleValidRequests("/reposts", new RepostHandler()::handle);
+        server.handleValidRequests("/comments", new ContactsHandler()::handle);
+
     }
 }

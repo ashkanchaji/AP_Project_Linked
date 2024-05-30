@@ -23,7 +23,7 @@ public class PostController extends Controller {
     public static void createPost(String json) throws SQLException {
         Post post = gson.fromJson(json, Post.class);
 
-        if (!UserDAO.doesUserExist(post.getUserId())) throw new SQLException("User does not exist");
+        if (UserDAO.getUserByEmail(post.getUserId()) == null) throw new SQLException("User does not exist");
 
         if (PostDAO.getPostByEmail(post.getUserId()) == null) {
             PostDAO.savePost(post);
@@ -34,7 +34,7 @@ public class PostController extends Controller {
 
     public static void deletePost(String json) throws SQLException {
         Post post = gson.fromJson(json, Post.class);
-        PostDAO.deletePostByEmail(post.getUserId());
+        PostDAO.deletePostByEmail(post.getUserId(), post.getCreatedAt());
     }
 
     public static void deleteAllPosts() throws SQLException {
@@ -57,7 +57,7 @@ public class PostController extends Controller {
     public static void createComment(String json) throws SQLException {
         Comment comment = gson.fromJson(json, Comment.class);
 
-        if (!UserDAO.doesUserExist(comment.getUserId())) throw new SQLException("User does not exist");
+        if (UserDAO.getUserByEmail(comment.getUserId()) == null) throw new SQLException("User does not exist");
 
         if (CommentDAO.getCommentByEmail(comment.getUserId()) == null) {
             CommentDAO.saveComment(comment);
@@ -68,7 +68,7 @@ public class PostController extends Controller {
 
     public static void deleteComment(String json) throws SQLException {
         Comment comment = gson.fromJson(json, Comment.class);
-        CommentDAO.deleteCommentByEmail(comment.getUserId());
+        CommentDAO.deleteCommentByEmail(comment.getUserId(), comment.getCreatedAt());
     }
 
     public static void deleteAllComments() throws SQLException {
@@ -91,7 +91,7 @@ public class PostController extends Controller {
     public static void createRepost(String json) throws SQLException {
         Repost repost = gson.fromJson(json, Repost.class);
 
-        if (!UserDAO.doesUserExist(repost.getUserId())) throw new SQLException("User does not exist");
+        if (UserDAO.getUserByEmail(repost.getUserId()) == null) throw new SQLException("User does not exist");
 
         if (RepostDAO.getRepostByEmail(repost.getUserId()) == null) {
             RepostDAO.saveRepost(repost);
@@ -102,7 +102,7 @@ public class PostController extends Controller {
 
     public static void deleteRepost(String json) throws SQLException {
         Repost repost = gson.fromJson(json, Repost.class);
-        RepostDAO.deleteRepostByEmail(repost.getUserId());
+        RepostDAO.deleteRepostByEmail(repost.getUserId(), repost.getCreatedAt());
     }
 
     public static void deleteAllReposts() throws SQLException {

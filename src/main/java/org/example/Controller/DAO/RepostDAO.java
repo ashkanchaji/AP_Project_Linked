@@ -2,6 +2,7 @@ package org.example.Controller.DAO;
 
 import org.example.Model.Repost;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -76,9 +77,9 @@ public class RepostDAO extends AbstractPostDAO<Repost> {
         updatePost(repost, UPDATE_REPOST_SQL);
     }
 
-    public void deleteRepostByEmail(String email) throws SQLException {
-        String query = "DELETE FROM " + tablePath + " WHERE posterID = ?";
-        deleteEntity(query, email);
+    public void deleteRepostByEmail(String email, Date date) throws SQLException {
+        String query = "DELETE FROM " + tablePath + " WHERE posterID = ?, createdAT = ?";
+        deletePostByEmail(email, date, query);
     }
 
     public void deleteAllReposts() throws SQLException {
