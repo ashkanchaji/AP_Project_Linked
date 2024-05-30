@@ -1,6 +1,6 @@
 package org.example.Model;
 
-public class Follow {
+public class Follow extends Model{
 
     private String follower;
 
@@ -17,6 +17,14 @@ public class Follow {
 
     public String getFollowing() {
         return following;
+    }
+
+    public void setFollower(String follower) {
+        this.follower = follower;
+    }
+
+    public void setFollowing(String following) {
+        this.following = following;
     }
 
     @Override
