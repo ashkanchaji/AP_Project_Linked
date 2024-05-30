@@ -55,35 +55,7 @@ public class Post extends Model{
     public int getReposts() {
         return reposts;
     }
-
-    public void setPosterID(String posterID) {
-        this.posterID = posterID;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
-
-    public void setComments(int comments) {
-        this.comments = comments;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setReposts(int reposts) {
-        this.reposts = reposts;
-    }
-
-    public void setByteFilePath(String byteFilePath) {
-        this.byteFilePath = byteFilePath;
-    }
-
+    
     @Override
     public String toString(){
         return "(Post):" +
@@ -93,7 +65,7 @@ public class Post extends Model{
                 "Likes: " + this.likes +"/"+
                 "Comments: " + this.comments +"/"+
                 "Reposts:" + this.reposts + "}";
-        
+
 
     }
 }
