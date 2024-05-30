@@ -20,7 +20,7 @@ public class Post extends Model{
 
     private String byteFilePath;
 
-    public Post(String posterID, String text , int likes , int comments , Date createdAt , int reposts) throws CharacterNumberLimitException {
+    public Post(int type, String posterID, String text , int likes , int comments , Date createdAt , int reposts) throws CharacterNumberLimitException {
         this.posterID = posterID;
         if (text.length() > 3000)
             throw  new CharacterNumberLimitException();
@@ -30,6 +30,16 @@ public class Post extends Model{
         this.comments = comments;
         this.createdAt = createdAt;
         this.reposts = reposts;
+    }
+
+    public Post(String posterID, String text, int likes, int comments, Date createdAt, int reposts, String byteFilePath) {
+        this.posterID = posterID;
+        this.text = text;
+        this.likes = likes;
+        this.comments = comments;
+        this.createdAt = createdAt;
+        this.reposts = reposts;
+        this.byteFilePath = byteFilePath;
     }
 
     public String getUserId() {
@@ -59,6 +69,7 @@ public class Post extends Model{
     public String getByteFilePath() {
         return byteFilePath;
     }
+
     @Override
     public String toString(){
         return "(Post):" +
@@ -68,6 +79,5 @@ public class Post extends Model{
                 "Likes: " + this.likes +"/"+
                 "Comments: " + this.comments +"/"+
                 "Reposts:" + this.reposts + "}";
-
     }
 }
