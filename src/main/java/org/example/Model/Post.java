@@ -69,6 +69,5 @@ public class Post extends Model{
                 "Comments: " + this.comments +"/"+
                 "Reposts:" + this.reposts + "}";
 
-
     }
 }
