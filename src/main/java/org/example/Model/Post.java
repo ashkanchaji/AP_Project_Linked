@@ -93,6 +93,7 @@ public class Post extends Model{
                 "Likes: " + this.likes +"/"+
                 "Comments: " + this.comments +"/"+
                 "Reposts:" + this.reposts + "}";
+        
 
     }
 }
