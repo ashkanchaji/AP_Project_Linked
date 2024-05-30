@@ -1,33 +1,38 @@
 package org.example.Model;
 
 import org.example.Controller.Exeptions.CharacterNumberLimitException;
-
 import java.util.ArrayList;
 
-public class Job extends Model{
+public class Job {
     private String email;
     private String name;
-    //نوع اشتغال : نمام وثت پاره وقت ، خود-اشتغالی، فریلنس، قراردادی، کارآموزی، کارآموز با حقوق، فصلی
     private String location;
-    //نوع محل کار )چندگزینهای شامل در محل، هیبرید، دورکاری
-    //تاریخ شروع و پایان کار شامل ماه و سال )باید از
-    //picker date استفاده شود(
     private String additionalInfo;
     private ArrayList<String> skills;
-    //اطلاع رسانی تغییرات پروفایل به شبکه ارتباطی فرد )چک باکس(
 
+    public Job(int type, String email, String name, String location, String additionalInfo, ArrayList<String> skills) throws CharacterNumberLimitException {
+        if (email.length() > 45)
+            throw new CharacterNumberLimitException();
+        this.email = email;
 
-    public Job(String email, String name, String location, String additionalInfo, ArrayList<String> skills) throws CharacterNumberLimitException {
-        if (email.length() > 40)
-            throw  new CharacterNumberLimitException();
-        else
-            this.email = email;
+        if (name.length() > 40)
+            throw new CharacterNumberLimitException();
         this.name = name;
+
         this.location = location;
+
         if (additionalInfo.length() > 1000)
             throw new CharacterNumberLimitException();
-        else
-            this.additionalInfo = additionalInfo;
+        this.additionalInfo = additionalInfo;
+
+        this.skills = skills;
+    }
+
+    public Job(String email, String name, String location, String additionalInfo, ArrayList<String> skills) {
+        this.email = email;
+        this.name = name;
+        this.location = location;
+        this.additionalInfo = additionalInfo;
         this.skills = skills;
     }
 
@@ -49,5 +54,25 @@ public class Job extends Model{
 
     public ArrayList<String> getSkills() {
         return skills;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+
+    public void setSkills(ArrayList<String> skills) {
+        this.skills = skills;
     }
 }

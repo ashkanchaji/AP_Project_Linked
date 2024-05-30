@@ -16,5 +16,4 @@ public abstract class Handler {
         }
         return body.toString().trim(); // Trim any leading/trailing whitespaces
     }
-
 }

@@ -1,123 +1,95 @@
 package org.example.Controller.DAO;
 
-import org.example.Controller.DB.MySqlDB;
-import org.example.Controller.Exeptions.CharacterNumberLimitException;
 import org.example.Model.ContactsInfo;
-import org.example.Model.Education;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ContactsInfoDAO extends DAO{
-
-    private static final String tableName = "contacts_info";
-    private static final String tablePath = MySqlDB.getDBName() + "." + tableName;
-    private static final String createContactsTableSQL = "CREATE TABLE IF NOT EXISTS "
+public class ContactsInfoDAO extends GenericDAO<ContactsInfo> {
+    private final String CREATE_CONTACTS_TABLE_SQL = "CREATE TABLE IF NOT EXISTS "
             + tablePath + " ("
             + "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, "
-            + "email VARCHAR(45) , "
+            + "email VARCHAR(45), "
             + "link VARCHAR(40), "
             + "phoneNumber VARCHAR(40), "
             + "phoneType VARCHAR(40), "
-            + "address VARCHAR(220), "                        //تاریخ تولد ، سیاست نمایش تاریخ تولد
-            + "birthday DATE"
+            + "address VARCHAR(220), "
+            + "birthday DATE, "
+            + "contactUS VARCHAR(1000)"
             + ")";
 
-    public static ContactsInfo getContactsInfo (String email) throws SQLException {
-        ContactsInfo contactsInfo = null;
-        String query = "SELECT * FROM " + tablePath + " WHERE email = ?";
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, email);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()){
-                contactsInfo = returnContactsInfo(resultSet);
-            }
-        } catch (CharacterNumberLimitException e) {
-            throw new RuntimeException(e);
-        }
-
-        return contactsInfo;
-    }
-    public static ArrayList<ContactsInfo> getAllContactsInformations () throws SQLException {
-        ArrayList<ContactsInfo> contactsInformations = new ArrayList<>();
-        String query = "SELECT * FROM " + tablePath;
-
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()){
-                ContactsInfo contactsInfo = returnContactsInfo(resultSet);
-                contactsInformations.add(contactsInfo);
-            }
-        } catch (CharacterNumberLimitException e) {
-            throw new RuntimeException(e);
-        }
-
-        return contactsInformations;
-    }
-    public static void saveContactsInfo (ContactsInfo contactsInfo) throws SQLException {
-        String query = "INSERT INTO " + tablePath +
-                "( email , link ,phoneNumber, phoneType, address, birthday, contactUS) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            if (!MySqlDB.doesTableExist(connection, tableName)){
-                try (Statement stmt = connection.createStatement()) {
-                    stmt.execute(createContactsTableSQL);
-                }
-            }
-            executePreparedStatement(ps, contactsInfo);
-        }
-    }
-    public static void updateContactsInfo(ContactsInfo contactsInfo) throws SQLException {
-        String query = "UPDATE " + tablePath +
-                " SET  email = ?,link = ? , phoneNumber = ?, phoneType = ?, address = ?, birthday = ?," +
-                " contactUs = ? WHERE email = ?";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(8, contactsInfo.getEmail());
-            executePreparedStatement(ps, contactsInfo);
-        }
-    }
-    public static void deleteContactsInfo(ContactsInfo contactsInfo) throws SQLException {
-        String query = "DELETE FROM " + tablePath + " WHERE email = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, contactsInfo.getEmail());
-            statement.executeUpdate();
-        }
-    }
-    public static void deleteAllContactsInformation() throws SQLException {
-        String query = "DELETE FROM " + tablePath;
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.executeUpdate();
-        }
+    public ContactsInfoDAO() {
+        super("contacts_info");
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private static ContactsInfo returnContactsInfo(ResultSet resultSet) throws SQLException, CharacterNumberLimitException {
-        return new ContactsInfo(resultSet.getString("email"),
+    @Override
+    protected ContactsInfo mapResultSetToEntity(ResultSet resultSet) throws SQLException {
+        return new ContactsInfo(
+                resultSet.getString("email"),
                 resultSet.getString("link"),
                 resultSet.getString("phoneNumber"),
                 resultSet.getString("phoneType"),
                 resultSet.getString("address"),
                 resultSet.getDate("birthday"),
-                resultSet.getString("contactUS"));
+                resultSet.getString("contactUS")
+        );
     }
 
-    private static void executePreparedStatement(PreparedStatement ps, ContactsInfo contactsInfo) throws SQLException {
-        ps.setString(1, contactsInfo.getEmail());
-        ps.setString(2, contactsInfo.getLink());
-        ps.setString(3, contactsInfo.getPhoneNumber());
-        ps.setString(4, contactsInfo.getPhoneType());
-        ps.setString(5, contactsInfo.getAddress());
-        ps.setDate(6, (Date) contactsInfo.getBirthday());
-        ps.setString(7, contactsInfo.getContactUs());
-        ps.executeUpdate();
+    @Override
+    protected String getCreateTableSQL() {
+        return CREATE_CONTACTS_TABLE_SQL;
     }
 
+    public void saveContactsInfo(ContactsInfo contactsInfo) throws SQLException {
+        String query = "INSERT INTO " + tablePath +
+                "(email, link, phoneNumber, phoneType, address, birthday, contactUS) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        saveEntity(contactsInfo, query, (ps, c) -> {
+            ps.setString(1, c.getEmail());
+            ps.setString(2, c.getLink());
+            ps.setString(3, c.getPhoneNumber());
+            ps.setString(4, c.getPhoneType());
+            ps.setString(5, c.getAddress());
+            ps.setDate(6, c.getBirthday());
+            ps.setString(7, c.getContactUs());
+        });
+    }
 
+    public ContactsInfo getContactsInfoByEmail(String email) throws SQLException {
+        String query = "SELECT * FROM " + tablePath + " WHERE email = ?";
+        return getEntity(query, email);
+    }
 
+    public ArrayList<ContactsInfo> getAllContactsInfo() throws SQLException {
+        String query = "SELECT * FROM " + tablePath;
+        return getAllEntities(query);
+    }
 
+    public void updateContactsInfo(ContactsInfo contactsInfo) throws SQLException {
+        String query = "UPDATE " + tablePath +
+                " SET link = ?, phoneNumber = ?, phoneType = ?, address = ?, birthday = ?, contactUS = ?" +
+                " WHERE email = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, contactsInfo.getLink());
+            ps.setString(2, contactsInfo.getPhoneNumber());
+            ps.setString(3, contactsInfo.getPhoneType());
+            ps.setString(4, contactsInfo.getAddress());
+            ps.setDate(5, contactsInfo.getBirthday());
+            ps.setString(6, contactsInfo.getContactUs());
+            ps.setString(7, contactsInfo.getEmail());
+            ps.executeUpdate();
+        }
+    }
+
+    public void deleteContactsInfoByEmail(String email) throws SQLException {
+        String query = "DELETE FROM " + tablePath + " WHERE email = ?";
+        deleteEntity(query, email);
+    }
+
+    public void deleteAllContactsInfo() throws SQLException {
+        String query = "DELETE FROM " + tablePath;
+        deleteAllEntities(query);
+    }
 }

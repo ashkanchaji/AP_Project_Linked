@@ -36,7 +36,7 @@ public class EducationHandler extends Handler{
                     response = "success";
                     break;
                 default:
-                    String eduJson = splitPath[splitPath.length - 1];
+                    String eduJson = new String(exchange.getRequestBody().readAllBytes());
                     switch (method) {
                         case "POST" :
                         case "PUT" :

@@ -29,7 +29,7 @@ public class UserHandler extends Handler {
                     break;
                 case "DELETE":
                     if (splitPath.length >= 3){
-                        String userJson = splitPath[splitPath.length - 1];
+                        String userJson = new String(exchange.getRequestBody().readAllBytes());
                         UserController.deleteUser(userJson);
                     } else {
                         UserController.deleteUsers();
@@ -37,8 +37,7 @@ public class UserHandler extends Handler {
                     response = "success"; // but is it really successful ?
                     break;
                 default:
-//                    String newJsonUser = readRequestBody(exchange.getRequestBody()); // what does request body mean and do ???
-                    String userJson = splitPath[splitPath.length - 1];
+                    String userJson = new String(exchange.getRequestBody().readAllBytes());
                     switch (method) {
                         case "POST" :
                             UserController.createUser(userJson);
