@@ -1,7 +1,5 @@
 package org.example.Controller.Controllers;
 
-import com.google.gson.Gson;
-
 import org.example.Model.ContactsInfo;
 import org.example.Model.Education;
 import org.example.Model.User;
@@ -10,8 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UserController extends Controller{
-    private static final Gson gson = new Gson();
-
     public static String getUsers() throws SQLException {
         ArrayList<User> users = UserDAO.getAllUsers();
         return gson.toJson(users);
