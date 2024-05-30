@@ -19,6 +19,13 @@ public class Connect extends Model {
             this.notes = notes;
     }
 
+    public Connect(int type  ,String sender , String receiver , String notes){
+        this.sender = sender;
+        this.receiver = receiver;
+        this.notes = notes;
+        type = 1;
+    }
+
     public String getSender() {
         return sender;
     }
