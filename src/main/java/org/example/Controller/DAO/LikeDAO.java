@@ -12,8 +12,8 @@ public class LikeDAO extends  GenericDAO<Like> {
     private final String CREATE_LIKES_TABLE_SQL = "CREATE TABLE IF NOT EXISTS "
             + tablePath + " ("
             + "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, "
-            + "likes VARCHAR(45), "
             + "liker VARCHAR(45), "
+            + "liked VARCHAR(45), "
             + ")";
 
     public LikeDAO() {
@@ -43,7 +43,7 @@ public class LikeDAO extends  GenericDAO<Like> {
     }
 
     public Like getLikeByEmail(String email) throws SQLException {
-        String query = "SELECT * FROM " + tablePath + " WHERE email = ?";
+        String query = "SELECT * FROM " + tablePath + " WHERE liker = ?";
         return getEntity(query, email);
     }
 
@@ -62,7 +62,7 @@ public class LikeDAO extends  GenericDAO<Like> {
         }
     }
     public void deleteLikeByEmail(String email) throws SQLException {
-        String query = "DELETE FROM " + tablePath + " WHERE email = ?";
+        String query = "DELETE FROM " + tablePath + " WHERE liker = ?";
         deleteEntity(query, email);
     }
 

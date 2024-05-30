@@ -1,7 +1,6 @@
 package org.example.Controller.DAO;
 
 import org.example.Model.Connect;
-import org.example.Model.Job;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,7 +22,6 @@ public class ConnectDAO extends GenericDAO<Connect> {
     @Override
     protected Connect mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         return new Connect(
-                resultSet.getInt("type"),
                 resultSet.getString("sender"),
                 resultSet.getString("receiver"),
                 resultSet.getString("notes")
@@ -46,12 +44,12 @@ public class ConnectDAO extends GenericDAO<Connect> {
         });
     }
 
-    public Connect getJobByEmail(String email) throws SQLException {
-        String query = "SELECT * FROM " + tablePath + " WHERE email = ?";
+    public Connect getConnectByEmail(String email) throws SQLException {
+        String query = "SELECT * FROM " + tablePath + " WHERE sender = ?";
         return getEntity(query, email);
     }
 
-    public ArrayList<Connect> getAllJobs() throws SQLException {
+    public ArrayList<Connect> getAllConnects() throws SQLException {
         String query = "SELECT * FROM " + tablePath;
         return getAllEntities(query);
     }
@@ -69,7 +67,7 @@ public class ConnectDAO extends GenericDAO<Connect> {
     }
 
     public void deleteConnectByEmail(String email) throws SQLException {
-        String query = "DELETE FROM " + tablePath + " WHERE email = ?";
+        String query = "DELETE FROM " + tablePath + " WHERE sender = ?";
         deleteEntity(query, email);
     }
 

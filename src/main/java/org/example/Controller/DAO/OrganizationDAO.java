@@ -47,7 +47,7 @@ public class OrganizationDAO extends  GenericDAO<Organization> {
     }
 
     public Organization getOrganizationByEmail(String email) throws SQLException {
-        String query = "SELECT * FROM " + tablePath + " WHERE email = ?";
+        String query = "SELECT * FROM " + tablePath + " WHERE name = ?";
         return getEntity(query, email);
     }
 
@@ -70,7 +70,7 @@ public class OrganizationDAO extends  GenericDAO<Organization> {
     }
 
     public void deleteOrganizationByEmail(String email) throws SQLException {
-        String query = "DELETE FROM " + tablePath + " WHERE email = ?";
+        String query = "DELETE FROM " + tablePath + " WHERE name = ?";
         deleteEntity(query, email);
     }
 

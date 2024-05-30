@@ -10,7 +10,7 @@ public class Connect extends Model {
 
     private String notes;
 
-    public Connect(String sender , String receiver , String notes) throws CharacterNumberLimitException {
+    public Connect(int type , String sender , String receiver , String notes) throws CharacterNumberLimitException {
         this.sender = sender;
         this.receiver = receiver;
         if (notes.length() > 500)
@@ -19,11 +19,10 @@ public class Connect extends Model {
             this.notes = notes;
     }
 
-    public Connect(int type  ,String sender , String receiver , String notes){
+    public Connect(String sender , String receiver , String notes){
         this.sender = sender;
         this.receiver = receiver;
         this.notes = notes;
-        type = 1;
     }
 
     public String getSender() {

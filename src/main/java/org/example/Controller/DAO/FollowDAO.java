@@ -43,7 +43,7 @@ public class FollowDAO extends GenericDAO<Follow> {
     }
 
     public Follow getFollowByEmail(String email) throws SQLException {
-        String query = "SELECT * FROM " + tablePath + " WHERE email = ?";      //email = follower?
+        String query = "SELECT * FROM " + tablePath + " WHERE follower = ?";      //email = follower?
         return getEntity(query, email);
     }
 
@@ -64,7 +64,7 @@ public class FollowDAO extends GenericDAO<Follow> {
     }
 
     public void deleteFollowByEmail(String email) throws SQLException {
-        String query = "DELETE FROM " + tablePath + " WHERE email = ?";
+        String query = "DELETE FROM " + tablePath + " WHERE follower = ?";
         deleteEntity(query, email);
     }
 
