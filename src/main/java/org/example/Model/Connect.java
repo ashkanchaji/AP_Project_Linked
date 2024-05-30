@@ -46,7 +46,9 @@ public class Connect extends Model {
     @Override
     public String toString(){
         return "(Connect)" +
-                "{" + sender + " make connection with " + notes + " }";
+                "{ sender:" + sender+
+                " notes:" + notes +
+                "receiver :" + receiver;
     }
 
 }
