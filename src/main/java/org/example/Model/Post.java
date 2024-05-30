@@ -55,7 +55,10 @@ public class Post extends Model{
     public int getReposts() {
         return reposts;
     }
-    
+
+    public String getByteFilePath() {
+        return byteFilePath;
+    }
     @Override
     public String toString(){
         return "(Post):" +
