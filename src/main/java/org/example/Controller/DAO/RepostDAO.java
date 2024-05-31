@@ -78,7 +78,7 @@ public class RepostDAO extends AbstractPostDAO<Repost> {
     }
 
     public void deleteRepostByEmail(String email, Date date) throws SQLException {
-        String query = "DELETE FROM " + tablePath + " WHERE posterID = ?, createdAT = ?";
+        String query = "DELETE FROM " + tablePath + " WHERE posterID = ? AND createdAT = ?";
         deletePostByEmail(email, date, query);
     }
 

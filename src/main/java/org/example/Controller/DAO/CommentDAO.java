@@ -78,7 +78,7 @@ public class CommentDAO extends AbstractPostDAO<Comment> {
     }
 
     public void deleteCommentByEmail(String email, Date date) throws SQLException {
-        String query = "DELETE FROM " + tablePath + " WHERE posterID = ?, createdAT = ?";
+        String query = "DELETE FROM " + tablePath + " WHERE posterID = ? AND createdAT = ?";
         deletePostByEmail(email, date, query);
     }
 

@@ -1,24 +1,27 @@
 package org.example.Controller.DAO;
-import org.example.Model.Job;
+
 import org.example.Model.Organization;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-public class OrganizationDAO extends  GenericDAO<Organization> {
+
+public class OrganizationDAO extends GenericDAO<Organization> {
+
     private final String CREATE_ORGANIZATIONS_TABLE_SQL = "CREATE TABLE IF NOT EXISTS "
             + tablePath + " ("
             + "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, "
             + "name VARCHAR(45), "
             + "rank VARCHAR(45), "
             + "enterYear DATE, "
-            + "exitYear DATE, "
+            + "exitYear DATE"
             + ")";
 
     public OrganizationDAO() {
         super("organization_info");
     }
+
     @Override
     protected Organization mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         return new Organization(
@@ -26,17 +29,17 @@ public class OrganizationDAO extends  GenericDAO<Organization> {
                 resultSet.getString("rank"),
                 resultSet.getDate("enterYear"),
                 resultSet.getDate("exitYear")
-
         );
     }
+
     @Override
     protected String getCreateTableSQL() {
         return CREATE_ORGANIZATIONS_TABLE_SQL;
     }
 
-    public void saveJob(Organization organization) throws SQLException {
+    public void saveOrganization(Organization organization) throws SQLException { // Corrected method name
         String query = "INSERT INTO " + tablePath +
-                "(name , rank , enterYear , exitYear) " +
+                "(name, rank, enterYear, exitYear) " +
                 "VALUES (?, ?, ?, ?)";
         saveEntity(organization, query, (ps, j) -> {
             ps.setString(1, j.getName());
@@ -46,9 +49,9 @@ public class OrganizationDAO extends  GenericDAO<Organization> {
         });
     }
 
-    public Organization getOrganizationByEmail(String email) throws SQLException {
+    public Organization getOrganizationByName(String name) throws SQLException { // Corrected method name and parameter
         String query = "SELECT * FROM " + tablePath + " WHERE name = ?";
-        return getEntity(query, email);
+        return getEntity(query, name);
     }
 
     public ArrayList<Organization> getAllOrganizations() throws SQLException {
@@ -56,27 +59,26 @@ public class OrganizationDAO extends  GenericDAO<Organization> {
         return getAllEntities(query);
     }
 
-    public void updateJob(Organization organization) throws SQLException {
+    public void updateOrganization(Organization organization) throws SQLException { // Corrected method name
         String query = "UPDATE " + tablePath +
                 " SET rank = ?, enterYear = ?, exitYear = ? " +
                 "WHERE name = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, organization.getName());
-            ps.setString(2, organization.getRank());
-            ps.setDate(3, organization.getEnterYear());
-            ps.setDate(4, organization.getExitYear());
+            ps.setString(1, organization.getRank()); // Corrected parameter order
+            ps.setDate(2, organization.getEnterYear());
+            ps.setDate(3, organization.getExitYear());
+            ps.setString(4, organization.getName());
             ps.executeUpdate();
         }
     }
 
-    public void deleteOrganizationByEmail(String email) throws SQLException {
+    public void deleteOrganizationByName(String name) throws SQLException { // Corrected method name and parameter
         String query = "DELETE FROM " + tablePath + " WHERE name = ?";
-        deleteEntity(query, email);
+        deleteEntity(query, name);
     }
 
     public void deleteAllOrganizations() throws SQLException {
         String query = "DELETE FROM " + tablePath;
         deleteAllEntities(query);
     }
-
 }
