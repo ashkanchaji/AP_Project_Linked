@@ -13,11 +13,11 @@ public class LikeDAO extends  GenericDAO<Like> {
             + tablePath + " ("
             + "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, "
             + "liker VARCHAR(45), "
-            + "liked VARCHAR(45), "
+            + "liked VARCHAR(45)"
             + ")";
 
     public LikeDAO() {
-        super("Likes_info");
+        super("likes_info");
     }
 
     @Override
@@ -34,7 +34,7 @@ public class LikeDAO extends  GenericDAO<Like> {
     }
     public void saveLike(Like like) throws SQLException {
         String query = "INSERT INTO " + tablePath +
-                "(liker , liked) " +
+                " (liker , liked) " +
                 "VALUES (?, ?)";
         saveEntity(like, query, (ps, j) -> {
             ps.setString(1, j.getLiker());

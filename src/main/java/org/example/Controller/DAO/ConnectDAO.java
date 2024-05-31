@@ -12,8 +12,8 @@ public class ConnectDAO extends GenericDAO<Connect> {
             + tablePath + " ("
             + "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, "
             + "sender VARCHAR(45), "
-            + "receiver VARCHAR(40), "
-            + "note VARCHAR(500), "
+            + "receiver VARCHAR(45), "
+            + "notes VARCHAR(500)"
             + ")";
 
     public ConnectDAO() {
@@ -59,9 +59,9 @@ public class ConnectDAO extends GenericDAO<Connect> {
                 " SET receiver = ?, notes = ? " +
                 "WHERE sender = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, connect.getSender());
-            ps.setString(2, connect.getReceiver());
-            ps.setString(3, connect.getNotes());
+            ps.setString(1, connect.getReceiver());
+            ps.setString(2, connect.getNotes());
+            ps.setString(3, connect.getSender());
             ps.executeUpdate();
         }
     }
