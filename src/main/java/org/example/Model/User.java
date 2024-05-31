@@ -25,6 +25,7 @@ public class User extends Model{
     private Job currentJob;
     private ArrayList<Job> previousJobs;
     private ArrayList<Education> educations;
+    private String jwtToken;
 
 
     public User(String email, String firstName, String lastName, String password) throws InvalidEmailException, InvalidPassException {
@@ -44,7 +45,7 @@ public class User extends Model{
         this.lastName = lastName;
     }
 
-    public User(String email, String firstName, String lastName, String password, String additionalName, String profilePicture, String backgroundPicture, String headline, String country, String city, String profession) {
+    public User(String email, String firstName, String lastName, String password, String additionalName, String profilePicture, String backgroundPicture, String headline, String country, String city, String profession, String jwtToken) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -56,6 +57,7 @@ public class User extends Model{
         this.country = country;
         this.city = city;
         this.profession = profession;
+        this.jwtToken = jwtToken;
     }
 
     public String getEmail() {
@@ -168,5 +170,13 @@ public class User extends Model{
 
     public void setEducations(ArrayList<Education> educations) {
         this.educations = educations;
+    }
+
+    public String getJwtToken() {
+        return jwtToken;
+    }
+
+    public void setJwtToken(String jwtToken) {
+        this.jwtToken = jwtToken;
     }
 }

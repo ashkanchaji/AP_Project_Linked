@@ -44,7 +44,8 @@ public class UserDAO extends GenericDAO<User> {
                 resultSet.getString("headline"),
                 resultSet.getString("country"),
                 resultSet.getString("city"),
-                resultSet.getString("profession"));
+                resultSet.getString("profession"),
+                resultSet.getString("jwt_hash"));
     }
 
     @Override
@@ -116,7 +117,7 @@ public class UserDAO extends GenericDAO<User> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public  void addUserJWT(String jwt, User user) {
+    public void addUserJWT(String jwt, User user) {
         String sql = "UPDATE " + tablePath + " SET jwt_hash = ? WHERE email = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -129,6 +130,7 @@ public class UserDAO extends GenericDAO<User> {
     }
 
     // should be checked for efficiency
+    @Deprecated
     public boolean doesUserExist(String email){
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery("SELECT email FROM " + tablePath);

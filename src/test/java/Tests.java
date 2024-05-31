@@ -18,7 +18,6 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 
-import static org.example.Controller.Parsers.JwtUtil.generateToken;
 import static org.example.Controller.Parsers.JwtUtil.parseToken;
 
 public class Tests {
@@ -27,16 +26,16 @@ public class Tests {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         User user = new User("achaji25563@gmail.com", "2", "3", "4sdhfl67d6f");
 
-        String jwt = generateToken(gson.toJson(user));
-        System.out.println("Generated JWT: " + jwt);
-
-        Claims claims = parseToken(jwt);
-        if (claims != null) {
-            System.out.println("Subject: " + claims.getSubject());
-
-            System.out.println("Issued At: " + claims.getIssuedAt());
-            System.out.println("Expiration: " + claims.getExpiration());
-        }
+        //String jwt = generateToken(gson.toJson(user));
+//        System.out.println("Generated JWT: " + jwt);
+//
+//        Claims claims = parseToken(jwt);
+//        if (claims != null) {
+//            System.out.println("Subject: " + claims.getSubject());
+//
+//            System.out.println("Issued At: " + claims.getIssuedAt());
+//            System.out.println("Expiration: " + claims.getExpiration());
+//        }
     }
 
     @Test

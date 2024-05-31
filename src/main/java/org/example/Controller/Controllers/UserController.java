@@ -1,5 +1,6 @@
 package org.example.Controller.Controllers;
 
+import org.example.Controller.Parsers.JwtUtil;
 import org.example.Model.ContactsInfo;
 import org.example.Model.Education;
 import org.example.Model.User;
@@ -25,6 +26,8 @@ public class UserController extends Controller{
             UserDAO.updateUser(user);
         } else {
             UserDAO.saveUser(user);
+            String userToken = JwtUtil.generateToken(json);
+            UserDAO.addUserJWT(userToken, user);
         }
     }
 
