@@ -1,9 +1,6 @@
 package org.example.Controller.Parsers;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 
@@ -21,7 +18,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setSubject(subject)
                 .setIssuedAt(now)
-                .setExpiration(new Date(nowMillis + 3600000)) // 1 hour expiry
+                .setExpiration(new Date(nowMillis + 24 * 60 * 60 * 1000)) // 1 day expiry
                 .signWith(key)
                 .compact();
     }
@@ -47,8 +44,21 @@ public class JwtUtil {
 
     public static String createToken(String email, String password){
         String subject = email.concat(":" + password);
-
         return generateToken(subject);
     }
-}
 
+    public static boolean isTokenExpired(String jwt) {
+        try {
+            Claims claims = parseToken(jwt);
+            Date expiration = claims.getExpiration();
+            return expiration.before(new Date());
+        } catch (ExpiredJwtException e) {
+            // Token has expired
+            return true;
+        } catch (Exception e) {
+            // Token parsing error or other exceptions
+            System.out.println("Error checking token expiration: " + e.getMessage());
+            return true; // Assume token is expired in case of any error
+        }
+    }
+}
