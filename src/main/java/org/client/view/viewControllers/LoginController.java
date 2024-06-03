@@ -1,4 +1,4 @@
-package org.server.Controller.FxmlControllers;
+package org.client.view.viewControllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,3 +13,4 @@ public class LoginController {
         System.out.println("Button clicked!");
     }
 }
+
