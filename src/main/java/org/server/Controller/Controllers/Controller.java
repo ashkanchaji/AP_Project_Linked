@@ -14,5 +14,7 @@ public abstract class Controller {
     protected static final CommentDAO CommentDAO = new CommentDAO();
     protected static final RepostDAO RepostDAO = new RepostDAO();
     protected static final OrganizationDAO OrganizationDAO = new OrganizationDAO();
+    protected static final LikeDAO LikeDAO = new LikeDAO();
+
 
 }
