@@ -1,30 +1,28 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import io.jsonwebtoken.Claims;
-import org.example.Controller.Controllers.UserController;
-import org.example.Controller.DAO.UserDAO;
-import org.example.Controller.DB.MySqlDB;
-import org.example.Controller.Exeptions.InvalidEmailException;
-import org.example.Controller.Exeptions.InvalidPassException;
-import org.example.Model.Education;
-import org.example.Model.Job;
-import org.example.Model.User;
+import org.server.Controller.Controllers.PostController;
+import org.server.Controller.DAO.CommentDAO;
+import org.server.Controller.DB.MySqlDB;
+import org.server.Controller.Exeptions.InvalidEmailException;
+import org.server.Controller.Exeptions.InvalidPassException;
+import org.server.Model.Comment;
+import org.server.Model.Education;
+import org.server.Model.User;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 
-import java.net.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 
-import static org.example.Controller.Parsers.JwtUtil.parseToken;
-
 public class Tests {
     @Test
-    public void jwtTest() throws InvalidPassException, InvalidEmailException {
+    public void jwtTest() throws InvalidPassException, InvalidEmailException, SQLException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        User user = new User("achaji25563@gmail.com", "2", "3", "4sdhfl67d6f");
+
+        Comment comment = gson.fromJson("{\"posterID\":\"achaji2563@gmail.com\", \"text\":\"#hi there\"}", Comment.class);
+
+        PostController.createComment("{\"posterID\":\"achaji2563@gmail.com\", \"text\":\"#haha there\", \"repliedUser\":\"achaji2563@gmail.com\"}");
 
         //String jwt = generateToken(gson.toJson(user));
 //        System.out.println("Generated JWT: " + jwt);
