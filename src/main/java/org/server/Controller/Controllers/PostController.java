@@ -1,5 +1,6 @@
 package org.server.Controller.Controllers;
 
+import org.server.Controller.DAO.AbstractPostDAO;
 import org.server.Model.Post;
 import org.server.Model.Comment;
 import org.server.Model.Repost;
@@ -107,5 +108,12 @@ public class PostController extends Controller {
 
     public static void deleteAllReposts() throws SQLException {
         RepostDAO.deleteAllReposts();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static String getPostsByHashtag (String hashtag) throws SQLException {
+        ArrayList<Post> posts =  AbstractPostDAO.getPostsByHashTag(hashtag);
+        return gson.toJson(posts);
     }
 }

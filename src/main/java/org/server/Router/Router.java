@@ -13,6 +13,6 @@ public class Router {
         server.handleValidRequests("/posts", new PostHandler()::handle);
         server.handleValidRequests("/reposts", new RepostHandler()::handle);
         server.handleValidRequests("/comments", new ContactsHandler()::handle);
-
+        server.handleValidRequests("/hashtags", new HashtagHandler()::handle);
     }
 }

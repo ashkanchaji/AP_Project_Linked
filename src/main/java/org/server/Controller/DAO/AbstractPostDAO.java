@@ -1,5 +1,7 @@
 package org.server.Controller.DAO;
 
+import org.server.Controller.DB.MySqlDB;
+import org.server.Model.Comment;
 import org.server.Model.Post;
 
 import java.sql.Date;
@@ -48,6 +50,10 @@ public abstract class AbstractPostDAO<T extends Post> extends GenericDAO<T> {
             ps.setInt(5, post.getReposts());
             ps.setString(6, post.getByteFilePath());
             ps.setString(7, post.getUserId());
+
+            if (post instanceof Comment){
+                ps.setString(8, ((Comment) post).getRepliedUser());
+            }
             ps.executeUpdate();
         }
     }
@@ -64,5 +70,47 @@ public abstract class AbstractPostDAO<T extends Post> extends GenericDAO<T> {
 
     public void deleteAllPosts(String query) throws SQLException {
         deleteAllEntities(query);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static ArrayList<Post> getPostsByHashTag(String hashtag) throws SQLException{
+        String[] tableNames = {"posts", "reposts", "comments"};
+
+        ArrayList<Post> posts = new ArrayList<>();
+
+        PostDAO postDAO = new PostDAO();
+        RepostDAO repostDAO = new RepostDAO();
+        CommentDAO commentDAO = new CommentDAO();
+
+        for (String tableName : tableNames){
+            String query = "SELECT * FROM " + MySqlDB.getDBName() + "." + tableName;
+
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                ResultSet resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    Post post = null;
+
+                    switch (tableName) {
+                        case "posts" :
+                            post = postDAO.mapResultSetToEntity(resultSet);
+                            break;
+                        case "reposts" :
+                            post = repostDAO.mapResultSetToEntity(resultSet);
+                            break;
+                        case "comments" :
+                            post = commentDAO.mapResultSetToEntity(resultSet);
+                            break;
+                    }
+
+                    if (post != null && post.getText().contains(hashtag)){
+                        posts.add(post);
+                    }
+                }
+            }
+        }
+
+        return posts;
     }
 }
