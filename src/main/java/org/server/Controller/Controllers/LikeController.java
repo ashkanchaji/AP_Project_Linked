@@ -29,11 +29,12 @@ public class LikeController extends Controller {
         }
     }
 
-    public static void deleteJob (String email) throws SQLException {
-        LikeDAO.deleteLikeByEmail(email);
+    public static void deleteLike (String json) throws SQLException {  //logic should change
+        Like like = gson.fromJson(json , Like.class);
+        LikeDAO.deleteLikeByEmail(like.getLiker());
     }
 
-    public static void deleteAllJobs () throws SQLException {
+    public static void deleteAllLikes () throws SQLException {
         LikeDAO.deleteAllLikes();
     }
 

@@ -30,11 +30,11 @@ public class OrganizationController extends Controller {
         }
     }
 
-    public static void deleteJob (String name) throws SQLException {
+    public static void deleteOrganization (String name) throws SQLException {
         OrganizationDAO.deleteOrganizationByName(name);
     }
 
-    public static void deleteAllJobs () throws SQLException {
+    public static void deleteAllOrganizations () throws SQLException {
         OrganizationDAO.deleteAllOrganizations();
     }
 
