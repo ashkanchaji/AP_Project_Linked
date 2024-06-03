@@ -1,24 +1,16 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import io.jsonwebtoken.Claims;
-import org.example.Controller.Controllers.UserController;
-import org.example.Controller.DAO.UserDAO;
-import org.example.Controller.DB.MySqlDB;
-import org.example.Controller.Exeptions.InvalidEmailException;
-import org.example.Controller.Exeptions.InvalidPassException;
-import org.example.Model.Education;
-import org.example.Model.Job;
-import org.example.Model.User;
+import org.server.Controller.DB.MySqlDB;
+import org.server.Controller.Exeptions.InvalidEmailException;
+import org.server.Controller.Exeptions.InvalidPassException;
+import org.server.Model.Education;
+import org.server.Model.User;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 
-import java.net.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
-
-import static org.example.Controller.Parsers.JwtUtil.parseToken;
 
 public class Tests {
     @Test
