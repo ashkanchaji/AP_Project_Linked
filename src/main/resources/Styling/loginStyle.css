@@ -1,0 +1,6 @@
+.vbox-background-center{
+    -fx-background-image: url("../Images/loginEdited.jpg");
+    -fx-background-size: contain;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
