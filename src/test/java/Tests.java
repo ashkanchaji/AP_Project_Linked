@@ -1,13 +1,11 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.server.Controller.Controllers.PostController;
-import org.server.Controller.DAO.CommentDAO;
-import org.server.Controller.DB.MySqlDB;
-import org.server.Controller.Exeptions.InvalidEmailException;
-import org.server.Controller.Exeptions.InvalidPassException;
-import org.server.Model.Comment;
-import org.server.Model.Education;
-import org.server.Model.User;
+import org.Linked.server.Controller.Controllers.PostController;
+import org.Linked.server.Controller.DB.MySqlDB;
+import org.Linked.server.Controller.Exeptions.InvalidEmailException;
+import org.Linked.server.Controller.Exeptions.InvalidPassException;
+import org.Linked.server.Model.Comment;
+import org.Linked.server.Model.Education;
 import org.junit.Test;
 
 import java.sql.Connection;
