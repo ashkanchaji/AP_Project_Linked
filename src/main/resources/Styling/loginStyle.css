@@ -4,3 +4,18 @@
     -fx-background-position: center center;
     -fx-background-repeat: no-repeat;
 }
+.cursor-hand{
+    -fx-cursor: hand;
+}
+.login-button{
+    -fx-background-color: #d1b18c;
+}
+.login-button:hover{
+    -fx-background-color: #d39d50;
+}
+.signup-button{
+    -fx-background-color: transparent;
+}
+.signup-button:hover{
+    -fx-background-color: #d1b18c;
+}
