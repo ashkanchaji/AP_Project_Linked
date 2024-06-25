@@ -13,8 +13,8 @@ public class LinkedApp extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/LoginView.fxml"));
-        primaryStage.setTitle("FXML Welcome");
-        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.setTitle("Linked");
+        primaryStage.setScene(new Scene(root, 1080, 720));
         primaryStage.show();
     }
 

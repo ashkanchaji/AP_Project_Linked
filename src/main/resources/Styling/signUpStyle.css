@@ -1,0 +1,15 @@
+.cursor-hand{
+    -fx-cursor: hand;
+}
+.login-button{
+    -fx-background-color: transparent;
+}
+.login-button:hover{
+    -fx-background-color: #d1b18c;
+}
+.signup-button{
+    -fx-background-color: #d1b18c;
+}
+.signup-button:hover{
+    -fx-background-color: #d39d50;
+}

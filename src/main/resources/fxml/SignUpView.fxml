@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #799bc9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.SignUpController">
+   <left>
+      <VBox prefHeight="720.0" prefWidth="540.0" style="-fx-background-color: #19498b; -fx-background-radius: 20;" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="137.0" prefWidth="540.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label contentDisplay="CENTER" prefHeight="58.0" prefWidth="342.0" text="Sign Up Today !" textAlignment="CENTER" textFill="#dde9ff">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
+                     <font>
+                        <Font name="Berlin Sans FB Bold" size="43.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="547.0" prefWidth="540.0" spacing="30.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <TextField fx:id="emailTF" alignment="CENTER" prefHeight="37.0" prefWidth="221.0" promptText="Email" style="-fx-background-radius: 50; -fx-background-color: #e4f0ff;" />
+                  <TextField fx:id="firstNameTF" alignment="CENTER" prefHeight="37.0" prefWidth="221.0" promptText="First Name" style="-fx-background-radius: 50; -fx-background-color: #e4f0ff;" />
+                  <TextField fx:id="lastNameTF" alignment="CENTER" prefHeight="37.0" prefWidth="221.0" promptText="Last Name" style="-fx-background-radius: 50; -fx-background-color: #e4f0ff;" />
+                  <TextField fx:id="passwordTF" alignment="CENTER" prefHeight="37.0" prefWidth="221.0" promptText="Password" style="-fx-background-radius: 50; -fx-background-color: #e4f0ff;" />
+                  <TextField fx:id="confirmPassTF" alignment="CENTER" prefHeight="37.0" prefWidth="221.0" promptText="Confirm Password" style="-fx-background-radius: 50; -fx-background-color: #e4f0ff;" />
+                  <Button fx:id="signUpButton" mnemonicParsing="false" onAction="#on_signUpButton_clicked" prefHeight="38.0" prefWidth="121.0" style="-fx-background-radius: 50;" stylesheets="@../Styling/signUpStyle.css" text="SignUp">
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                     <styleClass>
+                        <String fx:value="signup-button" />
+                        <String fx:value="cursor-hand" />
+                     </styleClass>
+                     <font>
+                        <Font name="Calibri Bold" size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="85.0" right="85.0" />
+               </padding>
+            </VBox>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="TOP_LEFT">
+         <children>
+            <HBox alignment="TOP_RIGHT" fillHeight="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="54.0" prefWidth="540.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox prefHeight="85.0" prefWidth="381.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Button fx:id="signUpViewButton" mnemonicParsing="false" onAction="#on_signUpViewButton_clicked" prefHeight="54.0" prefWidth="111.0" style="-fx-background-radius: 50;" stylesheets="@../Styling/signUpStyle.css" text="SignUp">
+                           <HBox.margin>
+                              <Insets right="8.0" top="8.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Berlin Sans FB" size="23.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="cursor-hand" />
+                              <String fx:value="signup-button" />
+                           </styleClass>
+                        </Button>
+                        <Button fx:id="loginViewButton" mnemonicParsing="false" onAction="#on_loginViewButton_clicked" prefHeight="54.0" prefWidth="111.0" style="-fx-background-radius: 50;" stylesheets="@../Styling/signUpStyle.css" text="Login">
+                           <HBox.margin>
+                              <Insets top="8.0" />
+                           </HBox.margin>
+                           <styleClass>
+                              <String fx:value="login-button" />
+                              <String fx:value="cursor-hand" />
+                           </styleClass>
+                           <font>
+                              <Font name="Berlin Sans FB" size="23.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <opaqueInsets>
+                        <Insets top="25.0" />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets left="8.0" top="8.0" />
+                     </HBox.margin>
+                  </HBox>
+                  <ImageView fitHeight="90.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/linkedEdited.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <VBox alignment="TOP_CENTER" prefHeight="659.0" prefWidth="540.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <ImageView fitHeight="634.0" fitWidth="541.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                     <image>
+                        <Image url="@../Images/signUp.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
