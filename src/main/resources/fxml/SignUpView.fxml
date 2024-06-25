@@ -50,6 +50,11 @@
                         <Font name="Calibri Bold" size="20.0" />
                      </font>
                   </Button>
+                  <Label fx:id="statusMassageLabel" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" prefHeight="17.0" prefWidth="369.0" textAlignment="CENTER" textFill="RED" visible="false" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Calibri Bold" size="12.0" />
+                     </font>
+                  </Label>
                </children>
                <padding>
                   <Insets left="85.0" right="85.0" />
@@ -65,7 +70,7 @@
                <children>
                   <HBox prefHeight="85.0" prefWidth="381.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button fx:id="signUpViewButton" mnemonicParsing="false" onAction="#on_signUpViewButton_clicked" prefHeight="54.0" prefWidth="111.0" style="-fx-background-radius: 50;" stylesheets="@../Styling/signUpStyle.css" text="SignUp">
+                        <Button fx:id="signUpViewButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="111.0" style="-fx-background-radius: 50;" stylesheets="@../Styling/signUpStyle.css" text="SignUp">
                            <HBox.margin>
                               <Insets right="8.0" top="8.0" />
                            </HBox.margin>

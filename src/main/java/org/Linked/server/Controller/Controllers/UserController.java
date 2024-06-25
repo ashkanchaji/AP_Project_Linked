@@ -1,6 +1,7 @@
 package org.Linked.server.Controller.Controllers;
 
 import org.Linked.server.Controller.Parsers.JwtUtil;
+import org.Linked.server.Controller.Util.UserTypeAdapter;
 import org.Linked.server.Model.ContactsInfo;
 import org.Linked.server.Model.Education;
 import org.Linked.server.Model.User;

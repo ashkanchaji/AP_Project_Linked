@@ -1,13 +1,13 @@
 package org.Linked.server.Handlers;
 
 import com.sun.net.httpserver.HttpExchange;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
 
 public abstract class Handler {
     protected String response = "";
+
     protected static String readRequestBody(HttpExchange exchange) throws IOException {
         return new String(exchange.getRequestBody().readAllBytes()).trim();
     }
@@ -32,7 +32,11 @@ public abstract class Handler {
         } catch (SQLException e) {
             e.printStackTrace();
             response = "Internal Server Error";
-            statusCode = 500; // could be handled with the errorController
+            statusCode = 500;
+        } catch (Exception e) {
+            e.printStackTrace();
+            response = "Internal Server Error";
+            statusCode = 500;
         }
 
         sendResponse(exchange, response, statusCode);
