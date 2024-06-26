@@ -1,13 +1,14 @@
 package org.Linked.server.Handlers;
 
 import com.sun.net.httpserver.HttpExchange;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public abstract class Handler {
     protected String response = "";
+
     protected static String readRequestBody(HttpExchange exchange) throws IOException {
         return new String(exchange.getRequestBody().readAllBytes()).trim();
     }
@@ -19,22 +20,22 @@ public abstract class Handler {
         }
     }
 
-    protected abstract String handleRequest(String method, String path, HttpExchange exchange) throws SQLException, IOException;
+    protected abstract String handleRequest(String method, String path, HttpExchange exchange, AtomicInteger statusCode) throws SQLException, IOException;
 
     public void handle(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
         String response;
-        int statusCode = 200;
+        AtomicInteger statusCode = new AtomicInteger(200);
 
         try {
-            response = handleRequest(method, path, exchange);
-        } catch (SQLException e) {
+            response = handleRequest(method, path, exchange, statusCode);
+        } catch (Exception e) {
             e.printStackTrace();
             response = "Internal Server Error";
-            statusCode = 500; // could be handled with the errorController
+            statusCode.set(500);
         }
 
-        sendResponse(exchange, response, statusCode);
+        sendResponse(exchange, response, statusCode.get());
     }
 }

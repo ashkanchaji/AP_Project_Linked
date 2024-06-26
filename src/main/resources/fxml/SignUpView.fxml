@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #799bc9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.SignUpController">
+<BorderPane prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #799bc9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.SignUpController">
    <left>
       <VBox prefHeight="720.0" prefWidth="540.0" style="-fx-background-color: #19498b; -fx-background-radius: 20;" BorderPane.alignment="CENTER">
          <children>
@@ -50,6 +50,11 @@
                         <Font name="Calibri Bold" size="20.0" />
                      </font>
                   </Button>
+                  <Label fx:id="statusMassageLabel" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" prefHeight="17.0" prefWidth="369.0" textAlignment="CENTER" textFill="RED" visible="false" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Calibri Bold" size="12.0" />
+                     </font>
+                  </Label>
                </children>
                <padding>
                   <Insets left="85.0" right="85.0" />
@@ -65,7 +70,7 @@
                <children>
                   <HBox prefHeight="85.0" prefWidth="381.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button fx:id="signUpViewButton" mnemonicParsing="false" onAction="#on_signUpViewButton_clicked" prefHeight="54.0" prefWidth="111.0" style="-fx-background-radius: 50;" stylesheets="@../Styling/signUpStyle.css" text="SignUp">
+                        <Button fx:id="signUpViewButton" mnemonicParsing="false" prefHeight="54.0" prefWidth="111.0" style="-fx-background-radius: 50;" stylesheets="@../Styling/signUpStyle.css" text="SignUp">
                            <HBox.margin>
                               <Insets right="8.0" top="8.0" />
                            </HBox.margin>

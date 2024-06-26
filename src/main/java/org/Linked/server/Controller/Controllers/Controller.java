@@ -2,12 +2,16 @@ package org.Linked.server.Controller.Controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.Linked.client.viewControllers.Utils.UserTypeAdapter;
 import org.Linked.server.Controller.DAO.*;
 import org.Linked.server.Controller.DAO.*;
 import org.Linked.server.Controller.DAO.*;
+import org.Linked.server.Model.User;
 
 public abstract class Controller {
-    protected static final Gson gson = new  GsonBuilder().setPrettyPrinting().create();
+    protected static final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(User.class, new UserTypeAdapter())
+            .create();
     protected static final org.Linked.server.Controller.DAO.UserDAO UserDAO = new UserDAO();
     protected static final JobDAO JobDAO = new JobDAO();
     protected static final EducationDAO EducationDAO = new EducationDAO();

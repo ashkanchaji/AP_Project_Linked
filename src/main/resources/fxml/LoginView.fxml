@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #799bc9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.LoginController">
+<BorderPane prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #799bc9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.LoginController">
    <right>
       <VBox prefHeight="720.0" prefWidth="437.0" style="-fx-background-color: #19498b; -fx-background-radius: 20;" stylesheets="@../Styling/loginStyle.css" BorderPane.alignment="CENTER">
          <children>
@@ -37,8 +37,8 @@
             </HBox>
             <VBox alignment="CENTER" prefHeight="417.0" prefWidth="417.0" spacing="30.0">
                <children>
-                  <TextField fx:id="userName" alignment="CENTER" prefHeight="37.0" prefWidth="221.0" promptText="UserName" style="-fx-background-radius: 50; -fx-background-color: #e4f0ff;" />
-                  <PasswordField fx:id="password" alignment="CENTER" prefHeight="37.0" prefWidth="221.0" promptText="Password" style="-fx-background-radius: 50; -fx-background-color: #e4f0ff;" />
+                  <TextField fx:id="emailTF" alignment="CENTER" prefHeight="37.0" prefWidth="221.0" promptText="Email" style="-fx-background-radius: 50; -fx-background-color: #e4f0ff;" />
+                  <PasswordField fx:id="passwordTF" alignment="CENTER" prefHeight="37.0" prefWidth="221.0" promptText="Password" style="-fx-background-radius: 50; -fx-background-color: #e4f0ff;" />
                   <Button fx:id="loginButton" mnemonicParsing="false" onAction="#on_login_clicked" prefHeight="38.0" prefWidth="121.0" style="-fx-background-radius: 50;" stylesheets="@../Styling/loginStyle.css" text="Login">
                      <VBox.margin>
                         <Insets top="25.0" />
@@ -51,6 +51,11 @@
                         <String fx:value="cursor-hand" />
                      </styleClass>
                   </Button>
+                  <Label fx:id="statusMassageLabel" alignment="CENTER" prefHeight="17.0" prefWidth="312.0" textFill="RED" visible="false">
+                     <font>
+                        <Font name="Calibri Bold" size="12.0" />
+                     </font>
+                  </Label>
                </children>
                <padding>
                   <Insets left="85.0" right="85.0" />

@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class LinkedApp extends Application {
@@ -15,6 +16,7 @@ public class LinkedApp extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/LoginView.fxml"));
         primaryStage.setTitle("Linked");
         primaryStage.setScene(new Scene(root, 1080, 720));
+//        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 

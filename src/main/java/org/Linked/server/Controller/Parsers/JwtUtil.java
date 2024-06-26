@@ -11,7 +11,7 @@ public class JwtUtil {
 
     private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256); // HS256 key generation
 
-    public static String generateToken(String subject) {
+    private static String generateToken(String subject) {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
 

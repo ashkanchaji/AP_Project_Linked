@@ -1,6 +1,7 @@
 package org.Linked.server.Controller.Controllers;
 
 import org.Linked.server.Controller.Parsers.JwtUtil;
+import org.Linked.server.Controller.Util.UserTypeAdapter;
 import org.Linked.server.Model.ContactsInfo;
 import org.Linked.server.Model.Education;
 import org.Linked.server.Model.User;
@@ -26,8 +27,8 @@ public class UserController extends Controller{
             UserDAO.updateUser(user);
         } else {
             UserDAO.saveUser(user);
-            String userToken = JwtUtil.generateToken(json);
-            UserDAO.addUserJWT(userToken, user);
+            String userToken = JwtUtil.createToken(user.getEmail(), user.getPassword());
+            UserDAO.addUserJWT(userToken, user.getEmail());
         }
     }
 

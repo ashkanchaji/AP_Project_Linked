@@ -5,10 +5,11 @@ import org.Linked.server.Controller.Controllers.LikeController;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class LikeHandler extends Handler{
     @Override
-    protected String handleRequest(String method, String path, HttpExchange exchange) throws SQLException, IOException {
+    protected String handleRequest(String method, String path, HttpExchange exchange, AtomicInteger statusCode) throws SQLException, IOException {
         String[] splitPath = path.split("/");
 
         switch (method) {
