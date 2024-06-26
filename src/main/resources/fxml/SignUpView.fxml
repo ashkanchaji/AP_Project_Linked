@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #799bc9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.SignUpController">
+<BorderPane prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: #799bc9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.SignUpController">
    <left>
       <VBox prefHeight="720.0" prefWidth="540.0" style="-fx-background-color: #19498b; -fx-background-radius: 20;" BorderPane.alignment="CENTER">
          <children>

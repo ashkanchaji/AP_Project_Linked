@@ -27,8 +27,8 @@ public class UserController extends Controller{
             UserDAO.updateUser(user);
         } else {
             UserDAO.saveUser(user);
-            String userToken = JwtUtil.generateToken(json);
-            UserDAO.addUserJWT(userToken, user);
+            String userToken = JwtUtil.createToken(user.getEmail(), user.getPassword());
+            UserDAO.addUserJWT(userToken, user.getEmail());
         }
     }
 

@@ -115,12 +115,12 @@ public class UserDAO extends GenericDAO<User> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void addUserJWT(String jwt, User user) {
+    public void addUserJWT(String jwt, String email) {
         String sql = "UPDATE " + tablePath + " SET jwt_hash = ? WHERE email = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, jwt);
-            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(2, email);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -5,10 +5,11 @@ import org.Linked.server.Controller.Controllers.PostController;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class HashtagHandler extends Handler{
     @Override
-    protected String handleRequest(String method, String path, HttpExchange exchange) throws SQLException, IOException {
+    protected String handleRequest(String method, String path, HttpExchange exchange, AtomicInteger statusCode) throws SQLException, IOException {
         String[] splitPath = path.split("/");
 
         if (method.equals("GET")) {
