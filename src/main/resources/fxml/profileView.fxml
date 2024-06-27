@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.gleidson28.GNAvatarView?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="rootBP" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="720.0" prefWidth="1080.0" stylesheets="@../Styling/profileStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.ProfileController">
+<BorderPane fx:id="rootBP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../Styling/profileStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.ProfileController">
    <left>
-      <VBox fx:id="tabVBox" prefHeight="720.0" prefWidth="264.0" spacing="8.0" style="-fx-background-radius: 5;" stylesheets="@../Styling/profileStyle.css" BorderPane.alignment="CENTER">
+      <VBox fx:id="tabVBox" prefHeight="720.0" prefWidth="336.0" spacing="16.0" style="-fx-background-radius: 5;" stylesheets="@../Styling/profileStyle.css" BorderPane.alignment="CENTER">
          <styleClass>
             <String fx:value="secondary-color" />
             <String fx:value="tab" />
          </styleClass>
          <children>
-            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="258.0">
+            <HBox fx:id="homeHbox" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="258.0">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -32,14 +36,14 @@
                         <Insets right="4.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="258.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Home">
+                  <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Home">
                      <HBox.margin>
                         <Insets right="2.0" />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER">
+            <HBox fx:id="searchHbox" alignment="CENTER_LEFT">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -52,14 +56,14 @@
                         <Insets left="2.0" right="2.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="263.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Search">
+                  <Button fx:id="searchButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Search">
                      <HBox.margin>
                         <Insets right="2.0" />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER">
+            <HBox fx:id="notificationHbox" alignment="CENTER_LEFT">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -72,14 +76,14 @@
                         <Insets left="2.0" right="4.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="263.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Notifications">
+                  <Button fx:id="notificationButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Notifications">
                      <HBox.margin>
                         <Insets right="2.0" />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER">
+            <HBox fx:id="profileHbox" alignment="CENTER_LEFT">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -92,14 +96,14 @@
                         <Insets left="3.0" right="4.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="263.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Profile">
+                  <Button fx:id="profileButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Profile">
                      <HBox.margin>
                         <Insets right="2.0" />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="CENTER">
+            <HBox fx:id="settingHbox" alignment="CENTER_LEFT">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -112,7 +116,7 @@
                         <Insets right="4.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="263.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Setting">
+                  <Button fx:id="settingButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Setting">
                      <HBox.margin>
                         <Insets right="2.0" />
                      </HBox.margin>
@@ -132,17 +136,43 @@
       <Cursor fx:constant="DEFAULT" />
    </cursor>
    <center>
-      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <StackPane fx:id="profileStackPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <BorderPane fx:id="profileBP" prefHeight="200.0" prefWidth="200.0" StackPane.alignment="CENTER">
                <top>
-                  <ImageView fx:id="bannerImageView" fitHeight="150.0" fitWidth="817.0" pickOnBounds="true" BorderPane.alignment="CENTER">
+                  <ImageView fx:id="bannerImageView" fitHeight="316.0" fitWidth="1584.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                      <image>
                         <Image url="@../Images/banner_testi.jpg" />
                      </image>
                   </ImageView>
                </top>
+               <center>
+                  <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <HBox prefHeight="245.0" prefWidth="1584.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 20;">
+                           <children>
+                              <Label prefHeight="40.0" prefWidth="750.0" translateX="50.0" translateY="50.0">
+                                 <font>
+                                    <Font name="System Bold Italic" size="24.0" />
+                                 </font>
+                              </Label>
+                           </children></HBox>
+                     </children>
+                  </VBox>
+               </center>
             </BorderPane>
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" StackPane.alignment="TOP_LEFT">
+               <children>
+                  <GNAvatarView fx:id="profileAvatar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="245.0" prefWidth="248.0" scaleX="0.8" scaleY="0.8" strokeWidth="3.0" translateX="75.0" translateY="135.0" type="CIRCLE">
+                     <image>
+                        <Image url="@../Images/default_profile_image.jpeg" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </GNAvatarView>
+               </children>
+            </AnchorPane>
          </children>
       </StackPane>
    </center>

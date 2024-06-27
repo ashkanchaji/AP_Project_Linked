@@ -7,6 +7,8 @@ module ProjectLinked {
     requires jdk.httpserver;
     requires jjwt.api;
     requires com.fasterxml.jackson.databind;
+    requires com.gluonhq.charm.glisten;
+    requires GNAvatarView;
 
     opens org.Linked.client to javafx.fxml;
     opens org.Linked.client.viewControllers to javafx.fxml;
