@@ -64,8 +64,5 @@ public class ProfileController {
     @FXML
     public void initialize() {
         bannerImageView.fitWidthProperty().bind(profileBP.widthProperty());
-        // Bind the avatar's position relative to the BorderPane
-//        profileAvatar.layoutXProperty().bind(profileBP.widthProperty().divide(2).subtract(profileAvatar.prefWidthProperty().divide(2)));
-//        profileAvatar.layoutYProperty().bind(profileBP.heightProperty().divide(2).subtract(profileAvatar.prefHeightProperty().divide(2)));
     }
 }

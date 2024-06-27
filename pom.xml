@@ -98,12 +98,6 @@
           <version>20140107</version>
       </dependency>
       <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>RELEASE</version>
-          <scope>test</scope>
-      </dependency>
-      <dependency>
           <groupId>org.junit.jupiter</groupId>
           <artifactId>junit-jupiter-api</artifactId>
           <version>5.11.0-M1</version>
@@ -128,14 +122,6 @@
           <groupId>org.openjfx</groupId>
           <artifactId>javafx-graphics</artifactId>
           <version>21</version>
-          <groupId>com.gluonhq</groupId>
-          <artifactId>charm-glisten</artifactId>
-          <version>6.2.3</version>
-      </dependency>
-      <dependency>
-          <groupId>com.gluonhq.attach</groupId>
-          <artifactId>util</artifactId>
-          <version>4.0.9</version>
       </dependency>
       <dependency>
           <groupId>io.github.Gleidson28</groupId>
