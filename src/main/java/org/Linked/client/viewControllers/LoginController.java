@@ -7,10 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -41,6 +38,42 @@ public class LoginController extends AbstractViewController {
 
     @FXML
     private Label statusMassageLabel;
+
+    @FXML
+    private CheckBox showPasswordCheckBox;
+
+    @FXML
+    private TextField visiblePasswordTF;
+
+    @FXML
+    public void initialize() {
+        visiblePasswordTF.setVisible(false);
+
+        showPasswordCheckBox.setOnAction(event -> {
+            if (showPasswordCheckBox.isSelected()) {
+                visiblePasswordTF.setText(passwordTF.getText());
+                visiblePasswordTF.setVisible(true);
+                passwordTF.setVisible(false);
+            } else {
+                passwordTF.setText(visiblePasswordTF.getText());
+                passwordTF.setVisible(true);
+                visiblePasswordTF.setVisible(false);
+            }
+        });
+
+        // Sync text between fields if the user types in either field
+        passwordTF.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!showPasswordCheckBox.isSelected()) {
+                visiblePasswordTF.setText(newValue);
+            }
+        });
+
+        visiblePasswordTF.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (showPasswordCheckBox.isSelected()) {
+                passwordTF.setText(newValue);
+            }
+        });
+    }
 
     @FXML
     void on_login_clicked(ActionEvent event) {
