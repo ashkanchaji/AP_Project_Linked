@@ -1,0 +1,11 @@
+.root {
+    -fx-background-color: #FAF9F6;
+}
+
+.tab {
+    -fx-background-color: #46739E;
+}
+
+.tab_button {
+    -fx-background-color: transparent;
+}
