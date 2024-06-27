@@ -75,6 +75,32 @@ public class LoginController extends AbstractViewController {
                         fileWriter.write(tokenResponse);
                     }
                 }
+                try {
+                    // Store the current scene dimensions
+                    Stage currentStage = (Stage) signupViewButton.getScene().getWindow();
+                    previousSceneWidth = currentStage.getWidth();
+                    previousSceneHeight = currentStage.getHeight();
+
+                    // Load the FXML file for the SignUp page
+                    Parent profilePage = FXMLLoader.load(getClass().getResource("/fxml/profileView.fxml"));
+
+                    // Create a new scene using the SignUp page
+                    Scene profileScene = new Scene(profilePage);
+
+                    // Set the scene size to match the previous scene size
+                    profileScene.setRoot(profilePage);
+                    currentStage.setScene(profileScene);
+
+                    // Apply the previous scene size
+                    currentStage.setWidth(previousSceneWidth);
+                    currentStage.setHeight(previousSceneHeight);
+
+                    // Alternatively, maximize the stage if needed
+                    // currentStage.setMaximized(true);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else if (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 // Unauthorized (401) - Handle invalid credentials
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()))) {
