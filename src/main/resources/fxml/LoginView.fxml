@@ -3,11 +3,13 @@
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -37,8 +39,17 @@
             </HBox>
             <VBox alignment="CENTER" prefHeight="417.0" prefWidth="417.0" spacing="30.0">
                <children>
-                  <TextField fx:id="emailTF" alignment="CENTER" prefHeight="37.0" prefWidth="221.0" promptText="Email" style="-fx-background-radius: 50; -fx-background-color: #e4f0ff;" />
-                  <PasswordField fx:id="passwordTF" alignment="CENTER" prefHeight="37.0" prefWidth="221.0" promptText="Password" style="-fx-background-radius: 50; -fx-background-color: #e4f0ff;" />
+                  <TextField fx:id="emailTF" alignment="CENTER" prefHeight="37.0" prefWidth="221.0" promptText="Email" style="-fx-background-radius: 50; -fx-background-color: #e4f0ff;">
+                     <VBox.margin>
+                        <Insets top="16.0" />
+                     </VBox.margin></TextField>
+                  <AnchorPane prefHeight="37.0" prefWidth="221.0">
+                     <children>
+                        <PasswordField fx:id="passwordTF" alignment="CENTER" prefHeight="37.0" prefWidth="267.0" promptText="Password" style="-fx-background-radius: 50; -fx-background-color: #e4f0ff;" />
+                        <TextField fx:id="visiblePasswordTF" alignment="CENTER" prefHeight="37.0" prefWidth="267.0" promptText="Password" style="-fx-background-radius: 50; -fx-background-color: #e4f0ff;" />
+                     </children>
+                  </AnchorPane>
+                  <CheckBox fx:id="showPasswordCheckBox" mnemonicParsing="false" text="Show Password" textFill="#dde9ff" />
                   <Button fx:id="loginButton" mnemonicParsing="false" onAction="#on_login_clicked" prefHeight="38.0" prefWidth="121.0" style="-fx-background-radius: 50;" stylesheets="@../Styling/loginStyle.css" text="Login">
                      <VBox.margin>
                         <Insets top="25.0" />
@@ -60,6 +71,9 @@
                <padding>
                   <Insets left="85.0" right="85.0" />
                </padding>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </VBox>
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
