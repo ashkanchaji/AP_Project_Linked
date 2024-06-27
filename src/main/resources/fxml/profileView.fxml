@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="rootBP" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="720.0" prefWidth="1080.0" stylesheets="@../Styling/profileStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.ProfileController">
+<BorderPane fx:id="rootBP" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../Styling/profileStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.ProfileController">
    <left>
-      <VBox fx:id="tabVBox" prefHeight="720.0" prefWidth="264.0" spacing="8.0" style="-fx-background-radius: 5;" stylesheets="@../Styling/profileStyle.css" BorderPane.alignment="CENTER">
+      <VBox fx:id="tabVBox" prefHeight="720.0" prefWidth="336.0" spacing="8.0" style="-fx-background-radius: 5;" stylesheets="@../Styling/profileStyle.css" BorderPane.alignment="CENTER">
          <styleClass>
             <String fx:value="secondary-color" />
             <String fx:value="tab" />
@@ -136,7 +136,7 @@
          <children>
             <BorderPane fx:id="profileBP" prefHeight="200.0" prefWidth="200.0" StackPane.alignment="CENTER">
                <top>
-                  <ImageView fx:id="bannerImageView" fitHeight="150.0" fitWidth="817.0" pickOnBounds="true" BorderPane.alignment="CENTER">
+                  <ImageView fx:id="bannerImageView" fitHeight="316.0" fitWidth="1584.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                      <image>
                         <Image url="@../Images/banner_testi.jpg" />
                      </image>
