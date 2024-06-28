@@ -35,7 +35,8 @@ public class LoginHandler extends Handler{
                         return "Invalid password.";
                     }
 
-                    String userToken = JwtUtil.createToken(email, password);
+                    String userToken = JwtUtil.generateJwtToken(email, password);
+                    System.out.println(userToken);
 
                     UserDAO userDAO = new UserDAO();
                     userDAO.addUserJWT(userToken, email);

@@ -5,9 +5,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.Linked.client.viewControllers.Utils.JWTController;
+import org.Linked.server.Controller.Parsers.JwtUtil;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Scanner;
 
 public class LinkedApp extends Application {
 
@@ -22,5 +28,11 @@ public class LinkedApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
+//        try {
+//            System.out.println(JWTController.isExpired("src/main/java/org/Linked/client/Token/UserJwtToken.txt"));
+//
+//        } catch (Exception e) {
+//            System.out.println("Error reading token: " + e.getMessage());
+//        }
     }
 }

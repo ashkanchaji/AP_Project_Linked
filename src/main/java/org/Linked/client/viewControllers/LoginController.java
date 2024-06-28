@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.Linked.client.viewControllers.Utils.JWTController;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -107,6 +108,8 @@ public class LoginController extends AbstractViewController {
 //                    try (FileWriter fileWriter = new FileWriter("src/main/java/org/Linked/client/Token/UserJwtToken.txt")) {
 //                        fileWriter.write(tokenResponse);
 //                    }
+//                    JWTController.setJwtKey(tokenResponse);
+//                    System.out.println(JWTController.getJwtKey());
 //                }
                 try {
                     // Store the current scene dimensions

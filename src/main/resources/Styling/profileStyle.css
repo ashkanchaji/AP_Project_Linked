@@ -9,3 +9,46 @@
 .tab_button {
     -fx-background-color: transparent;
 }
+
+.profile_button {
+    -fx-background-color: #2196f3;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-transition: background-color 0.3s, transform 0.3s;
+}
+
+.profile_button:hover {
+    -fx-background-color: #1b66bb;
+}
+
+.text-area {
+    -fx-background-radius: 50px; /* Set desired corner radius */
+}
+
+.headLineTA {
+    -fx-control-inner-background: #E5E4E3; /* Change to your desired color */
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-text-fill: black; /* Change text color if needed */
+    -fx-background-insets: 0;
+    -fx-padding: 10;
+    -fx-border-color: #E5E4E3; /* Change to your desired border color */
+    -fx-border-width: 2px; /* Change to your desired border width */
+
+    -fx-focus-color: #E5E4E3;
+    -fx-faint-focus-color: #E5E4E3;
+}
+
+.headLineTAEdit {
+    -fx-control-inner-background:  #e4f0ff; /* Change to your desired color */
+    -fx-text-fill: black; /* Change text color if needed */
+    -fx-background-insets: 0;
+    -fx-background-radius: 50px;
+    -fx-focus-color:  #e4f0ff;
+    -fx-faint-focus-color:  #e4f0ff;
+}
+
+.titled-pane {
+    -fx-background-color: #e4f0ff; /* Light orange background */
+    -fx-text-fill:  black; /* Black text color */
+}
