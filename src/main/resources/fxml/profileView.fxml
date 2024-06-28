@@ -160,7 +160,7 @@
                                  </font>
                               </Label>
                               <TextArea fx:id="headLineTA" depthTest="DISABLE" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="70.0" prefWidth="750.0" styleClass="headLineTA" stylesheets="@../Styling/profileStyle.css" translateX="25.0" translateY="55.0" wrapText="true" />
-                              <Label fx:id="currentEducationLabel" prefHeight="30.0" prefWidth="720.0" text="WWWWWWWWWWWWWWW" translateX="25.0" translateY="70.0">
+                              <Label fx:id="professionLabel" prefHeight="30.0" prefWidth="720.0" text="WWWWWWWWWWWWWWW" translateX="25.0" translateY="70.0">
                                  <font>
                                     <Font size="11.0" />
                                  </font>
