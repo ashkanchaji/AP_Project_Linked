@@ -6,6 +6,9 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,9 +18,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="rootBP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../Styling/profileStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.ProfileController">
+<BorderPane fx:id="rootBP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../Styling/profileStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.ProfileController">
    <left>
-      <VBox fx:id="tabVBox" prefHeight="720.0" prefWidth="336.0" spacing="16.0" style="-fx-background-radius: 5;" stylesheets="@../Styling/profileStyle.css" BorderPane.alignment="CENTER">
+      <VBox fx:id="tabVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="336.0" spacing="16.0" style="-fx-background-radius: 5;" stylesheets="@../Styling/profileStyle.css" BorderPane.alignment="CENTER">
          <styleClass>
             <String fx:value="secondary-color" />
             <String fx:value="tab" />
@@ -136,9 +139,9 @@
       <Cursor fx:constant="DEFAULT" />
    </cursor>
    <center>
-      <StackPane fx:id="profileStackPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <StackPane fx:id="profileStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1584.0" BorderPane.alignment="CENTER">
          <children>
-            <BorderPane fx:id="profileBP" prefHeight="200.0" prefWidth="200.0" StackPane.alignment="CENTER">
+            <BorderPane fx:id="profileBP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1584.0" StackPane.alignment="CENTER">
                <top>
                   <ImageView fx:id="bannerImageView" fitHeight="316.0" fitWidth="1584.0" pickOnBounds="true" BorderPane.alignment="CENTER">
                      <image>
@@ -147,16 +150,43 @@
                   </ImageView>
                </top>
                <center>
-                  <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                  <VBox maxWidth="-Infinity" prefHeight="200.0" prefWidth="1584.0" BorderPane.alignment="CENTER">
                      <children>
-                        <HBox prefHeight="245.0" prefWidth="1584.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 20;">
+                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="245.0" prefWidth="1584.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 20;" VBox.vgrow="ALWAYS">
                            <children>
-                              <Label prefHeight="40.0" prefWidth="750.0" translateX="50.0" translateY="50.0">
+                              <Label fx:id="fullNameLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="750.0" text="Ashkan Chaji" translateX="50.0" translateY="50.0" VBox.vgrow="ALWAYS">
                                  <font>
                                     <Font name="System Bold Italic" size="24.0" />
                                  </font>
                               </Label>
-                           </children></HBox>
+                              <TextArea fx:id="headLineTA" depthTest="DISABLE" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="70.0" prefWidth="750.0" styleClass="headLineTA" stylesheets="@../Styling/profileStyle.css" translateX="25.0" translateY="55.0" wrapText="true" />
+                              <Label fx:id="currentEducationLabel" prefHeight="30.0" prefWidth="720.0" text="WWWWWWWWWWWWWWW" translateX="25.0" translateY="70.0">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="cityAndCountryLabel" prefHeight="30.0" prefWidth="720.0" text="Label" translateX="25.0" translateY="80.0">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="editInfoButton" mnemonicParsing="false" onAction="#on_editInfoButton_clicked" prefHeight="40.0" prefWidth="75.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Edit" textFill="WHITE" translateX="1270.0" translateY="-125.0">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="connectButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Connect" textFill="WHITE" translateX="1125.0" translateY="17.5">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="followButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Follow" textFill="WHITE" translateX="1250.0" translateY="-20.0">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </VBox>
                      </children>
                   </VBox>
                </center>
@@ -173,6 +203,100 @@
                   </GNAvatarView>
                </children>
             </AnchorPane>
+            <VBox fx:id="editInfoVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0">
+               <children>
+                  <TextField fx:id="firstNameEditTF" focusTraversable="false" prefHeight="30.0" promptText="First Name" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
+                     <VBox.margin>
+                        <Insets left="100.0" right="100.0" top="30.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="additionalNameEditTF" focusTraversable="false" prefHeight="30.0" promptText="Additional Name" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
+                     <VBox.margin>
+                        <Insets left="100.0" right="100.0" top="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="lastNameEditTF" focusTraversable="false" prefHeight="30.0" promptText="Last Name" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
+                     <VBox.margin>
+                        <Insets left="100.0" right="100.0" top="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextArea fx:id="headlineEditTA" focusTraversable="false" prefHeight="60.0" promptText="Headline" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;" styleClass="headLineTAEdit" stylesheets="@../Styling/profileStyle.css" wrapText="true">
+                     <VBox.margin>
+                        <Insets left="100.0" right="100.0" top="20.0" />
+                     </VBox.margin>
+                  </TextArea>
+                  <TextField fx:id="countryEditTF" focusTraversable="false" prefHeight="30.0" promptText="Country" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
+                     <VBox.margin>
+                        <Insets left="100.0" right="100.0" top="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="cityEditTF" focusTraversable="false" prefHeight="30.0" promptText="City" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
+                     <VBox.margin>
+                        <Insets left="100.0" right="100.0" top="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="professionEditTF" focusTraversable="false" prefHeight="30.0" promptText="Profession" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
+                     <VBox.margin>
+                        <Insets left="100.0" right="100.0" top="20.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets left="100.0" right="100.0" top="20.0" />
+                     </VBox.margin>
+                     <children>
+                        <Button fx:id="chooseAvatarButton" alignment="CENTER" mnemonicParsing="false" onAction="#on_chooseAvatarButton_clicked" prefHeight="40.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Choose Avatar">
+                           <HBox.margin>
+                              <Insets right="30.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Arial" size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="chooseBannerButton" mnemonicParsing="false" onAction="#on_chooseBannerButton_clicked" prefHeight="40.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Choose Banner">
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Arial" size="12.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets left="100.0" right="95.0" top="15.0" />
+                     </VBox.margin>
+                     <children>
+                        <RadioButton fx:id="jobRadioBtn" mnemonicParsing="false" prefHeight="20.0" prefWidth="120.0" text="Looking for work" textFill="#e4f0ff" />
+                        <RadioButton fx:id="hiringRadioBtn" mnemonicParsing="false" prefHeight="20.0" prefWidth="70.0" text="Hiring" textFill="#e4f0ff">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="servicesRadioBtn" mnemonicParsing="false" prefHeight="20.0" prefWidth="100.0" text="Services" textFill="#e4f0ff">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="saveInfoButton" mnemonicParsing="false" onAction="#on_saveInfoButton_clicked" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Save">
+                           <HBox.margin>
+                              <Insets right="40.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="cancelInfoButton" mnemonicParsing="false" onAction="#on_cancelInfoButton_clicked" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Cancel">
+                           <HBox.margin>
+                              <Insets left="40.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </children>
       </StackPane>
    </center>
