@@ -2,63 +2,79 @@ package org.Linked.server.Controller.Parsers;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.security.SignatureException;
 
-import java.security.Key;
+import javax.crypto.SecretKey;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.Date;
 
 public class JwtUtil {
+    private static final long EXPIRATION_TIME = 3600000; // 1 hour
 
-    private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256); // HS256 key generation
+    // Use the Singleton pattern to ensure the same secret key is reused
+    private static SecretKey secretKeyInstance;
 
-    private static String generateToken(String subject) {
-        long nowMillis = System.currentTimeMillis();
-        Date now = new Date(nowMillis);
+    private static SecretKey getSecretKey() {
+        if (secretKeyInstance == null) {
+            secretKeyInstance = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+        }
+        return secretKeyInstance;
+    }
 
+    public static String generateJwtToken(String username, String password) {
         return Jwts.builder()
-                .setSubject(subject)
-                .setIssuedAt(now)
-                .setExpiration(new Date(nowMillis + 24 * 60 * 60 * 1000)) // 1 day expiry
-                .signWith(key)
+                .setSubject(username)
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(getSecretKey())
                 .compact();
     }
 
-    public static Claims parseToken(String jwt) {
+    public static String getSubjectFromJwt(String jwt) {
         try {
-            Jws<Claims> jws = Jwts.parserBuilder()
-                    .setSigningKey(key)
-                    .build()
-                    .parseClaimsJws(jwt);
+            String[] jwtParts = jwt.split("\\.");
 
-            return jws.getBody();
-        } catch (SignatureException e) {
-            // handle invalid signature
-            System.out.println("Invalid JWT signature");
-            return null;
+            if (jwtParts.length == 3) {
+                String encodedPayload = jwtParts[1];
+                byte[] decodedPayload = Base64.getUrlDecoder().decode(encodedPayload);
+                String payloadJson = new String(decodedPayload, StandardCharsets.UTF_8);
+
+                // Parse the payload JSON and retrieve the "sub" value
+                // Assuming the payload JSON is in the format: {"sub": "username"}
+                String sub = payloadJson.substring(payloadJson.indexOf("\"sub\":") + 7);
+                sub = sub.substring(0, sub.indexOf("\""));
+
+                return sub;
+            } else {
+                // Invalid JWT format
+                throw new IllegalArgumentException("Invalid JWT format");
+            }
         } catch (Exception e) {
-            // handle other parsing errors
-            System.out.println("JWT parsing error: " + e.getMessage());
+            // Handle exception (e.g., invalid JWT format, decoding errors)
+            e.printStackTrace();
             return null;
         }
     }
 
-    public static String createToken(String email, String password){
-        String subject = email.concat(":" + password);
-        return generateToken(subject);
-    }
-
-    public static boolean isTokenExpired(String jwt) {
+    public static boolean validateJwtToken(String jwtToken) {
         try {
-            Claims claims = parseToken(jwt);
-            Date expiration = claims.getExpiration();
-            return expiration.before(new Date());
-        } catch (ExpiredJwtException e) {
-            // Token has expired
+            Jwts.parserBuilder()
+                    .setSigningKey(getSecretKey())
+                    .build()
+                    .parseClaimsJws(jwtToken);
             return true;
         } catch (Exception e) {
-            // Token parsing error or other exceptions
-            System.out.println("Error checking token expiration: " + e.getMessage());
-            return true; // Assume token is expired in case of any error
+            e.printStackTrace();
+            return false;
         }
     }
+
+    public static String readJwtTokenFromFile(String filePath) throws IOException {
+        // Read the token from the file
+        byte[] encoded = Files.readAllBytes(Paths.get(filePath));
+        return new String(encoded, StandardCharsets.UTF_8);
+    }
 }
+
