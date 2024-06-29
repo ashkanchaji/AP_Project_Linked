@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
+import java.time.chrono.Chronology;
 
 public class ProfileController extends AbstractViewController{
 
@@ -299,6 +300,19 @@ public class ProfileController extends AbstractViewController{
 
     @FXML
     private RadioButton workNumberContactsRB;
+
+    @FXML
+    private VBox contactsInfoVbox;
+
+    @FXML
+    private VBox educationVbox;
+
+    @FXML
+    private VBox skillsVbox;
+
+    @FXML
+    private Button editSkillsButton;
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private String avatarAddress;
     private String bannerAddress;
@@ -314,6 +328,23 @@ public class ProfileController extends AbstractViewController{
     private JsonNode country;
     private JsonNode city;
     private JsonNode profession;
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    private JsonNode instituteName;
+    private JsonNode major;
+    private JsonNode registerDate;
+    private JsonNode graduationDate;
+    private JsonNode grade;
+    private JsonNode activityDiscription;
+    private JsonNode additionalInformation;
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    private JsonNode email;
+    private JsonNode phoneNumber;
+    private JsonNode address;
+    private JsonNode birthday;
+    private JsonNode otherAccounts;
+    /////////////////////////////////////////////////
+
+
 
 
 
@@ -374,6 +405,69 @@ public class ProfileController extends AbstractViewController{
         headLineTA.setText(headline == null ? "No Headline." : headline.asText());
         professionLabel.setText(profession == null ? "No profession." : profession.asText());
         cityAndCountryLabel.setText(cityName + ", " + countryName);
+
+        //education
+        HttpResponse educationResponse = getEducationResponse();
+
+        JsonNode educationJson = getEducationJson(educationResponse);
+
+        instituteName = educationJson.get("collegeName");
+        major = educationJson.get("major");
+        registerDate = educationJson.get("enterYear");
+        graduationDate = educationJson.get("exitYear");
+        grade = educationJson.get("grade");
+        activityDiscription = educationJson.get("activitiesInfo");
+        additionalInformation = educationJson.get("additionalInfo");
+
+        instituteNameEduTF.setText(instituteName == null ? "" : instituteName.asText());
+        majorEduTF.setText(major == null ? "" : major.asText());
+        registerDateDP.setChronology(registerDate == null ? Chronology.of(""): Chronology.of(registerDate.asText()));
+        graduateDateDP.setChronology(graduationDate == null ? Chronology.of(""): Chronology.of(graduationDate.asText()));
+        gradeEduTF.setText(grade == null ? "" : grade.asText());
+        activityEduTF.setText(activityDiscription == null ? "" : activityDiscription.asText());
+        additionalEduTF.setText(additionalInformation == null ? "" : additionalInformation.asText());
+
+        instituteNameEduLabel.setText(instituteName == null ? "no institute name mentioned" : instituteName.asText());
+        majorEduLabel.setText(major == null ? "no major mentioned" : major.asText());
+        RegisterDateEduLabel.setText(registerDate == null ? "no register date mentioned" : registerDate.asText()); //idk if it works or not
+        GraduationDateEduLabel.setText(graduationDate == null ? "no graduation date mentioned" :graduationDate.asText()); //idk if it works or not
+        GradeEduLabel.setText(grade == null ? "no grade mentioned" : grade.asText());
+        activityDescriptionEduLabel.setText(activityDiscription == null ? "no activity discription mentioned" : activityDiscription.asText());
+        addInfoEduLabel.setText(additionalInformation == null ? "no additional information mentioned" : additionalInformation.asText());
+
+        // contacts info
+        HttpResponse contactsResponse = getContactsInfoResponse();
+
+        JsonNode contactsJson = getEducationJson(contactsResponse);
+
+        email = contactsJson.get("email");
+        phoneNumber = contactsJson.get("phoneNumber");
+        address = contactsJson.get("address");
+        birthday = contactsJson.get("birthday");
+        otherAccounts = contactsJson.get("contactUs");
+
+        emailContactsTF.setText(email == null ? "" : email.asText());
+        numberContactsTF.setText(phoneNumber == null ? "" : phoneNumber.asText());
+        addressContactsTF.setText(address == null ? "" : address.asText());
+        birthdayContactsDP.setChronology(birthday == null ? Chronology.of("") : Chronology.of(birthday.asText())); //idk if it works or not
+        otherAccountsContactsTF.setText(otherAccounts == null ? "" : otherAccounts.asText());
+
+        emailContactsLabel.setText(email == null ? "no email mentioned" : email.asText());
+        numberContactsLabel.setText(phoneNumber == null ? "no number mentioned" : phoneNumber.asText());
+        addressContactsLabel.setText(address == null ? "no address mentioned" : address.asText());
+        birthdayContactsLabel.setText(birthday == null ? "no birthday mentioned" : birthday.asText()); //idk if it works or not
+        otherAccContactsLabel.setText(otherAccounts == null ? "no other account mentioned" : otherAccounts.asText());
+
+        // skills
+
+
+
+
+
+
+
+
+
     }
 
     @FXML
@@ -450,6 +544,31 @@ public class ProfileController extends AbstractViewController{
         return userResponse;
     }
 
+    private HttpResponse getEducationResponse(){
+        HttpResponse educationResponse;
+        try {
+            educationResponse = HttpController.sendRequest(SERVER_ADDRESS + "/education/" + currentUserEmail ,HttpMethod.GET , null , null);
+        } catch (IOException e){
+            throw  new RuntimeException(e);
+        }
+
+        if (educationResponse.getStatusCode() != 200) throw new RuntimeException("Error getting education data");
+        return  educationResponse;
+    }
+
+    private HttpResponse getContactsInfoResponse(){
+        HttpResponse contactsInfoResponse;
+        try {
+            contactsInfoResponse = HttpController.sendRequest(SERVER_ADDRESS + "/contacts/" + currentUserEmail , HttpMethod.GET , null , null);
+        }catch (IOException e){
+            throw  new RuntimeException(e);
+        }
+
+        if (contactsInfoResponse.getStatusCode() != 200) throw new RuntimeException("Error getting contactsInfo data");
+        return  contactsInfoResponse;
+
+    }
+
     private JsonNode getUserJson(HttpResponse userResponse){
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -459,29 +578,60 @@ public class ProfileController extends AbstractViewController{
             throw new RuntimeException(e);
         }
     }
+
+    private JsonNode getEducationJson(HttpResponse EducationResponse){
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            return objectMapper.readTree(EducationResponse.getBody());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private JsonNode getContactsJson(HttpResponse contactsResponse){
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readTree(contactsResponse.getBody());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @FXML
     void on_cancelContactsButton_clicked(ActionEvent event) {
-
+        contactsInfoVbox.setVisible(false);
+        contactsInfoVbox.setDisable(true);
     }
 
     @FXML
     void on_cancelEduButton_Clicked(ActionEvent event) {
-
+        educationVbox.setVisible(false);
+        educationVbox.setDisable(true);
     }
 
 
     @FXML
     void on_cancelSkillsButton_clicked(ActionEvent event) {
-
+        educationVbox.setVisible(false);
+        educationVbox.setDisable(true);
     }
     @FXML
     void on_editContactButton_clicked(ActionEvent event) {
-
+        contactsInfoVbox.setDisable(false);
+        contactsInfoVbox.setVisible(true);
     }
 
     @FXML
     void on_editEduButton_clicked(ActionEvent event) {
+        educationVbox.setDisable(false);
+        educationVbox.setVisible(true);
+    }
 
+    @FXML
+    void on_editSkillsButton_clicked(ActionEvent event) {
+        skillsVbox.setDisable(false);
+        skillsVbox.setVisible(true);
     }
 
 
