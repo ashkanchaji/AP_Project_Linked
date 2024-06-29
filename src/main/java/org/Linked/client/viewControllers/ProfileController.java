@@ -34,13 +34,58 @@ import java.nio.file.Paths;
 public class ProfileController extends AbstractViewController{
 
     @FXML
+    private Label GradeEduLabel;
+
+    @FXML
+    private Label GraduationDateEduLabel;
+
+    @FXML
+    private RadioButton MobileNumberContactsRB;
+
+    @FXML
+    private Label RegisterDateEduLabel;
+
+    @FXML
+    private Label activityDescriptionEduLabel;
+
+    @FXML
+    private TextArea activityEduTF;
+
+    @FXML
+    private Label addInfoEduLabel;
+
+    @FXML
+    private TextArea additionalEduTF;
+
+    @FXML
     private TextField additionalNameEditTF;
+
+    @FXML
+    private Label addressContactsLabel;
+
+    @FXML
+    private TextArea addressContactsTF;
 
     @FXML
     private ImageView bannerImageView;
 
     @FXML
+    private DatePicker birthdayContactsDP;
+
+    @FXML
+    private Label birthdayContactsLabel;
+
+    @FXML
+    private Button cancelContactsButton;
+
+    @FXML
+    private Button cancelEduButton;
+
+    @FXML
     private Button cancelInfoButton;
+
+    @FXML
+    private Button cancelSkillsButton;
 
     @FXML
     private Button chooseAvatarButton;
@@ -58,13 +103,37 @@ public class ProfileController extends AbstractViewController{
     private Button connectButton;
 
     @FXML
+    private RadioButton contactsOnlyBirthContactsRB;
+
+    @FXML
     private TextField countryEditTF;
 
     @FXML
-    private Label professionLabel;
+    private Button editContactButton;
+
+    @FXML
+    private Button editEduButton;
 
     @FXML
     private Button editInfoButton;
+
+    @FXML
+    private VBox editInfoVbox;
+
+    @FXML
+    private Label educationLabel1;
+
+    @FXML
+    private Label educationLabel11;
+
+    @FXML
+    private Label emailContactsLabel;
+
+    @FXML
+    private TextField emailContactsTF;
+
+    @FXML
+    private RadioButton everyoneBirthContactsRB;
 
     @FXML
     private TextField firstNameEditTF;
@@ -74,6 +143,12 @@ public class ProfileController extends AbstractViewController{
 
     @FXML
     private Label fullNameLabel;
+
+    @FXML
+    private TextField gradeEduTF;
+
+    @FXML
+    private DatePicker graduateDateDP;
 
     @FXML
     private TextArea headLineTA;
@@ -91,10 +166,28 @@ public class ProfileController extends AbstractViewController{
     private HBox homeHbox;
 
     @FXML
+    private RadioButton homeNumberContactsRB;
+
+    @FXML
+    private Label instituteNameEduLabel;
+
+    @FXML
+    private TextField instituteNameEduTF;
+
+    @FXML
     private RadioButton jobRadioBtn;
 
     @FXML
     private TextField lastNameEditTF;
+
+    @FXML
+    private Label majorEduLabel;
+
+    @FXML
+    private TextField majorEduTF;
+
+    @FXML
+    private RadioButton nobodyBirthContactsRB;
 
     @FXML
     private Button notificationButton;
@@ -103,7 +196,25 @@ public class ProfileController extends AbstractViewController{
     private HBox notificationHbox;
 
     @FXML
+    private Label numberContactsLabel;
+
+    @FXML
+    private TextField numberContactsTF;
+
+    @FXML
+    private ToggleGroup numberFormat;
+
+    @FXML
+    private Label otherAccContactsLabel;
+
+    @FXML
+    private TextArea otherAccountsContactsTF;
+
+    @FXML
     private TextField professionEditTF;
+
+    @FXML
+    private Label professionLabel;
 
     @FXML
     private GNAvatarView profileAvatar;
@@ -121,10 +232,22 @@ public class ProfileController extends AbstractViewController{
     private StackPane profileStackPane;
 
     @FXML
+    private DatePicker registerDateDP;
+
+    @FXML
     private BorderPane rootBP;
 
     @FXML
+    private Button saveContactsButton;
+
+    @FXML
+    private Button saveEduButton;
+
+    @FXML
     private Button saveInfoButton;
+
+    @FXML
+    private Button saveSkillsButton;
 
     @FXML
     private Button searchButton;
@@ -142,11 +265,40 @@ public class ProfileController extends AbstractViewController{
     private HBox settingHbox;
 
     @FXML
+    private Label skill1SkillsLabel;
+
+    @FXML
+    private Label skill1SkillsLabel1;
+
+    @FXML
+    private Label skill1SkillsLabel2;
+
+    @FXML
+    private Label skill1SkillsLabel3;
+
+    @FXML
+    private Label skill1SkillsLabel4;
+
+    @FXML
+    private TextField skill1SkillsTF;
+
+    @FXML
+    private TextField skill2SkillsTF;
+
+    @FXML
+    private TextField skill3SkillsTF;
+
+    @FXML
+    private TextField skill4SkillsTF;
+
+    @FXML
+    private TextField skill5SkillsTF;
+
+    @FXML
     private VBox tabVBox;
 
     @FXML
-    private VBox editInfoVbox;
-
+    private RadioButton workNumberContactsRB;
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private String avatarAddress;
     private String bannerAddress;
@@ -306,5 +458,48 @@ public class ProfileController extends AbstractViewController{
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+    @FXML
+    void on_cancelContactsButton_clicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void on_cancelEduButton_Clicked(ActionEvent event) {
+
+    }
+
+
+    @FXML
+    void on_cancelSkillsButton_clicked(ActionEvent event) {
+
+    }
+    @FXML
+    void on_editContactButton_clicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void on_editEduButton_clicked(ActionEvent event) {
+
+    }
+
+
+
+    @FXML
+    void on_saveContactsButton_clicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void on_saveEduButton_clicked(ActionEvent event) {
+
+    }
+
+
+
+    @FXML
+    void on_saveSkillsButton_clicked(ActionEvent event) {
+
     }
 }
