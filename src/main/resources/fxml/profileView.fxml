@@ -309,7 +309,7 @@
                                                 <Font name="System Bold Italic" size="24.0" />
                                              </font>
                                           </Label>
-                                          <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="79.0" style="-fx-background-radius: 15;" styleClass="profile_button" text="Edit" translateX="500.0" translateY="15.0">
+                                          <Button fx:id="editSkillsButton" mnemonicParsing="false" onAction="#on_editSkillsButton_clicked" prefHeight="26.0" prefWidth="79.0" style="-fx-background-radius: 15;" styleClass="profile_button" text="Edit" translateX="500.0" translateY="15.0">
                                              <font>
                                                 <Font name="System Bold Italic" size="12.0" />
                                              </font>
@@ -435,7 +435,7 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" stylesheets="@../Styling/profileStyle.css" translateX="-240.0" visible="false">
+            <VBox fx:id="educationVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" stylesheets="@../Styling/profileStyle.css" translateX="-240.0" visible="false">
                <children>
                   <TextField fx:id="instituteNameEduTF" prefHeight="30.0" promptText="institute name" style="-fx-background-radius: 20;">
                      <VBox.margin>
@@ -494,7 +494,7 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
+            <VBox fx:id="contactsInfoVbox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
                <children>
                   <TextField fx:id="emailContactsTF" promptText="Email">
                      <VBox.margin>
@@ -616,7 +616,7 @@
                   <Insets top="2.0" />
                </StackPane.margin>
             </VBox>
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.95" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
+            <VBox fx:id="skillsVbox" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.95" prefHeight="450.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
                <children>
                   <TextField fx:id="skill1SkillsTF" promptText="Skill 1 ">
                      <VBox.margin>
