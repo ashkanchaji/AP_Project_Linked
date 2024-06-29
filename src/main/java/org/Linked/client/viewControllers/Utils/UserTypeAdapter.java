@@ -16,8 +16,16 @@ public class UserTypeAdapter extends TypeAdapter<User> {
         out.beginObject();
         out.name("email").value(user.getEmail());
         out.name("firstName").value(user.getFirstName());
-        out.name("lastName").value(user.getLastName());  // corrected "lastname" to "lastName"
+        out.name("lastName").value(user.getLastName());
         out.name("password").value(user.getPassword());
+        out.name("additionalName").value(user.getAdditionalName());
+        out.name("profilePicture").value(user.getProfilePicture());
+        out.name("backgroundPicture").value(user.getBackgroundPicture());
+        out.name("headline").value(user.getHeadline());
+        out.name("country").value(user.getCountry());
+        out.name("city").value(user.getCity());
+        out.name("profession").value(user.getProfession());
+        out.name("jwtToken").value(user.getJwtToken());
         out.endObject();
     }
 
@@ -27,6 +35,14 @@ public class UserTypeAdapter extends TypeAdapter<User> {
         String firstName = null;
         String lastName = null;
         String password = null;
+        String additionalName = null;
+        String profilePicture = null;
+        String backgroundPicture = null;
+        String headline = null;
+        String country = null;
+        String city = null;
+        String profession = null;
+        String jwtToken = null;
 
         in.beginObject();
         while (in.hasNext()) {
@@ -44,6 +60,30 @@ public class UserTypeAdapter extends TypeAdapter<User> {
                 case "password":
                     password = in.nextString();
                     break;
+                case "additionalName":
+                    additionalName = in.nextString();
+                    break;
+                case "profilePicture":
+                    profilePicture = in.nextString();
+                    break;
+                case "backgroundPicture":
+                    backgroundPicture = in.nextString();
+                    break;
+                case "headline":
+                    headline = in.nextString();
+                    break;
+                case "country":
+                    country = in.nextString();
+                    break;
+                case "city":
+                    city = in.nextString();
+                    break;
+                case "profession":
+                    profession = in.nextString();
+                    break;
+                case "jwtToken":
+                    jwtToken = in.nextString();
+                    break;
                 default:
                     in.skipValue();
                     break;
@@ -52,9 +92,16 @@ public class UserTypeAdapter extends TypeAdapter<User> {
         in.endObject();
 
         try {
-            return new User(email, firstName, lastName, password);
-        } catch (InvalidEmailException | InvalidPassException e) {
-            throw new IOException("Error creating User object", e);
+            // Try to use the constructor with additional fields first
+            return new User(email, firstName, lastName, password, additionalName, profilePicture, backgroundPicture, headline, country, city, profession, jwtToken);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+            try {
+                // If that fails, fall back to the basic constructor
+                return new User(email, firstName, lastName, password);
+            } catch (InvalidEmailException | InvalidPassException e2) {
+                throw new IOException("Error creating User object", e2);
+            }
         }
     }
 }

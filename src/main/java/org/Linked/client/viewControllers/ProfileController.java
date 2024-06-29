@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import io.github.gleidson28.GNAvatarView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,9 +22,14 @@ import org.Linked.client.viewControllers.Http.HttpController;
 import org.Linked.client.viewControllers.Http.HttpMethod;
 import org.Linked.client.viewControllers.Http.HttpResponse;
 import org.Linked.client.viewControllers.Utils.JWTController;
+import org.Linked.client.viewControllers.Utils.UserTypeAdapter;
+import org.Linked.server.Model.User;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 
 public class ProfileController extends AbstractViewController{
 
@@ -54,7 +61,7 @@ public class ProfileController extends AbstractViewController{
     private TextField countryEditTF;
 
     @FXML
-    private Label currentEducationLabel;
+    private Label professionLabel;
 
     @FXML
     private Button editInfoButton;
@@ -140,10 +147,23 @@ public class ProfileController extends AbstractViewController{
     @FXML
     private VBox editInfoVbox;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private String avatarAddress;
     private String bannerAddress;
     private String currentUserEmail;
     private String profileUserEmail;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private String firstName;
+    private String lastName;
+    private String password;
+    private JsonNode additionalName;
+    private JsonNode headline;
+    private JsonNode country;
+    private JsonNode city;
+    private JsonNode profession;
+
+
 
     @FXML
     private final ToggleGroup status = new ToggleGroup();
@@ -159,53 +179,49 @@ public class ProfileController extends AbstractViewController{
 
         /* ___ GET USER INFO ___ */
 
-//        currentUserEmail = "achaji2563@gmail.com";
-//        // JWTController.getSubjectFromJwt(JWTController.getJwtKey())
-//
-//        HttpResponse userResponse;
-//        try {
-//            userResponse = HttpController.sendRequest(SERVER_ADDRESS + "/users/" + currentUserEmail, HttpMethod.GET, null, null);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        if (userResponse.getStatusCode() != 200) throw new RuntimeException("Error getting user data");
-//
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        JsonNode userJson = null;
-//
-//        try {
-//            userJson = objectMapper.readTree(userResponse.getBody());
-//        } catch (JsonProcessingException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        JsonNode additionalName = userJson.get("additionalName");
-//        JsonNode headline = userJson.get("headline");
-//        JsonNode country = userJson.get("country");
-//        JsonNode city = userJson.get("city");
-//        JsonNode profession = userJson.get("profession");
-//
-//        firstNameEditTF.setText(userJson.get("firstName").asText());
-//        additionalNameEditTF.setText(additionalName == null ? "" : additionalName.asText());
-//        lastNameEditTF.setText(userJson.get("lastName").asText());
-//        headlineEditTA.setText(headline == null ? "" : headline.asText());
-//        countryEditTF.setText(country == null ? "" : country.asText());
-//        cityEditTF.setText(city == null ? "" : city.asText());
-//        professionEditTF.setText(profession == null ? "" : profession.asText());
-//
-//        avatarAddress = userJson.get("profilePicture") == null ? "" : userJson.get("profilePicture").asText();
-//        bannerAddress = userJson.get("backgroundPicture") == null ? "" : userJson.get("backgroundPicture").asText();
-//
-//        if (!avatarAddress.isEmpty()){
-//            Image avatar = new Image(avatarAddress);
-//            profileAvatar.setImage(avatar);
-//        }
-//
-//        if (!bannerAddress.isEmpty()){
-//            Image banner = new Image(bannerAddress);
-//            bannerImageView.setImage(banner);
-//        }
+        currentUserEmail = "achaji2563@gmail.com";
+        // JWTController.getSubjectFromJwt(JWTController.getJwtKey())
+
+        HttpResponse userResponse = getUserResponse();
+
+        JsonNode userJson = getUserJson(userResponse);
+
+        firstName = userJson.get("firstName").asText();
+        lastName = userJson.get("lastName").asText();
+        password = userJson.get("password").asText();
+        additionalName = userJson.get("additionalName");
+        headline = userJson.get("headline");
+        country = userJson.get("country");
+        String countryName = country == null ? "" : country.asText();
+        city = userJson.get("city");
+        String cityName = city == null ? "" : city.asText();
+        profession = userJson.get("profession");
+
+        firstNameEditTF.setText(firstName);
+        additionalNameEditTF.setText(additionalName == null ? "" : additionalName.asText());
+        lastNameEditTF.setText(lastName);
+        headlineEditTA.setText(headline == null ? "" : headline.asText());
+        countryEditTF.setText(countryName);
+        cityEditTF.setText(cityName);
+        professionEditTF.setText(profession == null ? "" : profession.asText());
+
+        avatarAddress = userJson.get("profilePicture") == null ? null : userJson.get("profilePicture").asText();
+        bannerAddress = userJson.get("backgroundPicture") == null ? null : userJson.get("backgroundPicture").asText();
+
+        if (avatarAddress != null){
+            Image avatar = new Image(Paths.get(avatarAddress).toUri().toString());
+            profileAvatar.setImage(avatar);
+        }
+
+        if (bannerAddress != null){
+            Image banner = new Image(Paths.get(bannerAddress).toUri().toString());
+            bannerImageView.setImage(banner);
+        }
+
+        fullNameLabel.setText(firstName + " " + (additionalName == null ? "" : (additionalName.asText() + " ")) + lastName);
+        headLineTA.setText(headline == null ? "No Headline." : headline.asText());
+        professionLabel.setText(profession == null ? "No profession." : profession.asText());
+        cityAndCountryLabel.setText(cityName + ", " + countryName);
     }
 
     @FXML
@@ -219,13 +235,9 @@ public class ProfileController extends AbstractViewController{
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose Image File");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.jpeg")
         );
         File selectedFile = fileChooser.showOpenDialog(new Stage());
-//        if (selectedFile != null) {
-//            Image image = new Image(selectedFile.toURI().toString());
-//            profileAvatar.setImage(image);
-//        }
         avatarAddress = selectedFile == null ? null : selectedFile.getAbsolutePath();
     }
 
@@ -234,7 +246,7 @@ public class ProfileController extends AbstractViewController{
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose Image File");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.jpeg")
         );
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         bannerAddress = selectedFile == null ? null : selectedFile.getAbsolutePath();
@@ -248,7 +260,51 @@ public class ProfileController extends AbstractViewController{
 
     @FXML
     void on_saveInfoButton_clicked(ActionEvent event) {
+        String newAdditionalName = additionalNameEditTF.getText();
+        String newHeadline = headlineEditTA.getText();
+        String newCountry = countryEditTF.getText();
+        String newCity = cityEditTF.getText();
+        String newProfession = professionEditTF.getText();
+        User user = new User(currentUserEmail, firstNameEditTF.getText(), lastNameEditTF.getText(), password,
+                newAdditionalName, avatarAddress, bannerAddress, newHeadline, newCountry, newCity, newProfession,
+                JWTController.getJwtKey());
 
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(User.class, new UserTypeAdapter())
+                .create();
+        String userJson = gson.toJson(user);
+
+        try {
+            HttpResponse response = HttpController.sendRequest(SERVER_ADDRESS + "/users", HttpMethod.PUT, userJson, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        editInfoVbox.setDisable(true);
+        editInfoVbox.setVisible(false);
+        initialize();
     }
 
+    private HttpResponse getUserResponse(){
+        HttpResponse userResponse;
+        try {
+            userResponse = HttpController.sendRequest(SERVER_ADDRESS + "/users/" + currentUserEmail, HttpMethod.GET, null, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (userResponse.getStatusCode() != 200) throw new RuntimeException("Error getting user data");
+
+        return userResponse;
+    }
+
+    private JsonNode getUserJson(HttpResponse userResponse){
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            return objectMapper.readTree(userResponse.getBody());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

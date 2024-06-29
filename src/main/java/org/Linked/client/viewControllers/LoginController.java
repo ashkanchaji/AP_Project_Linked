@@ -78,39 +78,39 @@ public class LoginController extends AbstractViewController {
 
     @FXML
     void on_login_clicked(ActionEvent event) {
-//        HttpURLConnection connection = null;
-//        try {
-//            String email = emailTF.getText();
-//            String password = passwordTF.getText();
-//
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            String requestBody = objectMapper.writeValueAsString(Map.of("email", email, "password", password));
-//
-//            String endpoint = "/login";
-//            URL url = new URL(SERVER_ADDRESS + endpoint);
-//
-//            connection = (HttpURLConnection) url.openConnection();
-//            connection.setRequestMethod("POST");
-//            connection.setRequestProperty("Content-Type", "application/json");
-//            connection.setDoOutput(true);
-//
-//            try (OutputStream os = connection.getOutputStream()) {
-//                os.write(requestBody.getBytes());
-//                os.flush();
-//            }
-//
-//            int responseCode = connection.getResponseCode();
-//
-//            if (responseCode == HttpURLConnection.HTTP_OK) {
-//                // Successful login
-//                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-//                    String tokenResponse = reader.readLine();
-//                    try (FileWriter fileWriter = new FileWriter("src/main/java/org/Linked/client/Token/UserJwtToken.txt")) {
-//                        fileWriter.write(tokenResponse);
-//                    }
-//                    JWTController.setJwtKey(tokenResponse);
-//                    System.out.println(JWTController.getJwtKey());
-//                }
+        HttpURLConnection connection = null;
+        try {
+            String email = emailTF.getText();
+            String password = passwordTF.getText();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String requestBody = objectMapper.writeValueAsString(Map.of("email", email, "password", password));
+
+            String endpoint = "/login";
+            URL url = new URL(SERVER_ADDRESS + endpoint);
+
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setDoOutput(true);
+
+            try (OutputStream os = connection.getOutputStream()) {
+                os.write(requestBody.getBytes());
+                os.flush();
+            }
+
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Successful login
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                    String tokenResponse = reader.readLine();
+                    try (FileWriter fileWriter = new FileWriter("src/main/java/org/Linked/client/Token/UserJwtToken.txt")) {
+                        fileWriter.write(tokenResponse);
+                    }
+                    JWTController.setJwtKey(tokenResponse);
+                    System.out.println(JWTController.getJwtKey());
+                }
                 try {
                     // Store the current scene dimensions
                     Stage currentStage = (Stage) signupViewButton.getScene().getWindow();
@@ -137,28 +137,28 @@ public class LoginController extends AbstractViewController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-//            } else if (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
-//                // Unauthorized (401) - Handle invalid credentials
-//                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()))) {
-//                    String response = reader.readLine();
-//                    statusMassageLabel.setText(response); // Display error message from server
-//                    statusMassageLabel.setVisible(true);
-//                }
-//            } else {
-//                // Handle other HTTP response codes (e.g., 400, 500, etc.)
-//                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()))) {
-//                    String response = reader.readLine();
-//                    statusMassageLabel.setText("Error: " + responseCode + " - " + response); // Display error message
-//                    statusMassageLabel.setVisible(true);
-//                }
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } finally {
-//            if (connection != null) {
-//                connection.disconnect();
-//            }
-//        }
+            } else if (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                // Unauthorized (401) - Handle invalid credentials
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()))) {
+                    String response = reader.readLine();
+                    statusMassageLabel.setText(response); // Display error message from server
+                    statusMassageLabel.setVisible(true);
+                }
+            } else {
+                // Handle other HTTP response codes (e.g., 400, 500, etc.)
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()))) {
+                    String response = reader.readLine();
+                    statusMassageLabel.setText("Error: " + responseCode + " - " + response); // Display error message
+                    statusMassageLabel.setVisible(true);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
     }
 
     @FXML
