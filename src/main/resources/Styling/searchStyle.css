@@ -1,0 +1,65 @@
+.root {
+    -fx-background-color: #FAF9F6;
+}
+
+.tab {
+    -fx-background-color: #347dab;
+}
+
+.tab_button {
+    -fx-background-color: transparent;
+}
+
+.search-box {
+    -fx-background-color: #CCCCCC;
+    -fx-text-fill: #3f3f3f; /* Text color */
+    -fx-padding: 10px;
+    -fx-font-size: 16px;
+}
+
+.search-box .text-field {
+    -fx-prompt-text-fill: #3f3f3f; /* Placeholder text color */
+}
+
+.search_button {
+    -fx-background-color: #2196f3;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-transition: background-color 0.3s, transform 0.3s;
+}
+
+.search_button:hover {
+    -fx-background-color: #1b66bb;
+}
+
+.list-cell {
+    -fx-background-color: #FAF9F6;
+    -fx-font-family: "Arial"; /* Choose a font family you like */
+    -fx-font-size: 14px;      /* Set the font size */
+}
+
+.list-cell .email-label {
+    -fx-font-family: "Verdana"; /* Different font for the name */
+    -fx-font-size: 16px;        /* Larger font size for the name */
+    -fx-font-weight: bold;      /* Bold font weight */
+}
+
+.list-cell .name-label {
+    -fx-font-family: "Courier New"; /* Different font for the email */
+    -fx-font-size: 14px;            /* Font size for the email */
+    -fx-text-fill: #555;            /* Text color for the email */
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #888; /* Color of the scrollbar thumb */
+    -fx-background-radius: 5px; /* Rounded corners for the scrollbar thumb */
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: #e0e0e0; /* Color of the scrollbar track */
+}
+
+.scroll-bar:vertical .increment-button, .scroll-bar:vertical .decrement-button {
+    -fx-background-color: #ccc; /* Color of the scrollbar buttons */
+    -fx-background-radius: 5px; /* Rounded corners for the scrollbar buttons */
+}

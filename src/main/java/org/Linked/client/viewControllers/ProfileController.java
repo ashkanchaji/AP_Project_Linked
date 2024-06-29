@@ -9,6 +9,9 @@ import com.google.gson.GsonBuilder;
 import io.github.gleidson28.GNAvatarView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -222,6 +225,36 @@ public class ProfileController extends AbstractViewController{
         headLineTA.setText(headline == null ? "No Headline." : headline.asText());
         professionLabel.setText(profession == null ? "No profession." : profession.asText());
         cityAndCountryLabel.setText(cityName + ", " + countryName);
+    }
+
+    @FXML
+    void on_searchButton_clicked(ActionEvent event) {
+        try {
+            // Store the current scene dimensions
+            Stage currentStage = (Stage) searchButton.getScene().getWindow();
+            previousSceneWidth = currentStage.getWidth();
+            previousSceneHeight = currentStage.getHeight();
+
+            // Load the FXML file for the SignUp page
+            Parent profilePage = FXMLLoader.load(getClass().getResource("/fxml/searchView.fxml"));
+
+            // Create a new scene using the SignUp page
+            Scene profileScene = new Scene(profilePage);
+
+            // Set the scene size to match the previous scene size
+            profileScene.setRoot(profilePage);
+            currentStage.setScene(profileScene);
+
+            // Apply the previous scene size
+            currentStage.setWidth(previousSceneWidth);
+            currentStage.setHeight(previousSceneHeight);
+
+            // Alternatively, maximize the stage if needed
+            // currentStage.setMaximized(true);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
