@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.Linked.client.viewControllers.Utils.JWTController;
 import org.Linked.server.Controller.Parsers.JwtUtil;
@@ -22,7 +23,9 @@ public class LinkedApp extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/LoginView.fxml"));
         primaryStage.setTitle("Linked");
         primaryStage.setScene(new Scene(root, 1080, 720));
-//        primaryStage.setMaximized(true);
+        Image icon = new Image(Paths.get("src/main/resources/Images/linkedEdited.png").toUri().toString());
+        primaryStage.getIcons().add(icon);
+        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 

@@ -61,7 +61,7 @@
                         <Insets left="2.0" right="2.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Button fx:id="searchButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Search">
+                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#on_searchButton_clicked" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Search">
                      <HBox.margin>
                         <Insets right="2.0" />
                      </HBox.margin>
