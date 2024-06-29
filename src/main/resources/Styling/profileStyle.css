@@ -52,3 +52,6 @@
     -fx-background-color: #e4f0ff; /* Light orange background */
     -fx-text-fill:  black; /* Black text color */
 }
+.button-edu{
+    -fx-background-radius: 15;
+}

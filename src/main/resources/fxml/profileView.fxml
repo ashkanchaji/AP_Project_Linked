@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="rootBP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../Styling/profileStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.ProfileController">
+<BorderPane fx:id="rootBP" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../Styling/profileStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.ProfileController">
    <left>
       <VBox fx:id="tabVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="336.0" spacing="16.0" style="-fx-background-radius: 5;" stylesheets="@../Styling/profileStyle.css" BorderPane.alignment="CENTER">
          <styleClass>
@@ -152,7 +152,7 @@
                <center>
                   <VBox maxWidth="-Infinity" prefHeight="200.0" prefWidth="1584.0" BorderPane.alignment="CENTER">
                      <children>
-                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="245.0" prefWidth="1584.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 20;" VBox.vgrow="ALWAYS">
+                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="245.0" prefWidth="1578.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 20;" VBox.vgrow="ALWAYS">
                            <children>
                               <Label fx:id="fullNameLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="750.0" text="Ashkan Chaji" translateX="50.0" translateY="50.0" VBox.vgrow="ALWAYS">
                                  <font>
@@ -169,6 +169,9 @@
                                  <font>
                                     <Font size="11.0" />
                                  </font>
+                                 <VBox.margin>
+                                    <Insets top="8.0" />
+                                 </VBox.margin>
                               </Label>
                               <Button fx:id="editInfoButton" mnemonicParsing="false" onAction="#on_editInfoButton_clicked" prefHeight="40.0" prefWidth="75.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Edit" textFill="WHITE" translateX="1270.0" translateY="-125.0">
                                  <font>
@@ -186,6 +189,65 @@
                                  </font>
                               </Button>
                            </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox prefHeight="245.0" prefWidth="1584.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 20;">
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <children>
+                              <Label fx:id="fullNameLabel1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="119.0" text="Education" translateX="25.0" translateY="10.0">
+                                 <font>
+                                    <Font name="System Bold Italic" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label prefHeight="18.0" prefWidth="271.0" text="school name" translateX="25.0" translateY="20.0">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label prefHeight="18.0" prefWidth="271.0" text="major" translateX="25.0" translateY="20.0">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label prefHeight="18.0" prefWidth="271.0" text="DateIn" translateX="25.0" translateY="20.0">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label prefHeight="18.0" prefWidth="271.0" text="DateOut" translateX="25.0" translateY="20.0">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label prefHeight="18.0" prefWidth="271.0" text="Grade" translateX="25.0" translateY="20.0">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label prefHeight="36.0" prefWidth="271.0" text="activity decription" translateX="25.0" translateY="20.0" wrapText="true">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="245.0" prefWidth="1584.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 20;">
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
                         </VBox>
                      </children>
                   </VBox>
@@ -203,7 +265,7 @@
                   </GNAvatarView>
                </children>
             </AnchorPane>
-            <VBox fx:id="editInfoVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0">
+            <VBox fx:id="editInfoVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
                <children>
                   <TextField fx:id="firstNameEditTF" focusTraversable="false" prefHeight="30.0" promptText="First Name" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
                      <VBox.margin>
