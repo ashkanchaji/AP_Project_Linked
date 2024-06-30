@@ -23,9 +23,10 @@ public class ConnectController extends  Controller{
 
         if (ConnectDAO.getConnectByEmail(connect.getSender()) == null){
             ConnectDAO.saveConnect(connect);
-        } else {
-            ConnectDAO.updateConnect(connect);
         }
+//        else {
+//            ConnectDAO.updateConnect(connect);
+//        }
     }
 
     public static void deleteConnect (String email) throws SQLException {
