@@ -30,6 +30,7 @@ public class AbstractViewController {
             .registerTypeAdapter(Follow.class, new FollowTypeAdapter())
             .create();
     protected static final Type USER_LIST_TYPE = new TypeToken<ArrayList<User>>() {}.getType();
+    protected static final Type FOLLOW_LIST_TYPE = new TypeToken<ArrayList<Follow>>() {}.getType();
 
     protected <T extends Node> void switchScenes (String path, T lastSceneNode) {
         try {

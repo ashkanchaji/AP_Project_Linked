@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -162,25 +163,37 @@
                                  </font>
                               </Label>
                               <TextArea fx:id="headLineTA" depthTest="DISABLE" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="70.0" prefWidth="750.0" styleClass="headLineTA" stylesheets="@../Styling/profileStyle.css" translateX="25.0" translateY="55.0" wrapText="true" />
-                              <Label fx:id="professionLabel" prefHeight="30.0" prefWidth="720.0" text="WWWWWWWWWWWWWWW" translateX="25.0" translateY="70.0">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="cityAndCountryLabel" prefHeight="30.0" prefWidth="720.0" text="Label" translateX="25.0" translateY="80.0">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
+                              <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="750.0" translateX="25.0" translateY="70.0">
+                                 <children>
+                                    <Label fx:id="professionLabel" prefHeight="30.0" prefWidth="550.0" text="WWWWWWWWWWWWWWW" wrapText="true">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="followingsCountLabel" alignment="CENTER_RIGHT" onMouseClicked="#on_followingsCountLabel_clicked" prefWidth="100.0" text="N/A Followings" />
+                                    <Label fx:id="followersCountLabel" alignment="CENTER_RIGHT" onMouseClicked="#on_followersCountLabel_clicked" prefWidth="100.0" text="N/A Followers" />
+                                 </children>
+                              </HBox>
+                              <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="750.0" translateX="25.0" translateY="80.0">
                                  <VBox.margin>
                                     <Insets top="8.0" />
                                  </VBox.margin>
-                              </Label>
+                                 <children>
+                                    <Label fx:id="cityAndCountryLabel" prefHeight="30.0" prefWidth="550.0" text="Label" wrapText="true">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="connectionCountLabel" alignment="CENTER_RIGHT" onMouseClicked="#on_connectionCountLabel_clicked" prefWidth="100.0" text="N/A Connection" />
+                                    <Label fx:id="connectedCountLabel" alignment="CENTER_RIGHT" onMouseClicked="#on_connectedCountLabel_clicked" prefWidth="100.0" text="N/A Connected" />
+                                 </children>
+                              </HBox>
                               <Button fx:id="editInfoButton" mnemonicParsing="false" onAction="#on_editInfoButton_clicked" prefHeight="40.0" prefWidth="75.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Edit" textFill="WHITE" translateX="1270.0" translateY="-125.0">
                                  <font>
                                     <Font name="System Bold Italic" size="12.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="connectButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Connect" textFill="WHITE" translateX="1125.0" translateY="17.5">
+                              <Button fx:id="connectButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Connect" textFill="WHITE" translateX="1125.0" translateY="13.5">
                                  <font>
                                     <Font name="System Bold Italic" size="12.0" />
                                  </font>
@@ -663,6 +676,50 @@
                         </Button>
                      </children>
                   </HBox>
+               </children>
+            </VBox>
+            <VBox fx:id="followShowVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
+               <children>
+                  <HBox alignment="CENTER">
+                     <VBox.margin>
+                        <Insets left="100.0" right="100.0" top="8.0" />
+                     </VBox.margin>
+                     <children>
+                        <HBox alignment="BOTTOM_CENTER" prefHeight="50.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="followingsFollowshowLbl" alignment="BOTTOM_CENTER" onMouseClicked="#on_followingsFollowshowLbl_clicked" prefHeight="40.0" prefWidth="100.0" text="Followings">
+                                 <HBox.margin>
+                                    <Insets right="50.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="followersFollowShowLbl" alignment="BOTTOM_CENTER" onMouseClicked="#on_followersFollowShowLbl_clicked" prefHeight="40.0" prefWidth="100.0" text="Followers">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font></Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                        </HBox>
+                        <Button fx:id="exitFollowShowButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#on_exitFollowShowButton_clicked" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="exit" translateX="80.0">
+                           <font>
+                              <Font size="8.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <ListView fx:id="usersListView" prefHeight="491.0" prefWidth="400.0" style="-fx-background-radius: 20; -fx-background-color: #347dab;" stylesheets="@../Styling/profileStyle.css">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="20.0" />
+                     </VBox.margin>
+                     <styleClass>
+                        <String fx:value="scroll-bar" />
+                        <String fx:value="list-cell" />
+                     </styleClass>
+                  </ListView>
                </children>
             </VBox>
          </children>
