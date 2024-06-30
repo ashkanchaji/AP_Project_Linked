@@ -8,7 +8,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.Linked.client.viewControllers.Utils.FollowTypeAdapter;
 import org.Linked.client.viewControllers.Utils.UserTypeAdapter;
+import org.Linked.server.Model.Follow;
 import org.Linked.server.Model.User;
 
 import java.io.IOException;
@@ -25,6 +27,7 @@ public class AbstractViewController {
 
     protected static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(User.class, new UserTypeAdapter())
+            .registerTypeAdapter(Follow.class, new FollowTypeAdapter())
             .create();
     protected static final Type USER_LIST_TYPE = new TypeToken<ArrayList<User>>() {}.getType();
 

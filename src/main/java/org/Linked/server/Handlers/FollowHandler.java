@@ -14,10 +14,16 @@ public class FollowHandler extends Handler{
 
         switch (method) {
             case "GET":
-                if (splitPath.length >= 3) {
+                if (splitPath.length == 3) {
                     String email = splitPath[splitPath.length - 1];
                     String FollowJson = FollowController.getFollow(email);
-                    response = FollowJson == null ? "No such job info found!" : FollowJson;
+                    response = FollowJson.equals("null") ? "No such follow info found!" : FollowJson;
+                } else if (splitPath.length == 4) {
+                    String followerEmail = splitPath[splitPath.length - 2];
+                    String followingEmail = splitPath[splitPath.length - 1];
+
+                    String followJson = FollowController.getFollow(followerEmail, followingEmail);
+                    response = followJson.equals("null") ? "No such follow info found!" : followJson;
                 } else {
                     response = FollowController.getAllFollows();
                 }

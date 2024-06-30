@@ -6,10 +6,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FollowController extends  Controller{
+    public static String getFollow (String followerEmail, String followingEmail) throws SQLException{
+        Follow follow = FollowDAO.getFollowByEmail(followerEmail, followingEmail);
+        return gson.toJson(follow);
+    }
 
     public static String getFollow (String email) throws SQLException {
-        Follow follow = FollowDAO.getFollowByEmail(email);
-        return follow == null ? null : gson.toJson(follow);
+        ArrayList<Follow> follows = FollowDAO.getFollowsByFollower(email);
+        return gson.toJson(follows);
     }
 
     public static String getAllFollows () throws SQLException {
@@ -22,11 +26,12 @@ public class FollowController extends  Controller{
 
         if (UserDAO.getUserByEmail(follow.getFollower()) == null) throw new SQLException("User does not exist");
 
-        if (FollowDAO.getFollowByEmail(follow.getFollowing()) == null){
+        if (FollowDAO.getFollowByEmail(follow.getFollower(), follow.getFollowing()) == null){
             FollowDAO.saveFollow(follow);
-        } else {
-            FollowDAO.updateFollow(follow);
         }
+//        else {
+//            FollowDAO.updateFollow(follow);
+//        }
     }
 
     public static void deleteFollow (String email) throws SQLException {

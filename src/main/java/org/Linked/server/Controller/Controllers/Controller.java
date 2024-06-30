@@ -6,11 +6,14 @@ import org.Linked.client.viewControllers.Utils.UserTypeAdapter;
 import org.Linked.server.Controller.DAO.*;
 import org.Linked.server.Controller.DAO.*;
 import org.Linked.server.Controller.DAO.*;
+import org.Linked.server.Controller.Util.FollowTypeAdapter;
+import org.Linked.server.Model.Follow;
 import org.Linked.server.Model.User;
 
 public abstract class Controller {
     protected static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(User.class, new UserTypeAdapter())
+            .registerTypeAdapter(Follow.class, new FollowTypeAdapter())
             .create();
     protected static final org.Linked.server.Controller.DAO.UserDAO UserDAO = new UserDAO();
     protected static final JobDAO JobDAO = new JobDAO();

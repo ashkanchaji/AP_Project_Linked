@@ -14,6 +14,7 @@ public class Router {
         server.handleValidRequests("/jobs", new JobHandler()::handle);
         server.handleValidRequests("/contacts", new ContactsHandler()::handle);
         server.handleValidRequests("/posts", new PostHandler()::handle);
+        server.handleValidRequests("/follow", new FollowHandler()::handle);
         server.handleValidRequests("/reposts", new RepostHandler()::handle);
         server.handleValidRequests("/comments", new ContactsHandler()::handle);
         server.handleValidRequests("/hashtags", new HashtagHandler()::handle);

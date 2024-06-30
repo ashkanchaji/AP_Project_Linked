@@ -26,6 +26,7 @@ import org.Linked.client.viewControllers.Http.HttpMethod;
 import org.Linked.client.viewControllers.Http.HttpResponse;
 import org.Linked.client.viewControllers.Utils.JWTController;
 import org.Linked.client.viewControllers.Utils.UserTypeAdapter;
+import org.Linked.server.Model.Follow;
 import org.Linked.server.Model.User;
 
 import java.io.File;
@@ -411,52 +412,56 @@ public class ProfileController extends AbstractViewController{
 
         JsonNode educationJson = getEducationJson(educationResponse);
 
-        instituteName = educationJson.get("collegeName");
-        major = educationJson.get("major");
-        registerDate = educationJson.get("enterYear");
-        graduationDate = educationJson.get("exitYear");
-        grade = educationJson.get("grade");
-        activityDiscription = educationJson.get("activitiesInfo");
-        additionalInformation = educationJson.get("additionalInfo");
+        if (educationJson != null) {
+            instituteName = educationJson.get("collegeName");
+            major = educationJson.get("major");
+            registerDate = educationJson.get("enterYear");
+            graduationDate = educationJson.get("exitYear");
+            grade = educationJson.get("grade");
+            activityDiscription = educationJson.get("activitiesInfo");
+            additionalInformation = educationJson.get("additionalInfo");
 
-        instituteNameEduTF.setText(instituteName == null ? "" : instituteName.asText());
-        majorEduTF.setText(major == null ? "" : major.asText());
-        registerDateDP.setChronology(registerDate == null ? Chronology.of(""): Chronology.of(registerDate.asText()));
-        graduateDateDP.setChronology(graduationDate == null ? Chronology.of(""): Chronology.of(graduationDate.asText()));
-        gradeEduTF.setText(grade == null ? "" : grade.asText());
-        activityEduTF.setText(activityDiscription == null ? "" : activityDiscription.asText());
-        additionalEduTF.setText(additionalInformation == null ? "" : additionalInformation.asText());
+            instituteNameEduTF.setText(instituteName == null ? "" : instituteName.asText());
+            majorEduTF.setText(major == null ? "" : major.asText());
+            registerDateDP.setChronology(registerDate == null ? Chronology.of(""): Chronology.of(registerDate.asText()));
+            graduateDateDP.setChronology(graduationDate == null ? Chronology.of(""): Chronology.of(graduationDate.asText()));
+            gradeEduTF.setText(grade == null ? "" : grade.asText());
+            activityEduTF.setText(activityDiscription == null ? "" : activityDiscription.asText());
+            additionalEduTF.setText(additionalInformation == null ? "" : additionalInformation.asText());
 
-        instituteNameEduLabel.setText(instituteName == null ? "no institute name mentioned" : instituteName.asText());
-        majorEduLabel.setText(major == null ? "no major mentioned" : major.asText());
-        RegisterDateEduLabel.setText(registerDate == null ? "no register date mentioned" : registerDate.asText()); //idk if it works or not
-        GraduationDateEduLabel.setText(graduationDate == null ? "no graduation date mentioned" :graduationDate.asText()); //idk if it works or not
-        GradeEduLabel.setText(grade == null ? "no grade mentioned" : grade.asText());
-        activityDescriptionEduLabel.setText(activityDiscription == null ? "no activity discription mentioned" : activityDiscription.asText());
-        addInfoEduLabel.setText(additionalInformation == null ? "no additional information mentioned" : additionalInformation.asText());
+            instituteNameEduLabel.setText(instituteName == null ? "no institute name mentioned" : instituteName.asText());
+            majorEduLabel.setText(major == null ? "no major mentioned" : major.asText());
+            RegisterDateEduLabel.setText(registerDate == null ? "no register date mentioned" : registerDate.asText()); //idk if it works or not
+            GraduationDateEduLabel.setText(graduationDate == null ? "no graduation date mentioned" :graduationDate.asText()); //idk if it works or not
+            GradeEduLabel.setText(grade == null ? "no grade mentioned" : grade.asText());
+            activityDescriptionEduLabel.setText(activityDiscription == null ? "no activity discription mentioned" : activityDiscription.asText());
+            addInfoEduLabel.setText(additionalInformation == null ? "no additional information mentioned" : additionalInformation.asText());
+        }
 
         // contacts info
         HttpResponse contactsResponse = getContactsInfoResponse();
 
-        JsonNode contactsJson = getEducationJson(contactsResponse);
+        JsonNode contactsJson = getContactsJson(contactsResponse);
 
-        email = contactsJson.get("email");
-        phoneNumber = contactsJson.get("phoneNumber");
-        address = contactsJson.get("address");
-        birthday = contactsJson.get("birthday");
-        otherAccounts = contactsJson.get("contactUs");
+        if (contactsJson != null) {
+            email = contactsJson.get("email");
+            phoneNumber = contactsJson.get("phoneNumber");
+            address = contactsJson.get("address");
+            birthday = contactsJson.get("birthday");
+            otherAccounts = contactsJson.get("contactUs");
 
-        emailContactsTF.setText(email == null ? "" : email.asText());
-        numberContactsTF.setText(phoneNumber == null ? "" : phoneNumber.asText());
-        addressContactsTF.setText(address == null ? "" : address.asText());
-        birthdayContactsDP.setChronology(birthday == null ? Chronology.of("") : Chronology.of(birthday.asText())); //idk if it works or not
-        otherAccountsContactsTF.setText(otherAccounts == null ? "" : otherAccounts.asText());
+            emailContactsTF.setText(email == null ? "" : email.asText());
+            numberContactsTF.setText(phoneNumber == null ? "" : phoneNumber.asText());
+            addressContactsTF.setText(address == null ? "" : address.asText());
+            birthdayContactsDP.setChronology(birthday == null ? Chronology.of("") : Chronology.of(birthday.asText())); //idk if it works or not
+            otherAccountsContactsTF.setText(otherAccounts == null ? "" : otherAccounts.asText());
 
-        emailContactsLabel.setText(email == null ? "no email mentioned" : email.asText());
-        numberContactsLabel.setText(phoneNumber == null ? "no number mentioned" : phoneNumber.asText());
-        addressContactsLabel.setText(address == null ? "no address mentioned" : address.asText());
-        birthdayContactsLabel.setText(birthday == null ? "no birthday mentioned" : birthday.asText()); //idk if it works or not
-        otherAccContactsLabel.setText(otherAccounts == null ? "no other account mentioned" : otherAccounts.asText());
+            emailContactsLabel.setText(email == null ? "no email mentioned" : email.asText());
+            numberContactsLabel.setText(phoneNumber == null ? "no number mentioned" : phoneNumber.asText());
+            addressContactsLabel.setText(address == null ? "no address mentioned" : address.asText());
+            birthdayContactsLabel.setText(birthday == null ? "no birthday mentioned" : birthday.asText()); //idk if it works or not
+            otherAccContactsLabel.setText(otherAccounts == null ? "no other account mentioned" : otherAccounts.asText());
+        }
 
         // skills
 
@@ -467,7 +472,27 @@ public class ProfileController extends AbstractViewController{
 
 
 
+        if (profileUserEmail.equals(currentUserEmail)) {
+            followButton.setVisible(false);
+            connectButton.setVisible(false);
+        } else {
+            editInfoButton.setVisible(false);
+            editContactButton.setVisible(false);
+            editEduButton.setVisible(false);
+            editSkillsButton.setVisible(false);
 
+            try {
+                HttpResponse httpResponse = HttpController.sendRequest(SERVER_ADDRESS + "/follow/" + currentUserEmail +
+                        "/" + profileUserEmail, HttpMethod.GET, null, null);
+                if (!httpResponse.getBody().equals("No such follow info found!") ) {
+                    followButton.setText("Following");
+                } else {
+                    followButton.setText("Follow");
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @FXML
@@ -536,6 +561,20 @@ public class ProfileController extends AbstractViewController{
         initialize();
     }
 
+    @FXML
+    void on_followButton_clicked(ActionEvent event) {
+        Follow follow = new Follow(currentUserEmail, profileUserEmail);
+        String followJson = gson.toJson(follow);
+
+        try {
+            HttpResponse response = HttpController.sendRequest(SERVER_ADDRESS + "/follow/" + currentUserEmail, HttpMethod.POST, followJson, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        followButton.setText("Following");
+        initialize();
+    }
+
     private HttpResponse getUserResponse(){
         HttpResponse userResponse;
         try {
@@ -552,7 +591,7 @@ public class ProfileController extends AbstractViewController{
     private HttpResponse getEducationResponse(){
         HttpResponse educationResponse;
         try {
-            educationResponse = HttpController.sendRequest(SERVER_ADDRESS + "/education/" + currentUserEmail ,HttpMethod.GET , null , null);
+            educationResponse = HttpController.sendRequest(SERVER_ADDRESS + "/education/" + profileUserEmail ,HttpMethod.GET , null , null);
         } catch (IOException e){
             throw  new RuntimeException(e);
         }
@@ -564,7 +603,7 @@ public class ProfileController extends AbstractViewController{
     private HttpResponse getContactsInfoResponse(){
         HttpResponse contactsInfoResponse;
         try {
-            contactsInfoResponse = HttpController.sendRequest(SERVER_ADDRESS + "/contacts/" + currentUserEmail , HttpMethod.GET , null , null);
+            contactsInfoResponse = HttpController.sendRequest(SERVER_ADDRESS + "/contacts/" + profileUserEmail , HttpMethod.GET , null , null);
         }catch (IOException e){
             throw  new RuntimeException(e);
         }
@@ -588,6 +627,7 @@ public class ProfileController extends AbstractViewController{
         ObjectMapper objectMapper = new ObjectMapper();
 
         try {
+            if (EducationResponse.getBody().equals("No such education info found!")) return null;
             return objectMapper.readTree(EducationResponse.getBody());
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -597,6 +637,7 @@ public class ProfileController extends AbstractViewController{
     private JsonNode getContactsJson(HttpResponse contactsResponse){
         ObjectMapper objectMapper = new ObjectMapper();
         try {
+            if (contactsResponse.getBody().equals("No such contact found!")) return null;
             return objectMapper.readTree(contactsResponse.getBody());
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
