@@ -32,7 +32,9 @@ import org.Linked.client.viewControllers.Http.HttpMethod;
 import org.Linked.client.viewControllers.Http.HttpResponse;
 import org.Linked.client.viewControllers.Utils.JWTController;
 import org.Linked.client.viewControllers.Utils.UserTypeAdapter;
+import org.Linked.server.Model.Education;
 import org.Linked.server.Model.Follow;
+import org.Linked.server.Model.Skill;
 import org.Linked.server.Model.User;
 
 import java.io.File;
@@ -40,6 +42,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.time.chrono.Chronology;
 import java.util.ArrayList;
 
@@ -590,9 +594,7 @@ public class ProfileController extends AbstractViewController{
                 newAdditionalName, avatarAddress, bannerAddress, newHeadline, newCountry, newCity, newProfession,
                 JWTController.getJwtKey());
 
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(User.class, new UserTypeAdapter())
-                .create();
+
         String userJson = gson.toJson(user);
 
         try {
@@ -896,8 +898,8 @@ public class ProfileController extends AbstractViewController{
 
     @FXML
     void on_cancelSkillsButton_clicked(ActionEvent event) {
-        educationVbox.setVisible(false);
-        educationVbox.setDisable(true);
+        skillsVbox.setVisible(false);
+        skillsVbox.setDisable(true);
     }
     @FXML
     void on_editContactButton_clicked(ActionEvent event) {
@@ -926,7 +928,32 @@ public class ProfileController extends AbstractViewController{
 
     @FXML
     void on_saveEduButton_clicked(ActionEvent event) {
+        String newInstituteName = instituteNameEduTF.getText();
+        String newMajor = majorEduTF.getText();
+        String newGrade = gradeEduTF.getText();
+        String newActivityDescription = activityEduTF.getText();
+        String newAdditionalInformation = additionalEduTF.getText();
+        LocalDate localDate1 = registerDateDP.getValue();
+        java.sql.Date newRegisterDate = java.sql.Date.valueOf(localDate1);
+        LocalDate localDate2 = graduateDateDP.getValue();
+        java.sql.Date newGraduateDate = java.sql.Date.valueOf(localDate2);
+        ArrayList<String> newSkills = null;
 
+        Education education = new Education(profileUserEmail , newInstituteName , newMajor, newRegisterDate ,
+                newGraduateDate , newGrade , newActivityDescription ,newSkills, newAdditionalInformation);
+
+
+        String educationJson = gson.toJson(education);
+
+        try {
+            HttpResponse response = HttpController.sendRequest(SERVER_ADDRESS + "/education", HttpMethod.PUT, educationJson, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        educationVbox.setDisable(true);
+        educationVbox.setVisible(false);
+        initialize();
     }
 
 

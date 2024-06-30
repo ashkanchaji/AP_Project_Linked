@@ -8,8 +8,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.Linked.client.viewControllers.Utils.EducationTypeAdapter;
 import org.Linked.client.viewControllers.Utils.FollowTypeAdapter;
 import org.Linked.client.viewControllers.Utils.UserTypeAdapter;
+import org.Linked.server.Model.Education;
 import org.Linked.server.Model.Follow;
 import org.Linked.server.Model.User;
 
@@ -28,6 +30,7 @@ public class AbstractViewController {
     protected static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(User.class, new UserTypeAdapter())
             .registerTypeAdapter(Follow.class, new FollowTypeAdapter())
+            .registerTypeAdapter(Education.class , new EducationTypeAdapter())
             .create();
     protected static final Type USER_LIST_TYPE = new TypeToken<ArrayList<User>>() {}.getType();
     protected static final Type FOLLOW_LIST_TYPE = new TypeToken<ArrayList<Follow>>() {}.getType();
