@@ -42,9 +42,21 @@ public class FollowDAO extends GenericDAO<Follow> {
         });
     }
 
-    public Follow getFollowByEmail(String email) throws SQLException {
-        String query = "SELECT * FROM " + tablePath + " WHERE follower = ?";
-        return getEntity(query, email);
+    public Follow getFollowByEmail(String followerEmail, String followingEmail) throws SQLException {
+        String query = "SELECT * FROM " + tablePath + " WHERE follower = ? AND following = ?";
+        checkTableExistence();
+
+        Follow entity = null;
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, followerEmail);
+            statement.setString(2, followingEmail);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                entity = mapResultSetToEntity(resultSet);
+            }
+        }
+        return entity;
     }
 
     public ArrayList<Follow> getAllFollows() throws SQLException {
@@ -71,5 +83,26 @@ public class FollowDAO extends GenericDAO<Follow> {
     public void deleteAllFollows() throws SQLException {
         String query = "DELETE FROM " + tablePath;
         deleteAllEntities(query);
+    }
+
+    public ArrayList<Follow> getFollowsByFollower(String follower) throws SQLException {
+        String query = "SELECT * FROM " + tablePath + " WHERE follower = ?";
+        return getEntities(query, follower);
+    }
+
+    // This method can use the existing getAllEntities method as a template
+    private ArrayList<Follow> getEntities(String query, String parameter) throws SQLException {
+        checkTableExistence();
+
+        ArrayList<Follow> entities = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, parameter);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                entities.add(mapResultSetToEntity(resultSet));
+            }
+        }
+        return entities;
     }
 }

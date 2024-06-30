@@ -70,7 +70,7 @@ public class JwtUtil {
                     .parseClaimsJws(jwtToken);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Token Expired!");;
             return false;
         }
     }
