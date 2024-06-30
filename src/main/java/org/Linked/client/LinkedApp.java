@@ -31,11 +31,5 @@ public class LinkedApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
-//        try {
-//            System.out.println(JWTController.isExpired("src/main/java/org/Linked/client/Token/UserJwtToken.txt"));
-//
-//        } catch (Exception e) {
-//            System.out.println("Error reading token: " + e.getMessage());
-//        }
     }
 }

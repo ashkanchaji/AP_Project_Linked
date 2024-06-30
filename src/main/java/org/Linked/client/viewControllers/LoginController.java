@@ -74,6 +74,18 @@ public class LoginController extends AbstractViewController {
                 passwordTF.setText(newValue);
             }
         });
+
+        try {
+            String jwtToken = JWTController.readJwtTokenFromFile("src/main/java/org/Linked/client/Token/UserJwtToken.txt");
+            if (!JWTController.isExpired(jwtToken)) {
+                String[] loginInfo = JWTController.getSubjectFromJwt(jwtToken).split(":");
+                emailTF.setText(loginInfo[0]);
+                passwordTF.setText(loginInfo[1]);
+                visiblePasswordTF.setText(loginInfo[1]);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -111,32 +123,7 @@ public class LoginController extends AbstractViewController {
                     JWTController.setJwtKey(tokenResponse);
                     System.out.println(JWTController.getJwtKey());
                 }
-                try {
-                    // Store the current scene dimensions
-                    Stage currentStage = (Stage) signupViewButton.getScene().getWindow();
-                    previousSceneWidth = currentStage.getWidth();
-                    previousSceneHeight = currentStage.getHeight();
-
-                    // Load the FXML file for the SignUp page
-                    Parent profilePage = FXMLLoader.load(getClass().getResource("/fxml/profileView.fxml"));
-
-                    // Create a new scene using the SignUp page
-                    Scene profileScene = new Scene(profilePage);
-
-                    // Set the scene size to match the previous scene size
-                    profileScene.setRoot(profilePage);
-                    currentStage.setScene(profileScene);
-
-                    // Apply the previous scene size
-                    currentStage.setWidth(previousSceneWidth);
-                    currentStage.setHeight(previousSceneHeight);
-
-                    // Alternatively, maximize the stage if needed
-                    // currentStage.setMaximized(true);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                switchScenes("/fxml/profileView.fxml", loginButton);
             } else if (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 // Unauthorized (401) - Handle invalid credentials
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()))) {
@@ -163,32 +150,7 @@ public class LoginController extends AbstractViewController {
 
     @FXML
     void on_signupViewButton_clicked(ActionEvent event) {
-        try {
-            // Store the current scene dimensions
-            Stage currentStage = (Stage) signupViewButton.getScene().getWindow();
-            previousSceneWidth = currentStage.getWidth();
-            previousSceneHeight = currentStage.getHeight();
-
-            // Load the FXML file for the SignUp page
-            Parent signupPage = FXMLLoader.load(getClass().getResource("/fxml/SignUpView.fxml"));
-
-            // Create a new scene using the SignUp page
-            Scene signupScene = new Scene(signupPage);
-
-            // Set the scene size to match the previous scene size
-            signupScene.setRoot(signupPage);
-            currentStage.setScene(signupScene);
-
-            // Apply the previous scene size
-            currentStage.setWidth(previousSceneWidth);
-            currentStage.setHeight(previousSceneHeight);
-
-            // Alternatively, maximize the stage if needed
-            // currentStage.setMaximized(true);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        switchScenes("/fxml/SignUpView.fxml", signupViewButton);
     }
 
 }

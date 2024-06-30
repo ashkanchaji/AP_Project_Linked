@@ -5,14 +5,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import org.Linked.client.Models.ProfileSearchCell;
 import org.Linked.client.viewControllers.Http.HttpController;
@@ -67,6 +64,7 @@ public class SearchController extends AbstractViewController{
 
         // Bind the ListView's height to the total height of its cells
         usersListView.prefHeightProperty().bind(Bindings.size(users).multiply(80));
+        usersListView.setOnMouseClicked(this::handleListViewClick);
 
         HttpResponse allUsersResponse;
 
@@ -106,32 +104,15 @@ public class SearchController extends AbstractViewController{
 
     @FXML
     void on_profileButton_clicked(ActionEvent event) {
-        try {
-            // Store the current scene dimensions
-            Stage currentStage = (Stage) searchBoxTF.getScene().getWindow();
-            previousSceneWidth = currentStage.getWidth();
-            previousSceneHeight = currentStage.getHeight();
-
-            // Load the FXML file for the SignUp page
-            Parent profilePage = FXMLLoader.load(getClass().getResource("/fxml/profileView.fxml"));
-
-            // Create a new scene using the SignUp page
-            Scene profileScene = new Scene(profilePage);
-
-            // Set the scene size to match the previous scene size
-            profileScene.setRoot(profilePage);
-            currentStage.setScene(profileScene);
-
-            // Apply the previous scene size
-            currentStage.setWidth(previousSceneWidth);
-            currentStage.setHeight(previousSceneHeight);
-
-            // Alternatively, maximize the stage if needed
-            // currentStage.setMaximized(true);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ProfileController.setProfileUserEmail(ProfileController.getCurrentUserEmail());
+        switchScenes("/fxml/profileView.fxml", searchBoxTF);
     }
 
+    private void handleListViewClick(MouseEvent event) {
+        User selectedUser = usersListView.getSelectionModel().getSelectedItem();
+        if (selectedUser != null) {
+            ProfileController.setProfileUserEmail(selectedUser.getEmail());
+            switchScenes("/fxml/profileView.fxml", searchBoxTF);
+        }
+    }
 }

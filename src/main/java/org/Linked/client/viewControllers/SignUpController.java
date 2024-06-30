@@ -53,32 +53,7 @@ public class SignUpController extends AbstractViewController{
 
     @FXML
     void on_loginViewButton_clicked(ActionEvent event) {
-        try {
-            // Store the current scene dimensions
-            Stage currentStage = (Stage) loginViewButton.getScene().getWindow();
-            previousSceneWidth = currentStage.getWidth();
-            previousSceneHeight = currentStage.getHeight();
-
-            // Load the FXML file for the Login page
-            Parent loginPage = FXMLLoader.load(getClass().getResource("/fxml/LoginView.fxml"));
-
-            // Create a new scene using the Login page
-            Scene loginScene = new Scene(loginPage);
-
-            // Set the scene size to match the previous scene size
-            loginScene.setRoot(loginPage);
-            currentStage.setScene(loginScene);
-
-            // Apply the previous scene size
-            currentStage.setWidth(previousSceneWidth);
-            currentStage.setHeight(previousSceneHeight);
-
-            // Alternatively, maximize the stage if needed
-            // currentStage.setMaximized(true);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        switchScenes("/fxml/LoginView.fxml", loginViewButton);
     }
 
     @FXML

@@ -319,8 +319,8 @@ public class ProfileController extends AbstractViewController{
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private String avatarAddress;
     private String bannerAddress;
-    private String currentUserEmail;
-    private String profileUserEmail;
+    private static String currentUserEmail = JWTController.getSubjectFromJwt(JWTController.getJwtKey()).split(":")[0];
+    private static String profileUserEmail = currentUserEmail;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private String firstName;
@@ -364,9 +364,6 @@ public class ProfileController extends AbstractViewController{
         editInfoVbox.setDisable(true);
 
         /* ___ GET USER INFO ___ */
-
-        currentUserEmail = "achaji2563@gmail.com";
-        // JWTController.getSubjectFromJwt(JWTController.getJwtKey())
 
         HttpResponse userResponse = getUserResponse();
 
@@ -475,32 +472,7 @@ public class ProfileController extends AbstractViewController{
 
     @FXML
     void on_searchButton_clicked(ActionEvent event) {
-        try {
-            // Store the current scene dimensions
-            Stage currentStage = (Stage) searchButton.getScene().getWindow();
-            previousSceneWidth = currentStage.getWidth();
-            previousSceneHeight = currentStage.getHeight();
-
-            // Load the FXML file for the SignUp page
-            Parent profilePage = FXMLLoader.load(getClass().getResource("/fxml/searchView.fxml"));
-
-            // Create a new scene using the SignUp page
-            Scene profileScene = new Scene(profilePage);
-
-            // Set the scene size to match the previous scene size
-            profileScene.setRoot(profilePage);
-            currentStage.setScene(profileScene);
-
-            // Apply the previous scene size
-            currentStage.setWidth(previousSceneWidth);
-            currentStage.setHeight(previousSceneHeight);
-
-            // Alternatively, maximize the stage if needed
-            // currentStage.setMaximized(true);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        switchScenes("/fxml/searchView.fxml", searchButton);
     }
 
     @FXML
@@ -567,7 +539,7 @@ public class ProfileController extends AbstractViewController{
     private HttpResponse getUserResponse(){
         HttpResponse userResponse;
         try {
-            userResponse = HttpController.sendRequest(SERVER_ADDRESS + "/users/" + currentUserEmail, HttpMethod.GET, null, null);
+            userResponse = HttpController.sendRequest(SERVER_ADDRESS + "/users/" + profileUserEmail, HttpMethod.GET, null, null);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -684,5 +656,21 @@ public class ProfileController extends AbstractViewController{
     @FXML
     void on_saveSkillsButton_clicked(ActionEvent event) {
 
+    }
+
+    public static String getCurrentUserEmail() {
+        return currentUserEmail;
+    }
+
+    public static void setCurrentUserEmail(String currentUserEmail) {
+        ProfileController.currentUserEmail = currentUserEmail;
+    }
+
+    public static String getProfileUserEmail() {
+        return profileUserEmail;
+    }
+
+    public static void setProfileUserEmail(String profileUserEmail) {
+        ProfileController.profileUserEmail = profileUserEmail;
     }
 }
