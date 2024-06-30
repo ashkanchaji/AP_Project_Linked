@@ -7,6 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.github.gleidson28.GNAvatarView;
+import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,12 +18,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import org.Linked.client.Models.ProfileSearchCell;
 import org.Linked.client.viewControllers.Http.HttpController;
 import org.Linked.client.viewControllers.Http.HttpMethod;
 import org.Linked.client.viewControllers.Http.HttpResponse;
@@ -113,6 +119,15 @@ public class ProfileController extends AbstractViewController{
     private Button connectButton;
 
     @FXML
+    private Label connectedCountLabel;
+
+    @FXML
+    private Label connectionCountLabel;
+
+    @FXML
+    private VBox contactsInfoVbox;
+
+    @FXML
     private RadioButton contactsOnlyBirthContactsRB;
 
     @FXML
@@ -131,10 +146,16 @@ public class ProfileController extends AbstractViewController{
     private VBox editInfoVbox;
 
     @FXML
+    private Button editSkillsButton;
+
+    @FXML
     private Label educationLabel1;
 
     @FXML
     private Label educationLabel11;
+
+    @FXML
+    private VBox educationVbox;
 
     @FXML
     private Label emailContactsLabel;
@@ -146,10 +167,25 @@ public class ProfileController extends AbstractViewController{
     private RadioButton everyoneBirthContactsRB;
 
     @FXML
+    private Button exitFollowShowButton;
+
+    @FXML
     private TextField firstNameEditTF;
 
     @FXML
     private Button followButton;
+
+    @FXML
+    private Label followersCountLabel;
+
+    @FXML
+    private Label followersFollowShowLbl;
+
+    @FXML
+    private Label followingsCountLabel;
+
+    @FXML
+    private Label followingsFollowshowLbl;
 
     @FXML
     private Label fullNameLabel;
@@ -305,22 +341,30 @@ public class ProfileController extends AbstractViewController{
     private TextField skill5SkillsTF;
 
     @FXML
+    private VBox skillsVbox;
+
+    @FXML
     private VBox tabVBox;
+
+    @FXML
+    private ListView<User> usersListView;
 
     @FXML
     private RadioButton workNumberContactsRB;
 
     @FXML
-    private VBox contactsInfoVbox;
+    private VBox followShowVbox;
 
     @FXML
-    private VBox educationVbox;
+    private final ToggleGroup status = new ToggleGroup();
 
-    @FXML
-    private VBox skillsVbox;
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private final ObservableList<User> users = FXCollections.observableArrayList();
+    private ArrayList<User> allUsers;
+    private ArrayList<Follow> follows;
 
-    @FXML
-    private Button editSkillsButton;
+    private int followingCount = 0;
+    private int followersCount = 0;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private String avatarAddress;
@@ -353,13 +397,6 @@ public class ProfileController extends AbstractViewController{
     private JsonNode otherAccounts;
     /////////////////////////////////////////////////
 
-
-
-
-
-    @FXML
-    private final ToggleGroup status = new ToggleGroup();
-
     @FXML
     public void initialize() {
         bannerImageView.fitWidthProperty().bind(profileBP.widthProperty());
@@ -368,6 +405,13 @@ public class ProfileController extends AbstractViewController{
         servicesRadioBtn.setToggleGroup(status);
         editInfoVbox.setVisible(false);
         editInfoVbox.setDisable(true);
+        followShowVbox.setVisible(false);
+
+        followersCount = calculateFollowers();
+        followingCount = calculateFollowings();
+
+        followingsCountLabel.setText(followingCount + " Followings");
+        followersCountLabel.setText(followersCount + " Followers");
 
         /* ___ GET USER INFO ___ */
 
@@ -587,6 +631,188 @@ public class ProfileController extends AbstractViewController{
         }
         initialize();
     }
+
+    @FXML
+    void on_followersCountLabel_clicked(MouseEvent event) {
+        initializeFollowListView(true);
+
+        HttpResponse followsResponse;
+
+        try {
+            followsResponse = HttpController.sendRequest(SERVER_ADDRESS + "/follow", HttpMethod.GET, null, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (followsResponse.getStatusCode() != 200) throw new RuntimeException("Error getting user data");
+
+        follows = gson.fromJson(followsResponse.getBody(), FOLLOW_LIST_TYPE);
+
+        for (User user : allUsers) {
+            for (Follow follow : follows) {
+                if (follow.getFollowing().equals(profileUserEmail)) {
+                    if (user.getEmail().equals(follow.getFollower())){
+                        users.add(user);
+                    }
+                }
+            }
+        }
+
+        followersFollowShowLbl.setStyle("-fx-underline: true;");
+        followingsFollowshowLbl.setStyle("-fx-underline: false;");
+        usersListView.setItems(users);
+    }
+
+    @FXML
+    void on_followingsCountLabel_clicked(MouseEvent event) {
+        initializeFollowListView(true);
+
+        HttpResponse followsResponse;
+
+        try {
+            followsResponse = HttpController.sendRequest(SERVER_ADDRESS + "/follow/" + profileUserEmail, HttpMethod.GET, null, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (followsResponse.getStatusCode() != 200) throw new RuntimeException("Error getting user data");
+
+        follows = gson.fromJson(followsResponse.getBody(), FOLLOW_LIST_TYPE);
+
+        for (User user : allUsers) {
+            for (Follow follow : follows) {
+                if (user.getEmail().equals(follow.getFollowing())){
+                    users.add(user);
+                }
+            }
+        }
+
+        followersFollowShowLbl.setStyle("-fx-underline: false;");
+        followingsFollowshowLbl.setStyle("-fx-underline: true;");
+
+        usersListView.setItems(users);
+    }
+
+    private void initializeFollowListView(boolean visibility) {
+        users.clear();
+        if (follows != null) follows.clear();
+
+        followShowVbox.setVisible(visibility);
+
+        usersListView.setItems(users);
+        usersListView.setCellFactory(
+                new Callback<ListView<User>, ListCell<User>>() {
+                    @Override
+                    public ListCell<User> call(ListView<User> param) {
+                        return new ProfileSearchCell();
+                    }
+                }
+        );
+
+        // Bind the ListView's height to the total height of its cells
+        usersListView.prefHeightProperty().bind(Bindings.size(users).multiply(80));
+        usersListView.setOnMouseClicked(this::handleListViewClick);
+
+        HttpResponse allUsersResponse;
+        try {
+            allUsersResponse = HttpController.sendRequest(SERVER_ADDRESS + "/users", HttpMethod.GET, null, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (allUsersResponse.getStatusCode() != 200) throw new RuntimeException("Error getting user data");
+
+        allUsers = gson.fromJson(allUsersResponse.getBody(), USER_LIST_TYPE);
+    }
+
+    private int calculateFollowers() {
+        initializeFollowListView(false);
+
+        HttpResponse followsResponse;
+
+        try {
+            followsResponse = HttpController.sendRequest(SERVER_ADDRESS + "/follow", HttpMethod.GET, null, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (followsResponse.getStatusCode() != 200) throw new RuntimeException("Error getting user data");
+
+        follows = gson.fromJson(followsResponse.getBody(), FOLLOW_LIST_TYPE);
+
+        for (User user : allUsers) {
+            for (Follow follow : follows) {
+                if (follow.getFollowing().equals(profileUserEmail)) {
+                    if (user.getEmail().equals(follow.getFollower())){
+                        users.add(user);
+                    }
+                }
+            }
+        }
+
+        return users.size();
+    }
+
+
+    private int calculateFollowings() {
+        initializeFollowListView(false);
+
+        HttpResponse followsResponse;
+
+        try {
+            followsResponse = HttpController.sendRequest(SERVER_ADDRESS + "/follow/" + profileUserEmail, HttpMethod.GET, null, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (followsResponse.getStatusCode() != 200) throw new RuntimeException("Error getting user data");
+
+        follows = gson.fromJson(followsResponse.getBody(), FOLLOW_LIST_TYPE);
+
+        for (User user : allUsers) {
+            for (Follow follow : follows) {
+                if (user.getEmail().equals(follow.getFollowing())){
+                    users.add(user);
+                }
+            }
+        }
+
+        return users.size();
+    }
+
+    @FXML
+    void on_connectedCountLabel_clicked(MouseEvent event) {
+
+    }
+
+    @FXML
+    void on_connectionCountLabel_clicked(MouseEvent event) {
+
+    }
+
+    @FXML
+    void on_exitFollowShowButton_clicked(ActionEvent event) {
+        followShowVbox.setVisible(false);
+    }
+
+    @FXML
+    void on_followersFollowShowLbl_clicked(MouseEvent event) {
+        on_followersCountLabel_clicked(event);
+    }
+
+    @FXML
+    void on_followingsFollowshowLbl_clicked(MouseEvent event) {
+        on_followingsCountLabel_clicked(event);
+    }
+
+    private void handleListViewClick(MouseEvent event) {
+        User selectedUser = usersListView.getSelectionModel().getSelectedItem();
+        if (selectedUser != null) {
+            ProfileController.setProfileUserEmail(selectedUser.getEmail());
+            switchScenes("/fxml/profileView.fxml", followShowVbox);
+        }
+    }
+
 
     private HttpResponse getUserResponse(){
         HttpResponse userResponse;
