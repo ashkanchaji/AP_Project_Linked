@@ -5,9 +5,9 @@ import java.sql.*;
 // maybe database shouldn't be singleton only if we need to change the schema...
 // if we only need to word with new 'table' s then the singleton is fine.
 public class MySqlDB {
-    private static final String DBName = "projectlinked";
+    private static final String DBName = "linkedoutdb";
     private static final String userName = "root";
-    private static final String password = "projectLinked";
+    private static final String password = "#Whatmask04";
     private static MySqlDB dataBase = null;
     private static Connection connection;
 

@@ -9,6 +9,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -21,98 +22,130 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="rootBP" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../Styling/profileStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.ProfileController">
-   <left>
-      <VBox fx:id="tabVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="336.0" spacing="16.0" style="-fx-background-radius: 5;" stylesheets="@../Styling/profileStyle.css" BorderPane.alignment="CENTER">
-         <styleClass>
-            <String fx:value="secondary-color" />
-            <String fx:value="tab" />
-         </styleClass>
-         <children>
-            <HBox fx:id="homeHbox" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="258.0">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.ProfileController">
+   <content>
+      <BorderPane fx:id="rootBP" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../Styling/profileStyle.css">
+         <left>
+            <VBox fx:id="tabVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="336.0" spacing="16.0" style="-fx-background-radius: 5;" stylesheets="@../Styling/profileStyle.css" BorderPane.alignment="CENTER">
+               <styleClass>
+                  <String fx:value="secondary-color" />
+                  <String fx:value="tab" />
+               </styleClass>
                <children>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/Icons/Home.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets right="4.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Home">
-                     <HBox.margin>
-                        <Insets right="2.0" />
-                     </HBox.margin>
-                  </Button>
+                  <HBox fx:id="homeHbox" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="258.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <children>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/Icons/Home.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets right="4.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Home">
+                           <HBox.margin>
+                              <Insets right="2.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox fx:id="searchHbox" alignment="CENTER_LEFT">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <children>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/Icons/Search.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="2.0" right="2.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Button fx:id="searchButton" mnemonicParsing="false" onAction="#on_searchButton_clicked" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Search">
+                           <HBox.margin>
+                              <Insets right="2.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox fx:id="notificationHbox" alignment="CENTER_LEFT">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <children>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/Icons/Notifications.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="2.0" right="4.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Button fx:id="notificationButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Notifications">
+                           <HBox.margin>
+                              <Insets right="2.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox fx:id="profileHbox" alignment="CENTER_LEFT">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <children>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/Icons/ProfilePerson.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="3.0" right="4.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Button fx:id="profileButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Profile">
+                           <HBox.margin>
+                              <Insets right="2.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox fx:id="settingHbox" alignment="CENTER_LEFT">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <children>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/Icons/Setting.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets right="4.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Button fx:id="settingButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Setting">
+                           <HBox.margin>
+                              <Insets right="2.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
-            <HBox fx:id="searchHbox" alignment="CENTER_LEFT">
-               <VBox.margin>
+               <padding>
+                  <Insets left="2.0" right="4.0" top="8.0" />
+               </padding>
+               <BorderPane.margin>
                   <Insets />
-               </VBox.margin>
-               <children>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/Icons/Search.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets left="2.0" right="2.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#on_searchButton_clicked" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Search">
-                     <HBox.margin>
-                        <Insets right="2.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
-            <HBox fx:id="notificationHbox" alignment="CENTER_LEFT">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <children>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/Icons/Notifications.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets left="2.0" right="4.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Button fx:id="notificationButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Notifications">
-                     <HBox.margin>
-                        <Insets right="2.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
-            <HBox fx:id="profileHbox" alignment="CENTER_LEFT">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <children>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/Icons/ProfilePerson.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets left="3.0" right="4.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Button fx:id="profileButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Profile">
-                     <HBox.margin>
-                        <Insets right="2.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
-            <HBox fx:id="settingHbox" alignment="CENTER_LEFT">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
+               </BorderPane.margin>
+            </VBox>
+         </left>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <center>
+            <StackPane fx:id="profileStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1584.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -219,463 +252,525 @@
                               <Insets />
                            </opaqueInsets>
                            <children>
-                              <HBox prefHeight="58.0" prefWidth="1587.0">
+                              <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="245.0" prefWidth="1578.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 20;" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="119.0" text="Education" translateX="25.0" translateY="10.0">
+                                    <Label fx:id="fullNameLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="750.0" text="Ashkan Chaji" translateX="50.0" translateY="50.0" VBox.vgrow="ALWAYS">
                                        <font>
                                           <Font name="System Bold Italic" size="24.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="editEduButton" mnemonicParsing="false" onAction="#on_editEduButton_clicked" prefHeight="25.0" prefWidth="75.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Edit" textFill="WHITE" translateX="1150.0" translateY="10.0">
+                                    <TextArea fx:id="headLineTA" depthTest="DISABLE" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="70.0" prefWidth="750.0" styleClass="headLineTA" stylesheets="@../Styling/profileStyle.css" translateX="25.0" translateY="55.0" wrapText="true" />
+                                    <Label fx:id="professionLabel" prefHeight="30.0" prefWidth="720.0" text="WWWWWWWWWWWWWWW" translateX="25.0" translateY="70.0">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="cityAndCountryLabel" prefHeight="30.0" prefWidth="720.0" text="Label" translateX="25.0" translateY="80.0">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="8.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Button fx:id="editInfoButton" mnemonicParsing="false" onAction="#on_editInfoButton_clicked" prefHeight="40.0" prefWidth="75.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Edit" textFill="WHITE" translateX="1270.0" translateY="-125.0">
+                                       <font>
+                                          <Font name="System Bold Italic" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="connectButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Connect" textFill="WHITE" translateX="1125.0" translateY="17.5">
+                                       <font>
+                                          <Font name="System Bold Italic" size="12.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="followButton" mnemonicParsing="false" onAction="#on_followButton_clicked" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Follow" textFill="WHITE" translateX="1250.0" translateY="-20.0">
                                        <font>
                                           <Font name="System Bold Italic" size="12.0" />
                                        </font>
                                     </Button>
                                  </children>
-                              </HBox>
-                              <Label fx:id="instituteNameEduLabel" prefHeight="18.0" prefWidth="547.0" text="institute name" translateX="25.0" translateY="-5.0">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
                                  <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin></Label>
-                              <Label fx:id="majorEduLabel" prefHeight="18.0" prefWidth="647.0" text="major" translateX="25.0" translateY="-5.0">
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin></Label>
-                              <Label fx:id="RegisterDateEduLabel" prefHeight="18.0" prefWidth="621.0" text="Register date" translateX="25.0" translateY="-5.0">
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin></Label>
-                              <Label fx:id="GraduationDateEduLabel" prefHeight="18.0" prefWidth="640.0" text="Graduation date" translateX="25.0" translateY="-5.0">
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin></Label>
-                              <Label fx:id="GradeEduLabel" prefHeight="18.0" prefWidth="653.0" text="Grade" translateX="25.0" translateY="-5.0">
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin></Label>
-                              <Label fx:id="activityDescriptionEduLabel" prefHeight="27.0" prefWidth="686.0" text="activity decription" translateX="25.0" translateY="-5.0" wrapText="true">
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin></Label>
-                              <Label fx:id="addInfoEduLabel" prefHeight="22.0" prefWidth="735.0" text="additional information" translateX="25.0" translateY="-5.0" wrapText="true">
-                                 <VBox.margin>
-                                    <Insets bottom="8.0" />
-                                 </VBox.margin></Label>
-                           </children>
-                        </VBox>
-                        <HBox prefHeight="262.0" prefWidth="1584.0">
-                           <children>
-                              <VBox prefHeight="262.0" prefWidth="608.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 15;">
-                                 <children>
-                                    <HBox prefHeight="67.0" prefWidth="769.0">
-                                       <children>
-                                          <Label fx:id="educationLabel1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="172.0" text="Contacts Info" translateX="25.0" translateY="10.0">
-                                             <font>
-                                                <Font name="System Bold Italic" size="24.0" />
-                                             </font>
-                                          </Label>
-                                          <Button fx:id="editContactButton" mnemonicParsing="false" onAction="#on_editContactButton_clicked" prefHeight="26.0" prefWidth="77.0" style="-fx-background-radius: 15;" styleClass="profile_button" text="Edit" translateX="330.0" translateY="15.0">
-                                             <font>
-                                                <Font name="System Bold Italic" size="12.0" />
-                                             </font></Button>
-                                       </children>
-                                    </HBox>
-                                    <Label fx:id="emailContactsLabel" prefHeight="18.0" prefWidth="351.0" text="Email" translateX="25.0" translateY="-10.0">
-                                       <VBox.margin>
-                                          <Insets top="8.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label fx:id="numberContactsLabel" prefHeight="18.0" prefWidth="378.0" text="Phone number" translateX="25.0" translateY="-10.0">
-                                       <VBox.margin>
-                                          <Insets top="8.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label fx:id="addressContactsLabel" prefHeight="34.0" prefWidth="378.0" text="Address" translateX="25.0" translateY="-10.0">
-                                       <VBox.margin>
-                                          <Insets top="8.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label fx:id="birthdayContactsLabel" prefHeight="18.0" prefWidth="320.0" text="Birthday" translateX="25.0" translateY="-10.0">
-                                       <VBox.margin>
-                                          <Insets top="8.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <Label fx:id="otherAccContactsLabel" prefHeight="18.0" prefWidth="353.0" text="other Accounts" translateX="25.0" translateY="-10.0">
-                                       <VBox.margin>
-                                          <Insets top="8.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets top="4.0" />
-                                 </HBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
                               </VBox>
-                              <VBox prefHeight="262.0" prefWidth="996.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 15;">
-                                 <HBox.margin>
-                                    <Insets left="2.0" top="4.0" />
-                                 </HBox.margin>
+                              <VBox prefHeight="245.0" prefWidth="1584.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 20;">
+                                 <VBox.margin>
+                                    <Insets top="4.0" />
+                                 </VBox.margin>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
                                  <children>
-                                    <HBox prefHeight="67.0" prefWidth="200.0">
+                                    <HBox prefHeight="58.0" prefWidth="1587.0">
                                        <children>
-                                          <Label fx:id="educationLabel11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="172.0" text="Skills" translateX="25.0" translateY="10.0">
+                                          <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="119.0" text="Education" translateX="25.0" translateY="10.0">
                                              <font>
                                                 <Font name="System Bold Italic" size="24.0" />
                                              </font>
                                           </Label>
-                                          <Button fx:id="editSkillsButton" mnemonicParsing="false" onAction="#on_editSkillsButton_clicked" prefHeight="26.0" prefWidth="79.0" style="-fx-background-radius: 15;" styleClass="profile_button" text="Edit" translateX="500.0" translateY="15.0">
+                                          <Button fx:id="editEduButton" mnemonicParsing="false" onAction="#on_editEduButton_clicked" prefHeight="25.0" prefWidth="75.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Edit" textFill="WHITE" translateX="1150.0" translateY="10.0">
                                              <font>
                                                 <Font name="System Bold Italic" size="12.0" />
                                              </font>
                                           </Button>
                                        </children>
                                     </HBox>
-                                    <Label fx:id="skill1SkillsLabel" prefHeight="30.0" prefWidth="470.0" text="skill1" translateX="25.0" translateY="-10.0" wrapText="true" />
-                                    <Label fx:id="skill1SkillsLabel1" prefHeight="30.0" prefWidth="470.0" text="skill2" translateX="25.0" translateY="-10.0" wrapText="true" />
-                                    <Label fx:id="skill1SkillsLabel2" prefHeight="30.0" prefWidth="470.0" text="skill3" translateX="25.0" translateY="-10.0" wrapText="true" />
-                                    <Label fx:id="skill1SkillsLabel3" prefHeight="30.0" prefWidth="470.0" text="skill4" translateX="25.0" translateY="-10.0" wrapText="true" />
-                                    <Label fx:id="skill1SkillsLabel4" prefHeight="30.0" prefWidth="470.0" text="skill5" translateX="25.0" translateY="-10.0" wrapText="true" />
+                                    <Label fx:id="instituteNameEduLabel" prefHeight="18.0" prefWidth="547.0" text="institute name" translateX="25.0" translateY="-5.0">
+                                       <VBox.margin>
+                                          <Insets bottom="8.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="majorEduLabel" prefHeight="18.0" prefWidth="647.0" text="major" translateX="25.0" translateY="-5.0">
+                                       <VBox.margin>
+                                          <Insets bottom="8.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="RegisterDateEduLabel" prefHeight="18.0" prefWidth="621.0" text="Register date" translateX="25.0" translateY="-5.0">
+                                       <VBox.margin>
+                                          <Insets bottom="8.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="GraduationDateEduLabel" prefHeight="18.0" prefWidth="640.0" text="Graduation date" translateX="25.0" translateY="-5.0">
+                                       <VBox.margin>
+                                          <Insets bottom="8.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="GradeEduLabel" prefHeight="18.0" prefWidth="653.0" text="Grade" translateX="25.0" translateY="-5.0">
+                                       <VBox.margin>
+                                          <Insets bottom="8.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="activityDescriptionEduLabel" prefHeight="27.0" prefWidth="686.0" text="activity decription" translateX="25.0" translateY="-5.0" wrapText="true">
+                                       <VBox.margin>
+                                          <Insets bottom="8.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="addInfoEduLabel" prefHeight="22.0" prefWidth="735.0" text="additional information" translateX="25.0" translateY="-5.0" wrapText="true">
+                                       <VBox.margin>
+                                          <Insets bottom="8.0" />
+                                       </VBox.margin>
+                                    </Label>
                                  </children>
                               </VBox>
+                              <HBox prefHeight="262.0" prefWidth="1584.0">
+                                 <children>
+                                    <VBox prefHeight="262.0" prefWidth="608.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 15;">
+                                       <children>
+                                          <HBox prefHeight="67.0" prefWidth="769.0">
+                                             <children>
+                                                <Label fx:id="educationLabel1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="172.0" text="Contacts Info" translateX="25.0" translateY="10.0">
+                                                   <font>
+                                                      <Font name="System Bold Italic" size="24.0" />
+                                                   </font>
+                                                </Label>
+                                                <Button fx:id="editContactButton" mnemonicParsing="false" onAction="#on_editContactButton_clicked" prefHeight="26.0" prefWidth="77.0" style="-fx-background-radius: 15;" styleClass="profile_button" text="Edit" translateX="330.0" translateY="15.0">
+                                                   <font>
+                                                      <Font name="System Bold Italic" size="12.0" />
+                                                   </font>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                          <Label fx:id="emailContactsLabel" prefHeight="18.0" prefWidth="351.0" text="Email" translateX="25.0" translateY="-10.0">
+                                             <VBox.margin>
+                                                <Insets top="8.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label fx:id="numberContactsLabel" prefHeight="18.0" prefWidth="378.0" text="Phone number" translateX="25.0" translateY="-10.0">
+                                             <VBox.margin>
+                                                <Insets top="8.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label fx:id="addressContactsLabel" prefHeight="34.0" prefWidth="378.0" text="Address" translateX="25.0" translateY="-10.0">
+                                             <VBox.margin>
+                                                <Insets top="8.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label fx:id="birthdayContactsLabel" prefHeight="18.0" prefWidth="320.0" text="Birthday" translateX="25.0" translateY="-10.0">
+                                             <VBox.margin>
+                                                <Insets top="8.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label fx:id="otherAccContactsLabel" prefHeight="18.0" prefWidth="353.0" text="other Accounts" translateX="25.0" translateY="-10.0">
+                                             <VBox.margin>
+                                                <Insets top="8.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets top="4.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox prefHeight="262.0" prefWidth="996.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 15;">
+                                       <HBox.margin>
+                                          <Insets left="2.0" top="4.0" />
+                                       </HBox.margin>
+                                       <children>
+                                          <HBox prefHeight="67.0" prefWidth="200.0">
+                                             <children>
+                                                <Label fx:id="educationLabel11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="172.0" text="Skills" translateX="25.0" translateY="10.0">
+                                                   <font>
+                                                      <Font name="System Bold Italic" size="24.0" />
+                                                   </font>
+                                                </Label>
+                                                <Button fx:id="editSkillsButton" mnemonicParsing="false" onAction="#on_editSkillsButton_clicked" prefHeight="26.0" prefWidth="79.0" style="-fx-background-radius: 15;" styleClass="profile_button" text="Edit" translateX="500.0" translateY="15.0">
+                                                   <font>
+                                                      <Font name="System Bold Italic" size="12.0" />
+                                                   </font>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                          <Label fx:id="skill1SkillsLabel" prefHeight="30.0" prefWidth="470.0" text="skill1" translateX="25.0" translateY="-10.0" wrapText="true" />
+                                          <Label fx:id="skill1SkillsLabel1" prefHeight="30.0" prefWidth="470.0" text="skill2" translateX="25.0" translateY="-10.0" wrapText="true" />
+                                          <Label fx:id="skill1SkillsLabel2" prefHeight="30.0" prefWidth="470.0" text="skill3" translateX="25.0" translateY="-10.0" wrapText="true" />
+                                          <Label fx:id="skill1SkillsLabel3" prefHeight="30.0" prefWidth="470.0" text="skill4" translateX="25.0" translateY="-10.0" wrapText="true" />
+                                          <Label fx:id="skill1SkillsLabel4" prefHeight="30.0" prefWidth="470.0" text="skill5" translateX="25.0" translateY="-10.0" wrapText="true" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </center>
+                  </BorderPane>
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" StackPane.alignment="TOP_LEFT">
+                     <children>
+                        <GNAvatarView fx:id="profileAvatar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="245.0" prefWidth="248.0" scaleX="0.8" scaleY="0.8" strokeWidth="3.0" translateX="75.0" translateY="135.0" type="CIRCLE">
+                           <image>
+                              <Image url="@../Images/default_profile_image.jpeg" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </GNAvatarView>
+                     </children>
+                  </AnchorPane>
+                  <VBox fx:id="editInfoVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
+                     <children>
+                        <TextField fx:id="firstNameEditTF" focusTraversable="false" prefHeight="30.0" promptText="First Name" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="30.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="additionalNameEditTF" focusTraversable="false" prefHeight="30.0" promptText="Additional Name" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="lastNameEditTF" focusTraversable="false" prefHeight="30.0" promptText="Last Name" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextArea fx:id="headlineEditTA" focusTraversable="false" prefHeight="60.0" promptText="Headline" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;" styleClass="headLineTAEdit" stylesheets="@../Styling/profileStyle.css" wrapText="true">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextArea>
+                        <TextField fx:id="countryEditTF" focusTraversable="false" prefHeight="30.0" promptText="Country" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="cityEditTF" focusTraversable="false" prefHeight="30.0" promptText="City" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="professionEditTF" focusTraversable="false" prefHeight="30.0" promptText="Profession" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                           <children>
+                              <Button fx:id="chooseAvatarButton" alignment="CENTER" mnemonicParsing="false" onAction="#on_chooseAvatarButton_clicked" prefHeight="40.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Choose Avatar">
+                                 <HBox.margin>
+                                    <Insets right="30.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Arial" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="chooseBannerButton" mnemonicParsing="false" onAction="#on_chooseBannerButton_clicked" prefHeight="40.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Choose Banner">
+                                 <HBox.margin>
+                                    <Insets left="30.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Arial" size="12.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets left="100.0" right="95.0" top="15.0" />
+                           </VBox.margin>
+                           <children>
+                              <RadioButton fx:id="jobRadioBtn" mnemonicParsing="false" prefHeight="20.0" prefWidth="120.0" text="Looking for work" textFill="#e4f0ff" />
+                              <RadioButton fx:id="hiringRadioBtn" mnemonicParsing="false" prefHeight="20.0" prefWidth="70.0" text="Hiring" textFill="#e4f0ff">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </RadioButton>
+                              <RadioButton fx:id="servicesRadioBtn" mnemonicParsing="false" prefHeight="20.0" prefWidth="100.0" text="Services" textFill="#e4f0ff">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </RadioButton>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="saveInfoButton" mnemonicParsing="false" onAction="#on_saveInfoButton_clicked" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Save">
+                                 <HBox.margin>
+                                    <Insets right="40.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="cancelInfoButton" mnemonicParsing="false" onAction="#on_cancelInfoButton_clicked" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Cancel">
+                                 <HBox.margin>
+                                    <Insets left="40.0" />
+                                 </HBox.margin>
+                              </Button>
                            </children>
                         </HBox>
                      </children>
                   </VBox>
-               </center>
-            </BorderPane>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" StackPane.alignment="TOP_LEFT">
-               <children>
-                  <GNAvatarView fx:id="profileAvatar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="245.0" prefWidth="248.0" scaleX="0.8" scaleY="0.8" strokeWidth="3.0" translateX="75.0" translateY="135.0" type="CIRCLE">
-                     <image>
-                        <Image url="@../Images/default_profile_image.jpeg" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </GNAvatarView>
-               </children>
-            </AnchorPane>
-            <VBox fx:id="editInfoVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
-               <children>
-                  <TextField fx:id="firstNameEditTF" focusTraversable="false" prefHeight="30.0" promptText="First Name" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
-                     <VBox.margin>
-                        <Insets left="100.0" right="100.0" top="30.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="additionalNameEditTF" focusTraversable="false" prefHeight="30.0" promptText="Additional Name" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
-                     <VBox.margin>
-                        <Insets left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="lastNameEditTF" focusTraversable="false" prefHeight="30.0" promptText="Last Name" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
-                     <VBox.margin>
-                        <Insets left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextArea fx:id="headlineEditTA" focusTraversable="false" prefHeight="60.0" promptText="Headline" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;" styleClass="headLineTAEdit" stylesheets="@../Styling/profileStyle.css" wrapText="true">
-                     <VBox.margin>
-                        <Insets left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextArea>
-                  <TextField fx:id="countryEditTF" focusTraversable="false" prefHeight="30.0" promptText="Country" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
-                     <VBox.margin>
-                        <Insets left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="cityEditTF" focusTraversable="false" prefHeight="30.0" promptText="City" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
-                     <VBox.margin>
-                        <Insets left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="professionEditTF" focusTraversable="false" prefHeight="30.0" promptText="Profession" style="-fx-background-color: #e4f0ff; -fx-background-radius: 5;">
-                     <VBox.margin>
-                        <Insets left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
-                     <VBox.margin>
-                        <Insets left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
+                  <VBox fx:id="educationVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" stylesheets="@../Styling/profileStyle.css" translateX="-240.0" visible="false">
                      <children>
-                        <Button fx:id="chooseAvatarButton" alignment="CENTER" mnemonicParsing="false" onAction="#on_chooseAvatarButton_clicked" prefHeight="40.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Choose Avatar">
-                           <HBox.margin>
-                              <Insets right="30.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font name="Arial" size="12.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="chooseBannerButton" mnemonicParsing="false" onAction="#on_chooseBannerButton_clicked" prefHeight="40.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Choose Banner">
-                           <HBox.margin>
-                              <Insets left="30.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font name="Arial" size="12.0" />
-                           </font>
-                        </Button>
+                        <TextField fx:id="instituteNameEduTF" prefHeight="30.0" promptText="institute name" style="-fx-background-radius: 20;">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="30.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="majorEduTF" prefHeight="30.0" promptText="major" style="-fx-background-radius: 20;">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="gradeEduTF" prefHeight="30.0" promptText="Grade" style="-fx-background-radius: 20;">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextArea fx:id="activityEduTF" prefHeight="64.0" prefWidth="300.0" promptText="Activity description">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextArea>
+                        <TextArea fx:id="additionalEduTF" prefHeight="64.0" prefWidth="300.0" promptText="Additional information">
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextArea>
+                        <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
+                           <children>
+                              <DatePicker fx:id="registerDateDP" prefHeight="20.0" prefWidth="120.0" promptText="Register date" />
+                              <DatePicker fx:id="graduateDateDP" prefHeight="20.0" prefWidth="120.0" promptText="Graduate Date">
+                                 <HBox.margin>
+                                    <Insets left="60.0" />
+                                 </HBox.margin>
+                              </DatePicker>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0" stylesheets="@../Styling/profileStyle.css">
+                           <children>
+                              <Button fx:id="saveEduButton" mnemonicParsing="false" onAction="#on_saveEduButton_clicked" prefHeight="26.0" prefWidth="100.0" style="-fx-background-radius: 15;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Save">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="cancelEduButton" mnemonicParsing="false" onAction="#on_cancelEduButton_Clicked" prefWidth="100.0" style="-fx-background-radius: 15;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Cancel">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </HBox>
                      </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
-                     <VBox.margin>
-                        <Insets left="100.0" right="95.0" top="15.0" />
-                     </VBox.margin>
+                  </VBox>
+                  <VBox fx:id="contactsInfoVbox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
                      <children>
-                        <RadioButton fx:id="jobRadioBtn" mnemonicParsing="false" prefHeight="20.0" prefWidth="120.0" text="Looking for work" textFill="#e4f0ff" />
-                        <RadioButton fx:id="hiringRadioBtn" mnemonicParsing="false" prefHeight="20.0" prefWidth="70.0" text="Hiring" textFill="#e4f0ff">
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </RadioButton>
-                        <RadioButton fx:id="servicesRadioBtn" mnemonicParsing="false" prefHeight="20.0" prefWidth="100.0" text="Services" textFill="#e4f0ff">
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </RadioButton>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Button fx:id="saveInfoButton" mnemonicParsing="false" onAction="#on_saveInfoButton_clicked" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Save">
-                           <HBox.margin>
-                              <Insets right="40.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button fx:id="cancelInfoButton" mnemonicParsing="false" onAction="#on_cancelInfoButton_clicked" prefHeight="40.0" prefWidth="150.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Cancel">
-                           <HBox.margin>
-                              <Insets left="40.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox fx:id="educationVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" stylesheets="@../Styling/profileStyle.css" translateX="-240.0" visible="false">
-               <children>
-                  <TextField fx:id="instituteNameEduTF" prefHeight="30.0" promptText="institute name" style="-fx-background-radius: 20;">
-                     <VBox.margin>
-                        <Insets left="100.0" right="100.0" top="30.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="majorEduTF" prefHeight="30.0" promptText="major" style="-fx-background-radius: 20;">
-                     <VBox.margin>
-                        <Insets left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="gradeEduTF" prefHeight="30.0" promptText="Grade" style="-fx-background-radius: 20;">
-                     <VBox.margin>
-                        <Insets left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextArea fx:id="activityEduTF" prefHeight="64.0" prefWidth="300.0" promptText="Activity description">
-                     <VBox.margin>
-                        <Insets left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextArea>
-                  <TextArea fx:id="additionalEduTF" prefHeight="64.0" prefWidth="300.0" promptText="Additional information">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextArea>
-                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
-                     <children>
-                        <DatePicker fx:id="registerDateDP" prefHeight="20.0" prefWidth="120.0" promptText="Register date" />
-                        <DatePicker fx:id="graduateDateDP" prefHeight="20.0" prefWidth="120.0" promptText="Graduate Date">
-                           <HBox.margin>
-                              <Insets left="60.0" />
-                           </HBox.margin>
+                        <TextField fx:id="emailContactsTF" promptText="Email">
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="100.0" right="100.0" top="30.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="numberContactsTF" promptText="Number">
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <HBox prefHeight="20.0" prefWidth="200.0">
+                           <children>
+                              <RadioButton fx:id="MobileNumberContactsRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="126.0" selected="true" text="Mobile" textFill="WHITE">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Italic" size="12.0" />
+                                 </font>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="numberFormat" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="homeNumberContactsRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="86.0" text="Home" textFill="WHITE" toggleGroup="$numberFormat" translateX="10.0">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Italic" size="12.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton fx:id="workNumberContactsRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="124.0" text="Work" textFill="WHITE" toggleGroup="$numberFormat" translateX="60.0">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Italic" size="12.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <TextArea fx:id="addressContactsTF" prefHeight="70.0" prefWidth="200.0" promptText="Address">
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextArea>
+                        <TextArea fx:id="otherAccountsContactsTF" prefHeight="70.0" prefWidth="200.0" promptText="Other accounts">
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextArea>
+                        <DatePicker fx:id="birthdayContactsDP" promptText="Birthday">
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
                         </DatePicker>
+                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="146.0" text="Birthday Visibility:" textFill="WHITE">
+                           <font>
+                              <Font name="System Italic" size="12.0" />
+                           </font>
+                        </Label>
+                        <HBox prefHeight="20.0" prefWidth="200.0">
+                           <children>
+                              <RadioButton fx:id="everyoneBirthContactsRB" mnemonicParsing="false" selected="true" text="Everyone" textFill="WHITE">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Italic" size="12.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton fx:id="contactsOnlyBirthContactsRB" mnemonicParsing="false" text="Contacts Only" textFill="WHITE" translateX="5.0">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Italic" size="12.0" />
+                                 </font>
+                              </RadioButton>
+                              <RadioButton fx:id="nobodyBirthContactsRB" mnemonicParsing="false" text="Nobody" textFill="WHITE" translateX="20.0">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Italic" size="12.0" />
+                                 </font>
+                              </RadioButton>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="saveContactsButton" mnemonicParsing="false" onAction="#on_saveContactsButton_clicked" prefWidth="100.0" style="-fx-background-radius: 15;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Save">
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="20.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="cancelContactsButton" mnemonicParsing="false" onAction="#on_cancelContactsButton_clicked" prefWidth="100.0" style="-fx-background-radius: 15;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Cancel">
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="20.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children>
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0" stylesheets="@../Styling/profileStyle.css">
+                     <StackPane.margin>
+                        <Insets top="2.0" />
+                     </StackPane.margin>
+                  </VBox>
+                  <VBox fx:id="skillsVbox" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.95" prefHeight="450.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
                      <children>
-                        <Button fx:id="saveEduButton" mnemonicParsing="false" onAction="#on_saveEduButton_clicked" prefHeight="26.0" prefWidth="100.0" style="-fx-background-radius: 15;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Save">
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </Button>
-                        <Button fx:id="cancelEduButton" mnemonicParsing="false" onAction="#on_cancelEduButton_Clicked" prefWidth="100.0" style="-fx-background-radius: 15;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Cancel">
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </Button>
+                        <TextField fx:id="skill1SkillsTF" promptText="Skill 1 ">
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="100.0" right="100.0" top="30.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="skill2SkillsTF" promptText="Skill 2">
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="skill3SkillsTF" promptText="Skill 3">
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="skill4SkillsTF" promptText="Skill 4">
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="skill5SkillsTF" promptText="Skill 5">
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="saveSkillsButton" mnemonicParsing="false" onAction="#on_saveSkillsButton_clicked" prefHeight="20.0" prefWidth="100.0" style="-fx-background-radius: 15;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Save">
+                                 <HBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="cancelSkillsButton" mnemonicParsing="false" onAction="#on_cancelSkillsButton_clicked" prefHeight="20.0" prefWidth="100.0" style="-fx-background-radius: 15;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Cancel">
+                                 <HBox.margin>
+                                    <Insets left="16.0" right="16.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children>
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox fx:id="contactsInfoVbox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
-               <children>
-                  <TextField fx:id="emailContactsTF" promptText="Email">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="100.0" right="100.0" top="30.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="numberContactsTF" promptText="Number">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <HBox prefHeight="20.0" prefWidth="200.0">
-                     <children>
-                        <RadioButton fx:id="MobileNumberContactsRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="126.0" selected="true" text="Mobile" textFill="WHITE">
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font name="System Italic" size="12.0" />
-                           </font>
-                           <toggleGroup>
-                              <ToggleGroup fx:id="numberFormat" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton fx:id="homeNumberContactsRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="86.0" text="Home" textFill="WHITE" toggleGroup="$numberFormat" translateX="10.0">
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font name="System Italic" size="12.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton fx:id="workNumberContactsRB" mnemonicParsing="false" prefHeight="18.0" prefWidth="124.0" text="Work" textFill="WHITE" toggleGroup="$numberFormat" translateX="60.0">
-                           <HBox.margin>
-                              <Insets right="10.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font name="System Italic" size="12.0" />
-                           </font>
-                        </RadioButton>
-                     </children>
-                     <VBox.margin>
-                        <Insets left="100.0" right="100.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <TextArea fx:id="addressContactsTF" prefHeight="70.0" prefWidth="200.0" promptText="Address">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextArea>
-                  <TextArea fx:id="otherAccountsContactsTF" prefHeight="70.0" prefWidth="200.0" promptText="Other accounts">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextArea>
-                  <DatePicker fx:id="birthdayContactsDP" promptText="Birthday">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </DatePicker>
-                  <Label alignment="CENTER" prefHeight="18.0" prefWidth="146.0" text="Birthday Visibility:" textFill="WHITE">
-                     <font>
-                        <Font name="System Italic" size="12.0" />
-                     </font>
-                  </Label>
-                  <HBox prefHeight="20.0" prefWidth="200.0">
-                     <children>
-                        <RadioButton fx:id="everyoneBirthContactsRB" mnemonicParsing="false" selected="true" text="Everyone" textFill="WHITE">
-                           <HBox.margin>
-                              <Insets right="20.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font name="System Italic" size="12.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton fx:id="contactsOnlyBirthContactsRB" mnemonicParsing="false" text="Contacts Only" textFill="WHITE" translateX="5.0">
-                           <HBox.margin>
-                              <Insets right="20.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font name="System Italic" size="12.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton fx:id="nobodyBirthContactsRB" mnemonicParsing="false" text="Nobody" textFill="WHITE" translateX="20.0">
-                           <HBox.margin>
-                              <Insets right="20.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font name="System Italic" size="12.0" />
-                           </font>
-                        </RadioButton>
-                     </children>
-                     <VBox.margin>
-                        <Insets left="100.0" right="100.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Button fx:id="saveContactsButton" mnemonicParsing="false" onAction="#on_saveContactsButton_clicked" prefWidth="100.0" style="-fx-background-radius: 15;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Save">
-                           <HBox.margin>
-                              <Insets left="20.0" right="20.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font name="System Bold Italic" size="12.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="cancelContactsButton" mnemonicParsing="false" onAction="#on_cancelContactsButton_clicked" prefWidth="100.0" style="-fx-background-radius: 15;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Cancel">
-                           <HBox.margin>
-                              <Insets left="20.0" right="20.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font name="System Bold Italic" size="12.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
-               <StackPane.margin>
-                  <Insets top="2.0" />
-               </StackPane.margin>
-            </VBox>
-            <VBox fx:id="skillsVbox" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.95" prefHeight="450.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
-               <children>
-                  <TextField fx:id="skill1SkillsTF" promptText="Skill 1 ">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="100.0" right="100.0" top="30.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="skill2SkillsTF" promptText="Skill 2">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="skill3SkillsTF" promptText="Skill 3">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="skill4SkillsTF" promptText="Skill 4">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="skill5SkillsTF" promptText="Skill 5">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Button fx:id="saveSkillsButton" mnemonicParsing="false" onAction="#on_saveSkillsButton_clicked" prefHeight="20.0" prefWidth="100.0" style="-fx-background-radius: 15;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Save">
-                           <HBox.margin>
-                              <Insets left="16.0" right="16.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font name="System Bold Italic" size="12.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="cancelSkillsButton" mnemonicParsing="false" onAction="#on_cancelSkillsButton_clicked" prefHeight="20.0" prefWidth="100.0" style="-fx-background-radius: 15;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Cancel">
-                           <HBox.margin>
-                              <Insets left="16.0" right="16.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font name="System Bold Italic" size="12.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
+                  </VBox>
                </children>
             </VBox>
             <VBox fx:id="followShowVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
