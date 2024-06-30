@@ -30,8 +30,9 @@ public class FollowHandler extends Handler{
                 break;
             case "DELETE":
                 if (splitPath.length >= 3) {
-                    String email = splitPath[splitPath.length - 1];
-                    FollowController.deleteFollow(email);
+                    String followerEmail = splitPath[splitPath.length - 2];
+                    String followingEmail = splitPath[splitPath.length - 1];
+                    FollowController.deleteFollow(followerEmail, followingEmail);
                 } else {
                     FollowController.deleteAllFollows();
                 }
