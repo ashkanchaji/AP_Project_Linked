@@ -3,11 +3,12 @@ package org.Linked.server.Controller.Parsers;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 
-import javax.crypto.SecretKey;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 
@@ -15,20 +16,23 @@ public class JwtUtil {
     private static final long EXPIRATION_TIME = 3600000; // 1 hour
 
     // Use the Singleton pattern to ensure the same secret key is reused
-    private static SecretKey secretKeyInstance;
+    private static Key secretKeyInstance;
+    private static final SignatureAlgorithm algorithm = SignatureAlgorithm.HS256;
 
-    private static SecretKey getSecretKey() {
+    private static Key getSecretKey() {
         if (secretKeyInstance == null) {
-            secretKeyInstance = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+            secretKeyInstance = Keys.hmacShaKeyFor(("Ah you think darkness is your ally? You merely adopted the dark." +
+                    " I was born in it, molded by it. I didn't see the light until I was already a man," +
+                    " by then it was nothing to me but blinding!").getBytes(StandardCharsets.UTF_8));
         }
         return secretKeyInstance;
     }
 
     public static String generateJwtToken(String username, String password) {
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(username + ":" + password)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(getSecretKey())
+                .signWith(getSecretKey(), algorithm)
                 .compact();
     }
 

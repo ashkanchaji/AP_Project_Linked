@@ -3,11 +3,18 @@ package org.Linked.client.viewControllers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.Linked.client.viewControllers.Utils.UserTypeAdapter;
 import org.Linked.server.Model.User;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AbstractViewController {
     private final static String PORT = "8080";
@@ -20,4 +27,33 @@ public class AbstractViewController {
             .registerTypeAdapter(User.class, new UserTypeAdapter())
             .create();
     protected static final Type USER_LIST_TYPE = new TypeToken<ArrayList<User>>() {}.getType();
+
+    protected <T extends Node> void switchScenes (String path, T lastSceneNode) {
+        try {
+            // Store the current scene dimensions
+            Stage currentStage = (Stage) lastSceneNode.getScene().getWindow();
+            previousSceneWidth = currentStage.getWidth();
+            previousSceneHeight = currentStage.getHeight();
+
+            // Load the FXML file for the SignUp page
+            Parent profilePage = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(path)));
+
+            // Create a new scene using the SignUp page
+            Scene profileScene = new Scene(profilePage);
+
+            // Set the scene size to match the previous scene size
+            profileScene.setRoot(profilePage);
+            currentStage.setScene(profileScene);
+
+            // Apply the previous scene size
+            currentStage.setWidth(previousSceneWidth);
+            currentStage.setHeight(previousSceneHeight);
+
+            // Alternatively, maximize the stage if needed
+            // currentStage.setMaximized(true);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
