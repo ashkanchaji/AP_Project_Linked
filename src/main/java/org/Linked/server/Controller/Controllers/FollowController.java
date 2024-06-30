@@ -34,8 +34,8 @@ public class FollowController extends  Controller{
 //        }
     }
 
-    public static void deleteFollow (String email) throws SQLException {
-        FollowDAO.deleteFollowByEmail(email);
+    public static void deleteFollow (String followerEmail, String followingEmail) throws SQLException {
+        FollowDAO.deleteFollowByEmail(followerEmail, followingEmail);
     }
 
     public static void deleteAllFollows () throws SQLException {

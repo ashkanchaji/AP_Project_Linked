@@ -563,15 +563,25 @@ public class ProfileController extends AbstractViewController{
 
     @FXML
     void on_followButton_clicked(ActionEvent event) {
-        Follow follow = new Follow(currentUserEmail, profileUserEmail);
-        String followJson = gson.toJson(follow);
+        if (followButton.getText().equals("Follow")){
+            Follow follow = new Follow(currentUserEmail, profileUserEmail);
+            String followJson = gson.toJson(follow);
 
-        try {
-            HttpResponse response = HttpController.sendRequest(SERVER_ADDRESS + "/follow/" + currentUserEmail, HttpMethod.POST, followJson, null);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            try {
+                HttpController.sendRequest(SERVER_ADDRESS + "/follow/" + currentUserEmail, HttpMethod.POST, followJson, null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            followButton.setText("Following");
+        } else {
+            try {
+                HttpController.sendRequest(SERVER_ADDRESS + "/follow/" + currentUserEmail + "/" + profileUserEmail,
+                        HttpMethod.DELETE, null, null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            followButton.setText("Follow");
         }
-        followButton.setText("Following");
         initialize();
     }
 

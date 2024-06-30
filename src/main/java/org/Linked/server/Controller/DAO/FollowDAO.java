@@ -75,9 +75,15 @@ public class FollowDAO extends GenericDAO<Follow> {
         }
     }
 
-    public void deleteFollowByEmail(String email) throws SQLException {
-        String query = "DELETE FROM " + tablePath + " WHERE follower = ?";
-        deleteEntity(query, email);
+    public void deleteFollowByEmail(String followerEmail, String followingEmail) throws SQLException {
+        String query = "DELETE FROM " + tablePath + " WHERE follower = ? AND following = ?";
+        checkTableExistence();
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, followerEmail);
+            statement.setString(2, followingEmail);
+            statement.executeUpdate();
+        }
     }
 
     public void deleteAllFollows() throws SQLException {
