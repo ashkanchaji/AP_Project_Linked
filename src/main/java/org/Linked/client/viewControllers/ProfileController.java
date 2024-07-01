@@ -585,6 +585,11 @@ public class ProfileController extends AbstractViewController{
         initialize();
     }
 
+    @FXML
+    void on_connectButton_clicked(ActionEvent event) {
+
+    }
+
     private HttpResponse getUserResponse(){
         HttpResponse userResponse;
         try {
