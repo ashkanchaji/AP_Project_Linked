@@ -543,6 +543,15 @@ public class ProfileController extends AbstractViewController{
             }
             otherAccountsContactsTF.setText(otherAccounts == null ? "" : otherAccounts.asText());
 
+            if (phoneType != null) {
+                for (Toggle toggle : numberFormat.getToggles()){
+                    if (((RadioButton) toggle).getText().equals(phoneType.asText())){
+                        numberFormat.selectToggle(toggle);
+                        break;
+                    }
+                }
+            }
+
             String selectedButtonName = phoneType == null ? "" : "(" + phoneType.asText() + ") ";
 
             emailContactsLabel.setText(email == null ? "Email: -" : "Email: " + email.asText());
