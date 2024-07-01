@@ -24,8 +24,10 @@ public class EducationTypeAdapter extends TypeAdapter<Education> {
         out.name("activitiesInfo").value(education.getActivitiesInfo());
         out.name("skills");
         out.beginArray();
-        for (String skill : education.getSkills()) {
-            out.value(skill);
+        if (education.getSkills() != null) {
+            for (String skill : education.getSkills()) {
+                out.value(skill);
+            }
         }
         out.endArray();
         out.name("additionalInfo").value(education.getAdditionalInfo());

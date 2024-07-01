@@ -1,20 +1,14 @@
 package org.Linked.client.viewControllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import io.github.gleidson28.GNAvatarView;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,25 +20,20 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import org.Linked.client.Models.ProfileSearchCell;
+import org.Linked.client.FXModels.ProfileSearchCell;
 import org.Linked.client.viewControllers.Http.HttpController;
 import org.Linked.client.viewControllers.Http.HttpMethod;
 import org.Linked.client.viewControllers.Http.HttpResponse;
 import org.Linked.client.viewControllers.Utils.JWTController;
-import org.Linked.client.viewControllers.Utils.UserTypeAdapter;
-import org.Linked.server.Model.Education;
-import org.Linked.server.Model.Follow;
-import org.Linked.server.Model.Skill;
-import org.Linked.server.Model.User;
+import org.Linked.server.Controller.Exeptions.CharacterNumberLimitException;
+import org.Linked.server.Model.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Paths;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.time.chrono.Chronology;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class ProfileController extends AbstractViewController{
@@ -358,6 +347,12 @@ public class ProfileController extends AbstractViewController{
     @FXML
     private final ToggleGroup status = new ToggleGroup();
 
+    @FXML
+    private Label educationLimitLabel;
+
+    @FXML
+    private Label contactLimitLabel;
+
     ////////////////////////////////// ___ follow/ connect listView fields ___ /////////////////////////////////////////
     private final ObservableList<User> users = FXCollections.observableArrayList();
     private ArrayList<User> allUsers;
@@ -391,14 +386,25 @@ public class ProfileController extends AbstractViewController{
     private JsonNode activityDiscription;
     private JsonNode additionalInformation;
 
+    private JsonNode skills;
+
 
     ///////////////////////////////////////// ___ contacts fields ___ //////////////////////////////////////////////////
 
     private JsonNode email;
     private JsonNode phoneNumber;
+    private JsonNode phoneType;
     private JsonNode address;
     private JsonNode birthday;
     private JsonNode otherAccounts;
+
+    /////////////////////////////////////////// ___ Skills fields ___ //////////////////////////////////////////////////
+
+    private JsonNode eduSkill1;
+    private JsonNode eduSkill2;
+    private JsonNode eduSkill3;
+    private JsonNode eduSkill4;
+    private JsonNode eduSkill5;
 
     //////////////////////////////////////////// ___ initialize ___ ////////////////////////////////////////////////////
 
@@ -475,21 +481,37 @@ public class ProfileController extends AbstractViewController{
             activityDiscription = educationJson.get("activitiesInfo");
             additionalInformation = educationJson.get("additionalInfo");
 
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
             instituteNameEduTF.setText(instituteName == null ? "" : instituteName.asText());
             majorEduTF.setText(major == null ? "" : major.asText());
-            registerDateDP.setChronology(registerDate == null ? Chronology.of(""): Chronology.of(registerDate.asText()));
-            graduateDateDP.setChronology(graduationDate == null ? Chronology.of(""): Chronology.of(graduationDate.asText()));
+
+            try {
+                if (registerDate != null) {
+                    LocalDate registerLocalDate = LocalDate.parse(registerDate.asText(), dateTimeFormatter);
+                    registerDateDP.setValue(registerDate == null ? null: registerLocalDate);
+                }
+                if (graduationDate != null) {
+                    LocalDate graduateLocalDate = LocalDate.parse(graduationDate.asText(), dateTimeFormatter);
+                    graduateDateDP.setValue(registerDate == null ? null: graduateLocalDate);
+                }
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid register date format: " + registerDate);
+                // Handle the exception (e.g., show an error message)
+            }
+
             gradeEduTF.setText(grade == null ? "" : grade.asText());
             activityEduTF.setText(activityDiscription == null ? "" : activityDiscription.asText());
             additionalEduTF.setText(additionalInformation == null ? "" : additionalInformation.asText());
 
-            instituteNameEduLabel.setText(instituteName == null ? "no institute name mentioned" : instituteName.asText());
-            majorEduLabel.setText(major == null ? "no major mentioned" : major.asText());
-            RegisterDateEduLabel.setText(registerDate == null ? "no register date mentioned" : registerDate.asText()); //idk if it works or not
-            GraduationDateEduLabel.setText(graduationDate == null ? "no graduation date mentioned" :graduationDate.asText()); //idk if it works or not
-            GradeEduLabel.setText(grade == null ? "no grade mentioned" : grade.asText());
-            activityDescriptionEduLabel.setText(activityDiscription == null ? "no activity discription mentioned" : activityDiscription.asText());
-            addInfoEduLabel.setText(additionalInformation == null ? "no additional information mentioned" : additionalInformation.asText());
+            instituteNameEduLabel.setText(instituteName == null ? "Institute Name: -" : "Institute Name: " + instituteName.asText());
+            majorEduLabel.setText(major == null ? "Major: -" : "Major: " + major.asText());
+            RegisterDateEduLabel.setText(registerDate == null ? "Registration date: -" : "Registration date: " + registerDate.asText());
+            GraduationDateEduLabel.setText(graduationDate == null ? "Graduations date: -" : "Graduations date: " + graduationDate.asText());
+            GradeEduLabel.setText(grade == null ? "Grade: -" : "Grade: " + grade.asText());
+            activityDescriptionEduLabel.setText(activityDiscription == null ? "Activity description: -" : "Activity description: " + activityDiscription.asText());
+            addInfoEduLabel.setText(additionalInformation == null ? "Additional info: -" : "Additional info: " + additionalInformation.asText());
+
         }
 
         // contacts info
@@ -498,33 +520,63 @@ public class ProfileController extends AbstractViewController{
         JsonNode contactsJson = getContactsJson(contactsResponse);
 
         if (contactsJson != null) {
-            email = contactsJson.get("email");
+            email = contactsJson.get("contactEmail");
             phoneNumber = contactsJson.get("phoneNumber");
+            phoneType = contactsJson.get("phoneType");
             address = contactsJson.get("address");
             birthday = contactsJson.get("birthday");
             otherAccounts = contactsJson.get("contactUs");
 
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
             emailContactsTF.setText(email == null ? "" : email.asText());
             numberContactsTF.setText(phoneNumber == null ? "" : phoneNumber.asText());
             addressContactsTF.setText(address == null ? "" : address.asText());
-            birthdayContactsDP.setChronology(birthday == null ? Chronology.of("") : Chronology.of(birthday.asText())); //idk if it works or not
+            try {
+                if (birthday != null){
+                    LocalDate birthDayLocalDate = LocalDate.parse(birthday.asText(), dateTimeFormatter);
+                    birthdayContactsDP.setValue(birthDayLocalDate);
+                }
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid register date format: " + registerDate);
+                // Handle the exception (e.g., show an error message)
+            }
             otherAccountsContactsTF.setText(otherAccounts == null ? "" : otherAccounts.asText());
 
-            emailContactsLabel.setText(email == null ? "no email mentioned" : email.asText());
-            numberContactsLabel.setText(phoneNumber == null ? "no number mentioned" : phoneNumber.asText());
-            addressContactsLabel.setText(address == null ? "no address mentioned" : address.asText());
-            birthdayContactsLabel.setText(birthday == null ? "no birthday mentioned" : birthday.asText()); //idk if it works or not
-            otherAccContactsLabel.setText(otherAccounts == null ? "no other account mentioned" : otherAccounts.asText());
+            String selectedButtonName = phoneType == null ? "" : "(" + phoneType.asText() + ") ";
+
+            emailContactsLabel.setText(email == null ? "Email: -" : "Email: " + email.asText());
+            numberContactsLabel.setText(phoneNumber == null ? "Number: -" : "Number: " + selectedButtonName + phoneNumber.asText());
+            addressContactsLabel.setText(address == null ? "Address: -" : "Address: " + address.asText());
+            birthdayContactsLabel.setText(birthday == null ? "Birthday: -" : "Birthday: " + birthday.asText());
+            otherAccContactsLabel.setText(otherAccounts == null ? "Other accounts: -" : "Other accounts: " + otherAccounts.asText());
         }
 
         // skills
 
+        HttpResponse eduSkillsResponse = getEducationSkillsResponse();
 
+        JsonNode eduSkillsJson = getEducatinSkillsJson(eduSkillsResponse);
 
+        if (eduSkillsJson != null) {
+            eduSkill1 = eduSkillsJson.get("skill1");
+            eduSkill2 = eduSkillsJson.get("skill2");
+            eduSkill3 = eduSkillsJson.get("skill3");
+            eduSkill4 = eduSkillsJson.get("skill4");
+            eduSkill5 = eduSkillsJson.get("skill5");
 
+            skill1SkillsTF.setText(eduSkill1 == null ? "" : eduSkill1.asText());
+            skill2SkillsTF.setText(eduSkill2 == null ? "" : eduSkill2.asText());
+            skill3SkillsTF.setText(eduSkill3 == null ? "" : eduSkill3.asText());
+            skill4SkillsTF.setText(eduSkill4 == null ? "" : eduSkill4.asText());
+            skill5SkillsTF.setText(eduSkill5 == null ? "" : eduSkill5.asText());
 
-
-
+            skill1SkillsLabel.setText(eduSkill1 == null ? "" : "Skill 1: " + eduSkill1.asText());
+            skill1SkillsLabel1.setText(eduSkill2 == null ? "" : "Skill 2: " + eduSkill2.asText());
+            skill1SkillsLabel2.setText(eduSkill3 == null ? "" : "Skill 3: " + eduSkill3.asText());
+            skill1SkillsLabel3.setText(eduSkill4 == null ? "" : "Skill 4: " + eduSkill4.asText());
+            skill1SkillsLabel4.setText(eduSkill5 == null ? "" : "Skill 5: " + eduSkill5.asText());
+        }
 
         if (profileUserEmail.equals(currentUserEmail)) {
             followButton.setVisible(false);
@@ -866,6 +918,17 @@ public class ProfileController extends AbstractViewController{
 
     }
 
+    private HttpResponse getEducationSkillsResponse() {
+        HttpResponse educationSkillsResponse;
+        try {
+            educationSkillsResponse = HttpController.sendRequest(SERVER_ADDRESS + "/educationSkills/" + profileUserEmail, HttpMethod.GET, null, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if (educationSkillsResponse.getStatusCode() != 200) throw new RuntimeException("Error getting contactsInfo data");
+        return  educationSkillsResponse;
+    }
+
     //////////////////////////////////////////// ___ response Json ___ /////////////////////////////////////////////////
 
     private JsonNode getUserJson(HttpResponse userResponse){
@@ -889,6 +952,17 @@ public class ProfileController extends AbstractViewController{
         }
     }
 
+    private JsonNode getEducatinSkillsJson(HttpResponse educationSkillResponse){
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            if (educationSkillResponse.getBody().equals("No such education skills info found!")) return null;
+            return objectMapper.readTree(educationSkillResponse.getBody());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private JsonNode getContactsJson(HttpResponse contactsResponse){
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -905,16 +979,45 @@ public class ProfileController extends AbstractViewController{
     void on_editContactButton_clicked(ActionEvent event) {
         contactsInfoVbox.setDisable(false);
         contactsInfoVbox.setVisible(true);
+        contactLimitLabel.setVisible(false);
     }
     @FXML
     void on_cancelContactsButton_clicked(ActionEvent event) {
         contactsInfoVbox.setVisible(false);
         contactsInfoVbox.setDisable(true);
+        contactLimitLabel.setVisible(false);
     }
 
     @FXML
     void on_saveContactsButton_clicked(ActionEvent event) {
+        String newContactEmail = emailContactsTF.getText();
+        String newNumber = numberContactsTF.getText();
+        RadioButton selectedButton = (RadioButton) numberFormat.getSelectedToggle();
+        String newPhoneType = selectedButton == null ? "" : selectedButton.getText();
+        String newAddress = addressContactsTF.getText();
+        String newOtherAccs = otherAccountsContactsTF.getText();
+        LocalDate birthdayLD = birthdayContactsDP.getValue();
+        java.sql.Date newBirthday = birthdayLD == null ? null : java.sql.Date.valueOf(birthdayLD);
 
+        ContactsInfo contactsInfo = null;
+        try {
+            contactsInfo = new ContactsInfo(1, profileUserEmail, newContactEmail, newNumber, newPhoneType, newAddress, newBirthday, newOtherAccs);
+        } catch (CharacterNumberLimitException e) {
+            contactLimitLabel.setVisible(true);
+            return;
+        }
+
+        String contactJson = gson.toJson(contactsInfo);
+
+        try {
+            HttpResponse response = HttpController.sendRequest(SERVER_ADDRESS + "/contacts", HttpMethod.PUT, contactJson, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        contactsInfoVbox.setDisable(true);
+        contactsInfoVbox.setVisible(false);
+        initialize();
     }
 
     //////////////////////////////////////////// ___ education bar ___ /////////////////////////////////////////////////
@@ -923,12 +1026,15 @@ public class ProfileController extends AbstractViewController{
     void on_editEduButton_clicked(ActionEvent event) {
         educationVbox.setDisable(false);
         educationVbox.setVisible(true);
+        educationLimitLabel.setVisible(false);
+
     }
 
     @FXML
     void on_cancelEduButton_Clicked(ActionEvent event) {
         educationVbox.setVisible(false);
         educationVbox.setDisable(true);
+        educationLimitLabel.setVisible(false);
     }
 
     @FXML
@@ -939,13 +1045,24 @@ public class ProfileController extends AbstractViewController{
         String newActivityDescription = activityEduTF.getText();
         String newAdditionalInformation = additionalEduTF.getText();
         LocalDate localDate1 = registerDateDP.getValue();
-        java.sql.Date newRegisterDate = java.sql.Date.valueOf(localDate1);
+        java.sql.Date newRegisterDate = localDate1 == null ? null : java.sql.Date.valueOf(localDate1);
         LocalDate localDate2 = graduateDateDP.getValue();
-        java.sql.Date newGraduateDate = java.sql.Date.valueOf(localDate2);
-        ArrayList<String> newSkills = null;
+        java.sql.Date newGraduateDate = localDate2 == null ? null : java.sql.Date.valueOf(localDate2);
+        TextField[] skills = new TextField[] {skill1SkillsTF, skill2SkillsTF, skill3SkillsTF, skill4SkillsTF, skill5SkillsTF};
+        ArrayList<String> newSkills = new ArrayList<>();
 
-        Education education = new Education(profileUserEmail , newInstituteName , newMajor, newRegisterDate ,
-                newGraduateDate , newGrade , newActivityDescription ,newSkills, newAdditionalInformation);
+        for (TextField skill : skills){
+            newSkills.add(skill.getText());
+        }
+
+        Education education = null;
+        try {
+            education = new Education(1, profileUserEmail , newInstituteName , newMajor, newRegisterDate ,
+                    newGraduateDate , newGrade , newActivityDescription ,newSkills, newAdditionalInformation);
+        } catch (CharacterNumberLimitException e) {
+            educationLimitLabel.setVisible(true);
+            return;
+        }
 
 
         String educationJson = gson.toJson(education);
@@ -977,7 +1094,20 @@ public class ProfileController extends AbstractViewController{
 
     @FXML
     void on_saveSkillsButton_clicked(ActionEvent event) {
+        EducationSkills educationSkills = new EducationSkills(profileUserEmail, skill1SkillsTF.getText(),
+                skill2SkillsTF.getText(), skill3SkillsTF.getText(), skill4SkillsTF.getText(), skill5SkillsTF.getText());
 
+        String eduSkillsJson = gson.toJson(educationSkills);
+
+        try {
+            HttpResponse response = HttpController.sendRequest(SERVER_ADDRESS + "/educationSkills", HttpMethod.PUT, eduSkillsJson, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        skillsVbox.setDisable(true);
+        skillsVbox.setVisible(false);
+        initialize();
     }
 
     /////////////////////////////////////// ___ getters and setters ___ ////////////////////////////////////////////////
