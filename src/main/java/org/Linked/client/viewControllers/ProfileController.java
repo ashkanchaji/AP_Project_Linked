@@ -703,7 +703,7 @@ public class ProfileController extends AbstractViewController{
         }
         initialize();
     }
-
+    
     @FXML
     void on_followersCountLabel_clicked(MouseEvent event) {
         initializeFollowListView(true);
@@ -876,6 +876,11 @@ public class ProfileController extends AbstractViewController{
     }
 
     ////////////////////////////////////////////// ___ connect ___ /////////////////////////////////////////////////////
+  
+    @FXML
+    void on_connectButton_clicked(ActionEvent event) {
+
+    }
 
     @FXML
     void on_connectedCountLabel_clicked(MouseEvent event) {
