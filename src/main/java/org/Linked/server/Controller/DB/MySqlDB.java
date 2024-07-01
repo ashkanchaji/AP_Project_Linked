@@ -7,7 +7,7 @@ import java.sql.*;
 public class MySqlDB {
     private static final String DBName = "projectlinked";
     private static final String userName = "root";
-    private static final String password = "projectlinked";
+    private static final String password = "projectLinked";
     private static MySqlDB dataBase = null;
     private static Connection connection;
 

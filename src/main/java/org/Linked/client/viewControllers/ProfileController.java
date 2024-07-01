@@ -358,7 +358,7 @@ public class ProfileController extends AbstractViewController{
     @FXML
     private final ToggleGroup status = new ToggleGroup();
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////// ___ follow/ connect listView fields ___ /////////////////////////////////////////
     private final ObservableList<User> users = FXCollections.observableArrayList();
     private ArrayList<User> allUsers;
     private ArrayList<Follow> follows;
@@ -366,13 +366,13 @@ public class ProfileController extends AbstractViewController{
     private int followingCount = 0;
     private int followersCount = 0;
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////// ___ profile/user emails ___ //////////////////////////////////////////////
     private String avatarAddress;
     private String bannerAddress;
     private static String currentUserEmail = JWTController.getSubjectFromJwt(JWTController.getJwtKey()).split(":")[0];
     private static String profileUserEmail = currentUserEmail;
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////// ___ general info fields ___ //////////////////////////////////////////////
     private String firstName;
     private String lastName;
     private String password;
@@ -381,7 +381,8 @@ public class ProfileController extends AbstractViewController{
     private JsonNode country;
     private JsonNode city;
     private JsonNode profession;
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+    ///////////////////////////////////////// ___ education fields ___ /////////////////////////////////////////////////
     private JsonNode instituteName;
     private JsonNode major;
     private JsonNode registerDate;
@@ -389,13 +390,17 @@ public class ProfileController extends AbstractViewController{
     private JsonNode grade;
     private JsonNode activityDiscription;
     private JsonNode additionalInformation;
-    /////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    ///////////////////////////////////////// ___ contacts fields ___ //////////////////////////////////////////////////
+
     private JsonNode email;
     private JsonNode phoneNumber;
     private JsonNode address;
     private JsonNode birthday;
     private JsonNode otherAccounts;
-    /////////////////////////////////////////////////
+
+    //////////////////////////////////////////// ___ initialize ___ ////////////////////////////////////////////////////
 
     @FXML
     public void initialize() {
@@ -544,10 +549,14 @@ public class ProfileController extends AbstractViewController{
         }
     }
 
+    ////////////////////////////////////////// ___ left bar buttons ___ ////////////////////////////////////////////////
+
     @FXML
     void on_searchButton_clicked(ActionEvent event) {
         switchScenes("/fxml/searchView.fxml", searchButton);
     }
+
+    ////////////////////////////////////////// ___ profile general info ___ ////////////////////////////////////////////
 
     @FXML
     void on_cancelInfoButton_clicked(ActionEvent event) {
@@ -607,6 +616,8 @@ public class ProfileController extends AbstractViewController{
         editInfoVbox.setVisible(false);
         initialize();
     }
+
+    //////////////////////////////////////////////// ___ follow ___ ////////////////////////////////////////////////////
 
     @FXML
     void on_followButton_clicked(ActionEvent event) {
@@ -781,16 +792,6 @@ public class ProfileController extends AbstractViewController{
     }
 
     @FXML
-    void on_connectedCountLabel_clicked(MouseEvent event) {
-
-    }
-
-    @FXML
-    void on_connectionCountLabel_clicked(MouseEvent event) {
-
-    }
-
-    @FXML
     void on_exitFollowShowButton_clicked(ActionEvent event) {
         followShowVbox.setVisible(false);
     }
@@ -813,6 +814,19 @@ public class ProfileController extends AbstractViewController{
         }
     }
 
+    ////////////////////////////////////////////// ___ connect ___ /////////////////////////////////////////////////////
+
+    @FXML
+    void on_connectedCountLabel_clicked(MouseEvent event) {
+
+    }
+
+    @FXML
+    void on_connectionCountLabel_clicked(MouseEvent event) {
+
+    }
+
+    ////////////////////////////////////////// ___ server response ___ /////////////////////////////////////////////////
 
     private HttpResponse getUserResponse(){
         HttpResponse userResponse;
@@ -852,6 +866,8 @@ public class ProfileController extends AbstractViewController{
 
     }
 
+    //////////////////////////////////////////// ___ response Json ___ /////////////////////////////////////////////////
+
     private JsonNode getUserJson(HttpResponse userResponse){
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -883,6 +899,13 @@ public class ProfileController extends AbstractViewController{
         }
     }
 
+    ///////////////////////////////////////////// ___ contacts bar ___ /////////////////////////////////////////////////
+
+    @FXML
+    void on_editContactButton_clicked(ActionEvent event) {
+        contactsInfoVbox.setDisable(false);
+        contactsInfoVbox.setVisible(true);
+    }
     @FXML
     void on_cancelContactsButton_clicked(ActionEvent event) {
         contactsInfoVbox.setVisible(false);
@@ -890,22 +913,11 @@ public class ProfileController extends AbstractViewController{
     }
 
     @FXML
-    void on_cancelEduButton_Clicked(ActionEvent event) {
-        educationVbox.setVisible(false);
-        educationVbox.setDisable(true);
+    void on_saveContactsButton_clicked(ActionEvent event) {
+
     }
 
-
-    @FXML
-    void on_cancelSkillsButton_clicked(ActionEvent event) {
-        skillsVbox.setVisible(false);
-        skillsVbox.setDisable(true);
-    }
-    @FXML
-    void on_editContactButton_clicked(ActionEvent event) {
-        contactsInfoVbox.setDisable(false);
-        contactsInfoVbox.setVisible(true);
-    }
+    //////////////////////////////////////////// ___ education bar ___ /////////////////////////////////////////////////
 
     @FXML
     void on_editEduButton_clicked(ActionEvent event) {
@@ -914,16 +926,9 @@ public class ProfileController extends AbstractViewController{
     }
 
     @FXML
-    void on_editSkillsButton_clicked(ActionEvent event) {
-        skillsVbox.setDisable(false);
-        skillsVbox.setVisible(true);
-    }
-
-
-
-    @FXML
-    void on_saveContactsButton_clicked(ActionEvent event) {
-
+    void on_cancelEduButton_Clicked(ActionEvent event) {
+        educationVbox.setVisible(false);
+        educationVbox.setDisable(true);
     }
 
     @FXML
@@ -956,12 +961,26 @@ public class ProfileController extends AbstractViewController{
         initialize();
     }
 
+    ////////////////////////////////////////////// ___ skills bar ___ //////////////////////////////////////////////////
 
+    @FXML
+    void on_editSkillsButton_clicked(ActionEvent event) {
+        skillsVbox.setDisable(false);
+        skillsVbox.setVisible(true);
+    }
+
+    @FXML
+    void on_cancelSkillsButton_clicked(ActionEvent event) {
+        skillsVbox.setVisible(false);
+        skillsVbox.setDisable(true);
+    }
 
     @FXML
     void on_saveSkillsButton_clicked(ActionEvent event) {
 
     }
+
+    /////////////////////////////////////// ___ getters and setters ___ ////////////////////////////////////////////////
 
     public static String getCurrentUserEmail() {
         return currentUserEmail;
