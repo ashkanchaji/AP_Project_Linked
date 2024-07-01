@@ -1,6 +1,7 @@
 package org.Linked.server.Controller.Controllers;
 
 import org.Linked.server.Model.Connect;
+import org.Linked.server.Model.Follow;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,6 +10,11 @@ public class ConnectController extends  Controller{
     public static String getConnect (String senderEmail , String receiverEmail) throws SQLException {
         Connect connect = ConnectDAO.getConnectByEmail(senderEmail, receiverEmail);
         return gson.toJson(connect);
+    }
+
+    public static String getConnect (String email) throws SQLException {
+        ArrayList<Connect> connects = ConnectDAO.getConnectsBySender(email);
+        return gson.toJson(connects);
     }
 
     public static String getAllConnects () throws SQLException {
