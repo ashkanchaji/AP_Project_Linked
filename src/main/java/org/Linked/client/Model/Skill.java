@@ -1,6 +1,6 @@
-package org.Linked.server.Model;
+package org.Linked.client.Model;
 
-public class Skill extends Model{
+public class Skill extends Model {
     private String skillName;
 
     public Skill(String skillName) {

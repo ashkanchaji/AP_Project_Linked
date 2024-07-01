@@ -11,7 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
-import org.Linked.client.Models.ProfileSearchCell;
+import org.Linked.client.FXModels.ProfileSearchCell;
 import org.Linked.client.viewControllers.Http.HttpController;
 import org.Linked.client.viewControllers.Http.HttpMethod;
 import org.Linked.client.viewControllers.Http.HttpResponse;

@@ -12,7 +12,7 @@ public class ContactsInfoDAO extends GenericDAO<ContactsInfo> {
             + tablePath + " ("
             + "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, "
             + "email VARCHAR(45), "
-            + "link VARCHAR(40), "
+            + "contactEmail VARCHAR(40), "
             + "phoneNumber VARCHAR(40), "
             + "phoneType VARCHAR(40), "
             + "address VARCHAR(220), "
@@ -28,7 +28,7 @@ public class ContactsInfoDAO extends GenericDAO<ContactsInfo> {
     protected ContactsInfo mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         return new ContactsInfo(
                 resultSet.getString("email"),
-                resultSet.getString("link"),
+                resultSet.getString("contactEmail"),
                 resultSet.getString("phoneNumber"),
                 resultSet.getString("phoneType"),
                 resultSet.getString("address"),
@@ -44,11 +44,11 @@ public class ContactsInfoDAO extends GenericDAO<ContactsInfo> {
 
     public void saveContactsInfo(ContactsInfo contactsInfo) throws SQLException {
         String query = "INSERT INTO " + tablePath +
-                "(email, link, phoneNumber, phoneType, address, birthday, contactUS) " +
+                "(email, contactEmail, phoneNumber, phoneType, address, birthday, contactUS) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
         saveEntity(contactsInfo, query, (ps, c) -> {
             ps.setString(1, c.getEmail());
-            ps.setString(2, c.getLink());
+            ps.setString(2, c.getContactEmail());
             ps.setString(3, c.getPhoneNumber());
             ps.setString(4, c.getPhoneType());
             ps.setString(5, c.getAddress());
@@ -69,10 +69,10 @@ public class ContactsInfoDAO extends GenericDAO<ContactsInfo> {
 
     public void updateContactsInfo(ContactsInfo contactsInfo) throws SQLException {
         String query = "UPDATE " + tablePath +
-                " SET link = ?, phoneNumber = ?, phoneType = ?, address = ?, birthday = ?, contactUS = ?" +
+                " SET contactEmail = ?, phoneNumber = ?, phoneType = ?, address = ?, birthday = ?, contactUS = ?" +
                 " WHERE email = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, contactsInfo.getLink());
+            ps.setString(1, contactsInfo.getContactEmail());
             ps.setString(2, contactsInfo.getPhoneNumber());
             ps.setString(3, contactsInfo.getPhoneType());
             ps.setString(4, contactsInfo.getAddress());

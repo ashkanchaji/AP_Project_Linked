@@ -11,6 +11,7 @@ public class Router {
         server.handleValidRequests("/login", new LoginHandler()::handle);
         server.handleValidRequests("/users", new UserHandler()::handle);
         server.handleValidRequests("/education", new EducationHandler()::handle);
+        server.handleValidRequests("/educationSkills", new EducationSkillsHandler()::handle);
         server.handleValidRequests("/jobs", new JobHandler()::handle);
         server.handleValidRequests("/contacts", new ContactsHandler()::handle);
         server.handleValidRequests("/posts", new PostHandler()::handle);
