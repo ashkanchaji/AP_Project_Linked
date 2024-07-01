@@ -1,4 +1,4 @@
-package org.Linked.client.Models;
+package org.Linked.client.FXModels;
 
 import io.github.gleidson28.GNAvatarView;
 import javafx.geometry.Pos;

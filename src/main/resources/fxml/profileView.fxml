@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -162,25 +163,37 @@
                                  </font>
                               </Label>
                               <TextArea fx:id="headLineTA" depthTest="DISABLE" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="70.0" prefWidth="750.0" styleClass="headLineTA" stylesheets="@../Styling/profileStyle.css" translateX="25.0" translateY="55.0" wrapText="true" />
-                              <Label fx:id="professionLabel" prefHeight="30.0" prefWidth="720.0" text="WWWWWWWWWWWWWWW" translateX="25.0" translateY="70.0">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="cityAndCountryLabel" prefHeight="30.0" prefWidth="720.0" text="Label" translateX="25.0" translateY="80.0">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
+                              <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="750.0" translateX="25.0" translateY="70.0">
+                                 <children>
+                                    <Label fx:id="professionLabel" prefHeight="30.0" prefWidth="550.0" text="WWWWWWWWWWWWWWW" wrapText="true">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="followingsCountLabel" alignment="CENTER_RIGHT" onMouseClicked="#on_followingsCountLabel_clicked" prefWidth="100.0" text="N/A Followings" />
+                                    <Label fx:id="followersCountLabel" alignment="CENTER_RIGHT" onMouseClicked="#on_followersCountLabel_clicked" prefWidth="100.0" text="N/A Followers" />
+                                 </children>
+                              </HBox>
+                              <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="750.0" translateX="25.0" translateY="80.0">
                                  <VBox.margin>
                                     <Insets top="8.0" />
                                  </VBox.margin>
-                              </Label>
+                                 <children>
+                                    <Label fx:id="cityAndCountryLabel" prefHeight="30.0" prefWidth="550.0" text="Label" wrapText="true">
+                                       <font>
+                                          <Font size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="connectionCountLabel" alignment="CENTER_RIGHT" onMouseClicked="#on_connectionCountLabel_clicked" prefWidth="100.0" text="N/A Connection" />
+                                    <Label fx:id="connectedCountLabel" alignment="CENTER_RIGHT" onMouseClicked="#on_connectedCountLabel_clicked" prefWidth="100.0" text="N/A Connected" />
+                                 </children>
+                              </HBox>
                               <Button fx:id="editInfoButton" mnemonicParsing="false" onAction="#on_editInfoButton_clicked" prefHeight="40.0" prefWidth="75.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Edit" textFill="WHITE" translateX="1270.0" translateY="-125.0">
                                  <font>
                                     <Font name="System Bold Italic" size="12.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="connectButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Connect" textFill="WHITE" translateX="1125.0" translateY="17.5">
+                              <Button fx:id="connectButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Connect" textFill="WHITE" translateX="1125.0" translateY="13.5">
                                  <font>
                                     <Font name="System Bold Italic" size="12.0" />
                                  </font>
@@ -220,31 +233,31 @@
                                     </Button>
                                  </children>
                               </HBox>
-                              <Label fx:id="instituteNameEduLabel" prefHeight="18.0" prefWidth="547.0" text="institute name" translateX="25.0" translateY="-5.0">
+                              <Label fx:id="instituteNameEduLabel" prefHeight="18.0" prefWidth="788.0" text="Institute Name: " translateX="25.0" translateY="-5.0">
                                  <VBox.margin>
                                     <Insets bottom="8.0" />
                                  </VBox.margin></Label>
-                              <Label fx:id="majorEduLabel" prefHeight="18.0" prefWidth="647.0" text="major" translateX="25.0" translateY="-5.0">
+                              <Label fx:id="majorEduLabel" prefHeight="18.0" prefWidth="779.0" text="Major: " translateX="25.0" translateY="-5.0">
                                  <VBox.margin>
                                     <Insets bottom="8.0" />
                                  </VBox.margin></Label>
-                              <Label fx:id="RegisterDateEduLabel" prefHeight="18.0" prefWidth="621.0" text="Register date" translateX="25.0" translateY="-5.0">
+                              <Label fx:id="RegisterDateEduLabel" prefHeight="18.0" prefWidth="621.0" text="Registration date: " translateX="25.0" translateY="-5.0">
                                  <VBox.margin>
                                     <Insets bottom="8.0" />
                                  </VBox.margin></Label>
-                              <Label fx:id="GraduationDateEduLabel" prefHeight="18.0" prefWidth="640.0" text="Graduation date" translateX="25.0" translateY="-5.0">
+                              <Label fx:id="GraduationDateEduLabel" prefHeight="18.0" prefWidth="640.0" text="Graduations date: " translateX="25.0" translateY="-5.0">
                                  <VBox.margin>
                                     <Insets bottom="8.0" />
                                  </VBox.margin></Label>
-                              <Label fx:id="GradeEduLabel" prefHeight="18.0" prefWidth="653.0" text="Grade" translateX="25.0" translateY="-5.0">
+                              <Label fx:id="GradeEduLabel" prefHeight="18.0" prefWidth="279.0" text="Grade: " translateX="25.0" translateY="-5.0">
                                  <VBox.margin>
                                     <Insets bottom="8.0" />
                                  </VBox.margin></Label>
-                              <Label fx:id="activityDescriptionEduLabel" prefHeight="27.0" prefWidth="686.0" text="activity decription" translateX="25.0" translateY="-5.0" wrapText="true">
+                              <Label fx:id="activityDescriptionEduLabel" prefHeight="23.0" prefWidth="1238.0" text="Activity description: " translateX="25.0" translateY="-5.0" wrapText="true">
                                  <VBox.margin>
                                     <Insets bottom="8.0" />
                                  </VBox.margin></Label>
-                              <Label fx:id="addInfoEduLabel" prefHeight="22.0" prefWidth="735.0" text="additional information" translateX="25.0" translateY="-5.0" wrapText="true">
+                              <Label fx:id="addInfoEduLabel" prefHeight="21.0" prefWidth="1237.0" text="Additional info: " translateX="25.0" translateY="-5.0" wrapText="true">
                                  <VBox.margin>
                                     <Insets bottom="8.0" />
                                  </VBox.margin></Label>
@@ -267,27 +280,27 @@
                                              </font></Button>
                                        </children>
                                     </HBox>
-                                    <Label fx:id="emailContactsLabel" prefHeight="18.0" prefWidth="351.0" text="Email" translateX="25.0" translateY="-10.0">
+                                    <Label fx:id="emailContactsLabel" prefHeight="18.0" prefWidth="351.0" text="Email: " translateX="25.0" translateY="-10.0">
                                        <VBox.margin>
                                           <Insets top="8.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="numberContactsLabel" prefHeight="18.0" prefWidth="378.0" text="Phone number" translateX="25.0" translateY="-10.0">
+                                    <Label fx:id="numberContactsLabel" prefHeight="18.0" prefWidth="378.0" text="Number: " translateX="25.0" translateY="-10.0">
                                        <VBox.margin>
                                           <Insets top="8.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="addressContactsLabel" prefHeight="34.0" prefWidth="378.0" text="Address" translateX="25.0" translateY="-10.0">
+                                    <Label fx:id="addressContactsLabel" prefHeight="34.0" prefWidth="378.0" text="Address: " translateX="25.0" translateY="-10.0">
                                        <VBox.margin>
                                           <Insets top="8.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="birthdayContactsLabel" prefHeight="18.0" prefWidth="320.0" text="Birthday" translateX="25.0" translateY="-10.0">
+                                    <Label fx:id="birthdayContactsLabel" prefHeight="18.0" prefWidth="320.0" text="Birthday: " translateX="25.0" translateY="-10.0">
                                        <VBox.margin>
                                           <Insets top="8.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="otherAccContactsLabel" prefHeight="18.0" prefWidth="353.0" text="other Accounts" translateX="25.0" translateY="-10.0">
+                                    <Label fx:id="otherAccContactsLabel" prefHeight="18.0" prefWidth="353.0" text="Other accounts: " translateX="25.0" translateY="-10.0">
                                        <VBox.margin>
                                           <Insets top="8.0" />
                                        </VBox.margin>
@@ -304,23 +317,23 @@
                                  <children>
                                     <HBox prefHeight="67.0" prefWidth="200.0">
                                        <children>
-                                          <Label fx:id="educationLabel11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="172.0" text="Skills" translateX="25.0" translateY="10.0">
+                                          <Label fx:id="educationLabel11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="204.0" text="Educational Skills" translateX="25.0" translateY="10.0">
                                              <font>
                                                 <Font name="System Bold Italic" size="24.0" />
                                              </font>
                                           </Label>
-                                          <Button fx:id="editSkillsButton" mnemonicParsing="false" onAction="#on_editSkillsButton_clicked" prefHeight="26.0" prefWidth="79.0" style="-fx-background-radius: 15;" styleClass="profile_button" text="Edit" translateX="500.0" translateY="15.0">
+                                          <Button fx:id="editSkillsButton" mnemonicParsing="false" onAction="#on_editSkillsButton_clicked" prefHeight="26.0" prefWidth="79.0" style="-fx-background-radius: 15;" styleClass="profile_button" text="Edit" translateX="465.0" translateY="15.0">
                                              <font>
                                                 <Font name="System Bold Italic" size="12.0" />
                                              </font>
                                           </Button>
                                        </children>
                                     </HBox>
-                                    <Label fx:id="skill1SkillsLabel" prefHeight="30.0" prefWidth="470.0" text="skill1" translateX="25.0" translateY="-10.0" wrapText="true" />
-                                    <Label fx:id="skill1SkillsLabel1" prefHeight="30.0" prefWidth="470.0" text="skill2" translateX="25.0" translateY="-10.0" wrapText="true" />
-                                    <Label fx:id="skill1SkillsLabel2" prefHeight="30.0" prefWidth="470.0" text="skill3" translateX="25.0" translateY="-10.0" wrapText="true" />
-                                    <Label fx:id="skill1SkillsLabel3" prefHeight="30.0" prefWidth="470.0" text="skill4" translateX="25.0" translateY="-10.0" wrapText="true" />
-                                    <Label fx:id="skill1SkillsLabel4" prefHeight="30.0" prefWidth="470.0" text="skill5" translateX="25.0" translateY="-10.0" wrapText="true" />
+                                    <Label fx:id="skill1SkillsLabel" prefHeight="30.0" prefWidth="470.0" text="Skill 1:" translateX="25.0" translateY="-10.0" wrapText="true" />
+                                    <Label fx:id="skill1SkillsLabel1" prefHeight="30.0" prefWidth="470.0" text="Skill 2:" translateX="25.0" translateY="-10.0" wrapText="true" />
+                                    <Label fx:id="skill1SkillsLabel2" prefHeight="30.0" prefWidth="470.0" text="Skill 3:" translateX="25.0" translateY="-10.0" wrapText="true" />
+                                    <Label fx:id="skill1SkillsLabel3" prefHeight="30.0" prefWidth="470.0" text="Skill 4:" translateX="25.0" translateY="-10.0" wrapText="true" />
+                                    <Label fx:id="skill1SkillsLabel4" prefHeight="30.0" prefWidth="470.0" text="Skill 5:" translateX="25.0" translateY="-10.0" wrapText="true" />
                                  </children>
                               </VBox>
                            </children>
@@ -437,27 +450,27 @@
             </VBox>
             <VBox fx:id="educationVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" stylesheets="@../Styling/profileStyle.css" translateX="-240.0" visible="false">
                <children>
-                  <TextField fx:id="instituteNameEduTF" prefHeight="30.0" promptText="institute name" style="-fx-background-radius: 20;">
+                  <TextField fx:id="instituteNameEduTF" prefHeight="30.0" promptText="institute name" style="-fx-background-radius: 5;">
                      <VBox.margin>
                         <Insets left="100.0" right="100.0" top="30.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField fx:id="majorEduTF" prefHeight="30.0" promptText="major" style="-fx-background-radius: 20;">
+                  <TextField fx:id="majorEduTF" prefHeight="30.0" promptText="major" style="-fx-background-radius: 5;">
                      <VBox.margin>
                         <Insets left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField fx:id="gradeEduTF" prefHeight="30.0" promptText="Grade" style="-fx-background-radius: 20;">
+                  <TextField fx:id="gradeEduTF" prefHeight="30.0" promptText="Grade" style="-fx-background-radius: 5;">
                      <VBox.margin>
                         <Insets left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextArea fx:id="activityEduTF" prefHeight="64.0" prefWidth="300.0" promptText="Activity description">
+                  <TextArea fx:id="activityEduTF" prefHeight="64.0" prefWidth="300.0" promptText="Activity description" style="-fx-background-radius: 5;">
                      <VBox.margin>
                         <Insets left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
                   </TextArea>
-                  <TextArea fx:id="additionalEduTF" prefHeight="64.0" prefWidth="300.0" promptText="Additional information">
+                  <TextArea fx:id="additionalEduTF" prefHeight="64.0" prefWidth="300.0" promptText="Additional information" style="-fx-background-radius: 5;">
                      <VBox.margin>
                         <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
@@ -475,6 +488,11 @@
                         <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
                   </HBox>
+                  <Label fx:id="educationLimitLabel" alignment="CENTER" prefHeight="18.0" prefWidth="301.0" text="One of the fields is too long." textFill="RED" visible="false">
+                     <VBox.margin>
+                        <Insets left="100.0" />
+                     </VBox.margin>
+                  </Label>
                   <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0" stylesheets="@../Styling/profileStyle.css">
                      <children>
                         <Button fx:id="saveEduButton" mnemonicParsing="false" onAction="#on_saveEduButton_clicked" prefHeight="26.0" prefWidth="100.0" style="-fx-background-radius: 15;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Save">
@@ -496,12 +514,12 @@
             </VBox>
             <VBox fx:id="contactsInfoVbox" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
                <children>
-                  <TextField fx:id="emailContactsTF" promptText="Email">
+                  <TextField fx:id="emailContactsTF" promptText="Email" style="-fx-background-radius: 5;">
                      <VBox.margin>
                         <Insets bottom="20.0" left="100.0" right="100.0" top="30.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField fx:id="numberContactsTF" promptText="Number">
+                  <TextField fx:id="numberContactsTF" promptText="Number" style="-fx-background-radius: 5;">
                      <VBox.margin>
                         <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
@@ -540,12 +558,12 @@
                         <Insets left="100.0" right="100.0" />
                      </VBox.margin>
                   </HBox>
-                  <TextArea fx:id="addressContactsTF" prefHeight="70.0" prefWidth="200.0" promptText="Address">
+                  <TextArea fx:id="addressContactsTF" prefHeight="70.0" prefWidth="200.0" promptText="Address" style="-fx-background-radius: 5;">
                      <VBox.margin>
                         <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
                   </TextArea>
-                  <TextArea fx:id="otherAccountsContactsTF" prefHeight="70.0" prefWidth="200.0" promptText="Other accounts">
+                  <TextArea fx:id="otherAccountsContactsTF" prefHeight="70.0" prefWidth="200.0" promptText="Other accounts" style="-fx-background-radius: 5;">
                      <VBox.margin>
                         <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
@@ -591,6 +609,7 @@
                         <Insets left="100.0" right="100.0" />
                      </VBox.margin>
                   </HBox>
+                  <Label fx:id="contactLimitLabel" alignment="CENTER" prefHeight="18.0" prefWidth="297.0" text="One of the fields is too long." textFill="RED" translateY="15.0" visible="false" />
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="saveContactsButton" mnemonicParsing="false" onAction="#on_saveContactsButton_clicked" prefWidth="100.0" style="-fx-background-radius: 15;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Save">
@@ -618,27 +637,27 @@
             </VBox>
             <VBox fx:id="skillsVbox" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.95" prefHeight="450.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
                <children>
-                  <TextField fx:id="skill1SkillsTF" promptText="Skill 1 ">
+                  <TextField fx:id="skill1SkillsTF" promptText="Skill 1 " style="-fx-background-radius: 20;">
                      <VBox.margin>
                         <Insets bottom="20.0" left="100.0" right="100.0" top="30.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField fx:id="skill2SkillsTF" promptText="Skill 2">
+                  <TextField fx:id="skill2SkillsTF" promptText="Skill 2" style="-fx-background-radius: 20;">
                      <VBox.margin>
                         <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField fx:id="skill3SkillsTF" promptText="Skill 3">
+                  <TextField fx:id="skill3SkillsTF" promptText="Skill 3" style="-fx-background-radius: 20;">
                      <VBox.margin>
                         <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField fx:id="skill4SkillsTF" promptText="Skill 4">
+                  <TextField fx:id="skill4SkillsTF" promptText="Skill 4" style="-fx-background-radius: 20;">
                      <VBox.margin>
                         <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField fx:id="skill5SkillsTF" promptText="Skill 5">
+                  <TextField fx:id="skill5SkillsTF" promptText="Skill 5" style="-fx-background-radius: 20;">
                      <VBox.margin>
                         <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
@@ -663,6 +682,50 @@
                         </Button>
                      </children>
                   </HBox>
+               </children>
+            </VBox>
+            <VBox fx:id="followShowVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
+               <children>
+                  <HBox alignment="CENTER">
+                     <VBox.margin>
+                        <Insets left="100.0" right="100.0" top="8.0" />
+                     </VBox.margin>
+                     <children>
+                        <HBox alignment="BOTTOM_CENTER" prefHeight="50.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="followingsFollowshowLbl" alignment="BOTTOM_CENTER" onMouseClicked="#on_followingsFollowshowLbl_clicked" prefHeight="40.0" prefWidth="100.0" text="Followings">
+                                 <HBox.margin>
+                                    <Insets right="50.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="followersFollowShowLbl" alignment="BOTTOM_CENTER" onMouseClicked="#on_followersFollowShowLbl_clicked" prefHeight="40.0" prefWidth="100.0" text="Followers">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font></Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                        </HBox>
+                        <Button fx:id="exitFollowShowButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#on_exitFollowShowButton_clicked" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="exit" translateX="80.0">
+                           <font>
+                              <Font size="8.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <ListView fx:id="usersListView" prefHeight="491.0" prefWidth="400.0" style="-fx-background-radius: 20; -fx-background-color: #347dab;" stylesheets="@../Styling/profileStyle.css">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="20.0" />
+                     </VBox.margin>
+                     <styleClass>
+                        <String fx:value="scroll-bar" />
+                        <String fx:value="list-cell" />
+                     </styleClass>
+                  </ListView>
                </children>
             </VBox>
          </children>

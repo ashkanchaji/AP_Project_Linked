@@ -8,10 +8,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.Linked.client.viewControllers.Utils.FollowTypeAdapter;
-import org.Linked.client.viewControllers.Utils.UserTypeAdapter;
-import org.Linked.server.Model.Follow;
-import org.Linked.server.Model.User;
+import org.Linked.client.viewControllers.Utils.*;
+import org.Linked.server.Model.*;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -19,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class AbstractViewController {
-    private final static String PORT = "8080";
+    private final static String PORT = "8888";
     protected final static String SERVER_ADDRESS = "http://127.0.0.1:" + PORT;
 
     protected double previousSceneWidth;
@@ -28,8 +26,13 @@ public class AbstractViewController {
     protected static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(User.class, new UserTypeAdapter())
             .registerTypeAdapter(Follow.class, new FollowTypeAdapter())
+            .registerTypeAdapter(Education.class , new EducationTypeAdapter())
+            .registerTypeAdapter(EducationSkills.class, new EducationSkillsTypeAdapter())
+            .registerTypeAdapter(ContactsInfo.class, new ContactsInfoTypeAdapter())
             .create();
     protected static final Type USER_LIST_TYPE = new TypeToken<ArrayList<User>>() {}.getType();
+    protected static final Type FOLLOW_LIST_TYPE = new TypeToken<ArrayList<Follow>>() {}.getType();
+    protected static final Type SKILL_LIST_TYPE = new TypeToken<ArrayList<String>>() {}.getType();
 
     protected <T extends Node> void switchScenes (String path, T lastSceneNode) {
         try {

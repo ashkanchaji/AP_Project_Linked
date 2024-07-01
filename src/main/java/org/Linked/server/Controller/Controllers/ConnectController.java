@@ -33,7 +33,6 @@ public class ConnectController extends  Controller{
 //        else {
 //            ConnectDAO.updateConnect(connect);
 //        }
-        
     }
 
     public static void deleteConnect (String senderEmail , String receiverEmail) throws SQLException {

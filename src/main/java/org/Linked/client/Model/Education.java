@@ -1,11 +1,11 @@
-package org.Linked.server.Model;
+package org.Linked.client.Model;
 
 import org.Linked.server.Controller.Exeptions.CharacterNumberLimitException;
 
 import java.sql.Date;
 import java.util.ArrayList;
 
-public class  Education extends Model{
+public class  Education extends Model {
     private String email;
     private String collegeName;
     private String major;
