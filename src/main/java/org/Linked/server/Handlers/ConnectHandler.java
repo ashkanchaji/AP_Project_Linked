@@ -19,13 +19,13 @@ public class ConnectHandler extends Handler {
                 if (splitPath.length == 3) {
                     String email = splitPath[splitPath.length - 1];
                     String connectJson = ConnectController.getConnect(email);
-                    response = connectJson == null ? "No such job info found!" : connectJson;
+                    response = connectJson == null ? "No such connect info found!" : connectJson;
                 } else if (splitPath.length == 4) {
                     String senderEmail = splitPath[splitPath.length - 2];
                     String receiverEmail = splitPath[splitPath.length - 1];
 
                     String connectJson = ConnectController.getConnect(senderEmail, receiverEmail);
-                    response = connectJson.equals("null") ? "No such follow info found!" : connectJson;
+                    response = connectJson.equals("null") ? "No such connect info found!" : connectJson;
                 }
                 else{
                     response = ConnectController.getAllConnects();

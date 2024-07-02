@@ -9,3 +9,33 @@
 .tab_button {
     -fx-background-color: transparent;
 }
+
+.textPostTAEdit {
+    -fx-control-inner-background: #E5E4E3; /* Change to your desired color */
+    -fx-text-fill: black; /* Change text color if needed */
+    -fx-background-insets: 0;
+    -fx-background-radius: 50px;
+    -fx-focus-color: #E5E4E3;
+    -fx-faint-focus-color: #E5E4E3;
+    -fx-border-color: #A9A9A9; /* Slightly shaded grey border color */
+    -fx-border-width: 1px; /* Width of the border */
+    -fx-border-radius: 5px; /* Match the background radius */
+}
+
+.post_vbox {
+    -fx-border-color: #A9A9A9; /* Slightly shaded grey border color */
+    -fx-border-width: 1px; /* Width of the border */
+    -fx-border-radius: 5px; /* Match the background radius */
+}
+
+
+.post_button {
+    -fx-background-color: #2196f3;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-transition: background-color 0.3s, transform 0.3s;
+}
+
+.post_button:hover {
+    -fx-background-color: #1b66bb;
+}
