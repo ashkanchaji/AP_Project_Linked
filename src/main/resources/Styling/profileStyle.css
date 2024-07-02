@@ -16,6 +16,11 @@
     -fx-cursor: hand;
     -fx-transition: background-color 0.3s, transform 0.3s;
 }
+.exit_button{
+    -fx-background-color: #fc5252;
+    -fx-background-radius: 100%;
+    -fx-text-fill: white;
+}
 
 .profile_button:hover {
     -fx-background-color: #1b66bb;
