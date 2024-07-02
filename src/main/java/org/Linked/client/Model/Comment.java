@@ -9,7 +9,7 @@ public class Comment extends Post {
     private final String repliedUser;
 
     public Comment (int type, String posterID , String text , int likes , int comments , Date createdAt , int reposts , String repliedUser) throws CharacterNumberLimitException {
-        super(type, posterID , text , likes , comments , createdAt ,reposts);
+        super(type, posterID , text , likes , comments , createdAt ,reposts, null);
         if (repliedUser.length() > 1250)
             throw  new CharacterNumberLimitException();
         else

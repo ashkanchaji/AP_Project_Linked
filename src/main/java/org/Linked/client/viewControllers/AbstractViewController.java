@@ -28,13 +28,14 @@ public class AbstractViewController {
             .registerTypeAdapter(Follow.class, new FollowTypeAdapter())
             .registerTypeAdapter(Education.class , new EducationTypeAdapter())
             .registerTypeAdapter(EducationSkills.class, new EducationSkillsTypeAdapter())
+            .registerTypeAdapter(Post.class, new PostTypeAdapter())
             .registerTypeAdapter(ContactsInfo.class, new ContactsInfoTypeAdapter())
             .create();
     protected static final Type USER_LIST_TYPE = new TypeToken<ArrayList<User>>() {}.getType();
     protected static final Type FOLLOW_LIST_TYPE = new TypeToken<ArrayList<Follow>>() {}.getType();
     protected static final Type SKILL_LIST_TYPE = new TypeToken<ArrayList<String>>() {}.getType();
+    protected static final Type POST_LIST_TYPE = new TypeToken<ArrayList<Post>>() {}.getType();
     protected static final Type CONNECT_LIST_TYPE = new TypeToken<ArrayList<Connect>>() {}.getType();
-
 
     protected <T extends Node> void switchScenes (String path, T lastSceneNode) {
         try {
