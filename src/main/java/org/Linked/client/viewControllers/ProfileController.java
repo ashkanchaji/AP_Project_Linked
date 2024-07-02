@@ -106,9 +106,6 @@ public class ProfileController extends AbstractViewController{
 
 
     @FXML
-    private Label connectedCountLabel;
-
-    @FXML
     private Label connectionCountLabel;
 
     @FXML
@@ -369,6 +366,18 @@ public class ProfileController extends AbstractViewController{
     @FXML
     private Button sendConnectButton;
 
+
+    @FXML
+    private Button closeConnectionListViewButton;
+
+    @FXML
+    private ListView<User> connectionListView;
+
+    @FXML
+    private VBox connectionListViewVbox;
+
+
+
     ////////////////////////////////// ___ follow/ connect listView fields ___ /////////////////////////////////////////
     private final ObservableList<User> users = FXCollections.observableArrayList();
     private ArrayList<User> allUsers;
@@ -376,6 +385,11 @@ public class ProfileController extends AbstractViewController{
 
     private int followingCount = 0;
     private int followersCount = 0;
+
+    private ArrayList<Connect> connects;
+
+    private int connectionsCount =0;
+
 
     ///////////////////////////////////////// ___ profile/user emails ___ //////////////////////////////////////////////
     private String avatarAddress;
@@ -913,15 +927,7 @@ public class ProfileController extends AbstractViewController{
     }
 
     ////////////////////////////////////////////// ___ connect ___ /////////////////////////////////////////////////////
-    @FXML
-    void on_connectedCountLabel_clicked(MouseEvent event) {
 
-    }
-
-    @FXML
-    void on_connectionCountLabel_clicked(MouseEvent event) {
-
-    }
     @FXML
     void on_sendConnectButton_clicked(ActionEvent event) {
         if (connectButton.getText().equals("Connect")){
@@ -959,6 +965,111 @@ public class ProfileController extends AbstractViewController{
         connectVbox.setDisable(false);
         connectVbox.setVisible(true);
     }
+
+    @FXML
+    void on_connectionCountLabel_clicked(MouseEvent event) {
+        initializeFollowListView(true);
+
+        HttpResponse connectsResponse;
+
+        try {
+            connectsResponse = HttpController.sendRequest(SERVER_ADDRESS + "/connect/" + profileUserEmail, HttpMethod.GET, null, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (connectsResponse.getStatusCode() != 200) throw new RuntimeException("Error getting user data");
+
+        connects = gson.fromJson(connectsResponse.getBody(), CONNECT_LIST_TYPE);
+
+        for (User user : allUsers) {
+            for (Connect connect : connects) {
+                if (connect.getSender().equals(profileUserEmail)){
+                    if (connect.getReceiver().equals(user.getEmail()))
+                        users.add(user);
+                }
+                else if (connect.getReceiver().equals(profileUserEmail)){
+                    if (connect.getSender().equals(user.getEmail()))
+                        users.add(user);
+                }
+            }
+        }
+
+        followersFollowShowLbl.setStyle("-fx-underline: false;");
+        followingsFollowshowLbl.setStyle("-fx-underline: true;");
+
+        usersListView.setItems(users);
+
+    }
+
+    @FXML
+    void on_closeConnectLW_clicked(ActionEvent event) {
+        connectionListViewVbox.setVisible(false);
+        connectionListViewVbox.setDisable(true);
+    }
+
+    private void initializeConnectListView(boolean visibility) {
+        users.clear();
+        if (connects != null) connects.clear();
+
+        connectionListViewVbox.setVisible(visibility);
+
+        connectionListView.setItems(users);
+        connectionListView.setCellFactory(
+                new Callback<ListView<User>, ListCell<User>>() {
+                    @Override
+                    public ListCell<User> call(ListView<User> param) {
+                        return new ProfileSearchCell();
+                    }
+                }
+        );
+        connectionListView.prefHeightProperty().bind(Bindings.size(users).multiply(80));
+        connectionListView.setOnMouseClicked(this::handleListViewClick);
+
+        HttpResponse allUsersResponse;
+        try {
+            allUsersResponse = HttpController.sendRequest(SERVER_ADDRESS + "/connect", HttpMethod.GET, null, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (allUsersResponse.getStatusCode() != 200) throw new RuntimeException("Error getting user data");
+
+        allUsers = gson.fromJson(allUsersResponse.getBody(), USER_LIST_TYPE);
+    }
+
+    private int calculateConnections() {
+        initializeConnectListView(false);
+
+        HttpResponse connectsResponse;
+
+        try {
+            connectsResponse = HttpController.sendRequest(SERVER_ADDRESS + "/connect/" + profileUserEmail, HttpMethod.GET, null, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (connectsResponse.getStatusCode() != 200) throw new RuntimeException("Error getting user data");
+
+        connects = gson.fromJson(connectsResponse.getBody(), CONNECT_LIST_TYPE);
+
+        for (User user : allUsers) {
+            for (Connect connect : connects) {
+                if (connect.getSender().equals(profileUserEmail)){
+                    if (connect.getReceiver().equals(user.getEmail()))
+                        users.add(user);
+                }
+                else if (connect.getReceiver().equals(profileUserEmail)){
+                    if (connect.getSender().equals(user.getEmail()))
+                        users.add(user);
+                }
+            }
+        }
+
+        return users.size();
+    }
+
+
     ////////////////////////////////////////// ___ server response ___ /////////////////////////////////////////////////
 
     private HttpResponse getUserResponse(){

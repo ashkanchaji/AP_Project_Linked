@@ -22,7 +22,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.ProfileController">
    <content>
       <BorderPane fx:id="rootBP" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../Styling/profileStyle.css">
@@ -193,8 +192,7 @@
                                                 <Font size="11.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="connectionCountLabel" alignment="CENTER_RIGHT" onMouseClicked="#on_connectionCountLabel_clicked" prefWidth="100.0" text="N/A Connection" />
-                                          <Label fx:id="connectedCountLabel" alignment="CENTER_RIGHT" onMouseClicked="#on_connectedCountLabel_clicked" prefWidth="100.0" text="N/A Connected" />
+                                          <Label fx:id="connectionCountLabel" alignment="CENTER_RIGHT" onMouseClicked="#on_connectionCountLabel_clicked" prefWidth="100.0" text="N/A Connections" translateX="115.0" />
                                        </children>
                                     </HBox>
                                     <Button fx:id="editInfoButton" mnemonicParsing="false" onAction="#on_editInfoButton_clicked" prefHeight="40.0" prefWidth="75.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Edit" textFill="WHITE" translateX="1270.0" translateY="-125.0">
@@ -728,10 +726,14 @@
                                     <Insets left="50.0" />
                                  </HBox.margin>
                               </HBox>
-                              <Button fx:id="exitFollowShowButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#on_exitFollowShowButton_clicked" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="exit" translateX="80.0">
+                              <Button fx:id="exitFollowShowButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#on_exitFollowShowButton_clicked" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 50;" stylesheets="@../Styling/profileStyle.css" text="X" translateX="80.0">
                                  <font>
-                                    <Font size="8.0" />
+                                    <Font size="10.0" />
                                  </font>
+                                 <styleClass>
+                                    <String fx:value="profile_button" />
+                                    <String fx:value="exit_button" />
+                                 </styleClass>
                               </Button>
                            </children>
                         </HBox>
@@ -746,7 +748,7 @@
                         </ListView>
                      </children>
                   </VBox>
-                  <VBox fx:id="connectVbox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="250.0" prefWidth="300.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" StackPane.alignment="CENTER">
+                  <VBox fx:id="connectVbox" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.95" prefHeight="250.0" prefWidth="300.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false" StackPane.alignment="CENTER">
                      <children>
                         <HBox alignment="TOP_RIGHT" prefHeight="50.0" prefWidth="300.0">
                            <children>
@@ -775,6 +777,29 @@
                               </Button>
                            </children>
                         </HBox>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="connectionListViewVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="78.0" prefWidth="500.0">
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="76.0" text="Connection">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="closeConnectionListViewButton" mnemonicParsing="false" onAction="#on_closeConnectLW_clicked" prefHeight="24.0" prefWidth="26.0" styleClass="exit_button" text="X" translateX="180.0" translateY="-20.0" />
+                           </children>
+                        </HBox>
+                        <ListView fx:id="connectionListView" prefHeight="422.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 20;">
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" top="20.0" />
+                           </VBox.margin>
+                           <styleClass>
+                              <String fx:value="list-cell" />
+                              <String fx:value="scroll-bar" />
+                           </styleClass>
+                        </ListView>
                      </children>
                   </VBox>
                </children>
