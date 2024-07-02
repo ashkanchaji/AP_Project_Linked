@@ -70,14 +70,5 @@ public class Post extends Model{
         return byteFilePath;
     }
 
-    @Override
-    public String toString(){
-        return "(Post):" +
-                "{ PostId: " + this.posterID + "/" +
-                "CreatedAt: " + this.createdAt + "/"+
-                "Text: " + this.text + "/"+
-                "Likes: " + this.likes +"/"+
-                "Comments: " + this.comments +"/"+
-                "Reposts:" + this.reposts + "}";
-    }
+
 }

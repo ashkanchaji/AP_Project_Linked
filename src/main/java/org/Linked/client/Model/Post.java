@@ -32,6 +32,19 @@ public class Post extends Model {
         this.reposts = reposts;
     }
 
+    public Post(int type, String posterID, String text , int likes , int comments , Date createdAt , int reposts, String byteFilePath) throws CharacterNumberLimitException {
+        this.posterID = posterID;
+        if (text.length() > 3000)
+            throw  new CharacterNumberLimitException();
+        else
+            this.text = text;
+        this.likes = likes;
+        this.comments = comments;
+        this.createdAt = createdAt;
+        this.reposts = reposts;
+        this.byteFilePath = byteFilePath;
+    }
+
     public Post(String posterID, String text, int likes, int comments, Date createdAt, int reposts, String byteFilePath) {
         this.posterID = posterID;
         this.text = text;

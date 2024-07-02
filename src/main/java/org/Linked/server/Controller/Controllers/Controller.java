@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.Linked.client.viewControllers.Utils.ContactsInfoTypeAdapter;
 import org.Linked.client.viewControllers.Utils.EducationSkillsTypeAdapter;
+import org.Linked.client.viewControllers.Utils.PostTypeAdapter;
 import org.Linked.client.viewControllers.Utils.UserTypeAdapter;
 import org.Linked.server.Controller.DAO.*;
 import org.Linked.server.Controller.DAO.*;
@@ -18,6 +19,7 @@ public abstract class Controller {
             .registerTypeAdapter(Follow.class, new FollowTypeAdapter())
             .registerTypeAdapter(Education.class, new EducationTypeAdapter())
             .registerTypeAdapter(EducationSkills.class, new EducationSkillsTypeAdapter())
+            .registerTypeAdapter(Post.class, new PostTypeAdapter())
             .registerTypeAdapter(ContactsInfo.class, new ContactsInfoTypeAdapter())
             .create();
     protected static final org.Linked.server.Controller.DAO.UserDAO UserDAO = new UserDAO();

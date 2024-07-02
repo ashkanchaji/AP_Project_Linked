@@ -9,6 +9,7 @@ module ProjectLinked {
     requires com.fasterxml.jackson.databind;
     requires GNAvatarView;
     requires de.jensd.fx.glyphs.fontawesome;
+    requires javafx.media;
 
     opens org.Linked.client to javafx.fxml;
     opens org.Linked.client.viewControllers to javafx.fxml;

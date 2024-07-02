@@ -26,11 +26,7 @@ public class PostController extends Controller {
 
         if (UserDAO.getUserByEmail(post.getUserId()) == null) throw new SQLException("User does not exist");
 
-        if (PostDAO.getPostByEmail(post.getUserId()) == null) {
-            PostDAO.savePost(post);
-        } else {
-            PostDAO.updatePost(post);
-        }
+        PostDAO.savePost(post);
     }
 
     public static void deletePost(String json) throws SQLException {
