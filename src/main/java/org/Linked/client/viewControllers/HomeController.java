@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class HomeController extends AbstractViewController{
@@ -76,37 +77,55 @@ public class HomeController extends AbstractViewController{
 
         allUsers = gson.fromJson(users.getBody(), USER_LIST_TYPE);
         allPosts = gson.fromJson(posts.getBody(), POST_LIST_TYPE);
-        System.out.println(posts.getBody());
         userFollows = gson.fromJson(follows.getBody(), FOLLOW_LIST_TYPE);
 
-        int row = 0;
+        // Reverse the list of posts
+        Collections.reverse(allPosts);
+
+        int row = 1;
         for (Post post : allPosts) {
-            for (Follow follow : userFollows){
-
-                if (post.getUserId().equals(follow.getFollowing()) ||post.getUserId().equals(THIS_USER_EMAIL)){
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PostView.fxml"));
-                        VBox postView = loader.load();
-
-                        PostController controller = loader.getController();
-
-                        User postUser = null;
-                        for (User user : allUsers) {
-                            if (user.getEmail().equals(post.getUserId())){
-                                postUser = user;
-                                controller.initializePostData(post, postUser);
-                                break;
-                            }
-                        }
-
-                        postShowGridPane.add(postView, 0, row++);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
+            if (shouldDisplayPost(post)) {
+                row = loadPost(post, row);
             }
         }
     }
+
+    private boolean shouldDisplayPost(Post post) {
+        if (post.getUserId().equals(THIS_USER_EMAIL)) {
+            return true;
+        }
+        for (Follow follow : userFollows) {
+            if (post.getUserId().equals(follow.getFollowing())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int loadPost(Post post, int row) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PostView.fxml"));
+            VBox postView = loader.load();
+
+            PostController controller = loader.getController();
+
+            User postUser = null;
+            for (User user : allUsers) {
+                if (user.getEmail().equals(post.getUserId())) {
+                    postUser = user;
+                    controller.initializePostData(post, postUser);
+                    break;
+                }
+            }
+
+            postShowGridPane.add(postView, 0, row);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return row + 1;
+    }
+
+
 
     @FXML
     void on_addNewPostButton_clicked(ActionEvent event) {
@@ -144,6 +163,7 @@ public class HomeController extends AbstractViewController{
                 new FileChooser.ExtensionFilter("Video Files", "*.mp4", "*.avi", "*.mkv", "*.flv", "*.mov", "*.wmv")
         );
         File selectedFile = fileChooser.showOpenDialog(new Stage());
+        videoPath = selectedFile == null ? null : selectedFile.getAbsolutePath();
     }
 
 }
