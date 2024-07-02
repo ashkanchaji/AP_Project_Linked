@@ -3,12 +3,14 @@ package org.Linked.client.viewControllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.Linked.client.viewControllers.Http.HttpController;
@@ -107,6 +109,13 @@ public class HomeController extends AbstractViewController{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PostView.fxml"));
             VBox postView = loader.load();
 
+            for (Node node : postView.getChildren()){
+                if (node instanceof MediaView && (post.getByteFilePath() == null || post.getByteFilePath().isEmpty())){
+                    postView.getChildren().remove(node);
+                    break;
+                }
+            }
+
             PostController controller = loader.getController();
 
             User postUser = null;
@@ -132,7 +141,7 @@ public class HomeController extends AbstractViewController{
         java.sql.Date createdAt = Date.valueOf(LocalDate.now());
         Post post = null;
         try {
-            post = new Post(1, THIS_USER_EMAIL, newPostTextArea.getText(), 0, 0, createdAt, 0);
+            post = new Post(THIS_USER_EMAIL, newPostTextArea.getText(), 0, 0, createdAt, 0);
         } catch (CharacterNumberLimitException e) {
             postLimitLabel.setVisible(true);
             return;

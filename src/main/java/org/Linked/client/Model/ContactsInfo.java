@@ -6,7 +6,7 @@ import java.sql.Date;
 
 public class ContactsInfo extends Model {
     private String email;
-    private String link;
+    private String contactEmail;
     private String phoneNumber;
     private String phoneType;  //home-work-mobile
     private String address;
@@ -14,42 +14,38 @@ public class ContactsInfo extends Model {
     //سیاست نمایش تولد
     private String contactUs; //rah ertebati ani
 
-    public ContactsInfo(int type, String email, String link, String phoneNumber, String phoneType, String address, Date birthday, String contactUs) throws CharacterNumberLimitException {
-        if (link.length() > 40)
+    public ContactsInfo(int type, String email, String contactEmail, String phoneNumber, String phoneType, String address, Date birthday, String contactUs) throws CharacterNumberLimitException {
+        if (contactEmail.length() > 40)
             throw new CharacterNumberLimitException();
         else
-            this.link = link;
+            this.contactEmail = contactEmail;
         if (email.length() > 40)
+            throw new CharacterNumberLimitException();
+        else
             this.email = email;
-        else
-            throw  new CharacterNumberLimitException();
-        if (link.length() > 40)
-            throw new CharacterNumberLimitException();
-        else
-            this.link = link;
         if (phoneNumber.length() > 40)
-            this.phoneNumber = phoneNumber;
-        else
-            throw  new CharacterNumberLimitException();
-        if (phoneType.length() > 40)
-            this.phoneType = phoneType;
-        else
-            throw  new CharacterNumberLimitException();
-        if (address.length() > 220)
-            this.address = address;
-        else
             throw new CharacterNumberLimitException();
+        else
+            this.phoneNumber = phoneNumber;
+        if (phoneType.length() > 40)
+            throw new CharacterNumberLimitException();
+        else
+            this.phoneType = phoneType;
+        if (address.length() > 220)
+            throw new CharacterNumberLimitException();
+        else
+            this.address = address;
 
         this.birthday = birthday;  // in typesh string nis
         if (contactUs.length() > 40)
-            this.contactUs = contactUs;
+            throw new CharacterNumberLimitException();
         else
-            throw  new CharacterNumberLimitException();
+            this.contactUs = contactUs;
     }
 
-    public ContactsInfo(String email, String link, String phoneNumber, String phoneType, String address, Date birthday, String contactUs) {
+    public ContactsInfo(String email, String contactEmail, String phoneNumber, String phoneType, String address, Date birthday, String contactUs) {
         this.email = email;
-        this.link = link;
+        this.contactEmail = contactEmail;
         this.phoneNumber = phoneNumber;
         this.phoneType = phoneType;
         this.address = address;
@@ -57,12 +53,12 @@ public class ContactsInfo extends Model {
         this.contactUs = contactUs;
     }
 
-    public String getLink() {
-        return link;
+    public String getContactEmail() {
+        return contactEmail;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
     }
 
     public String getEmail() {

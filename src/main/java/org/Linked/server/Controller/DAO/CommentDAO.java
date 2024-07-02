@@ -11,6 +11,7 @@ public class CommentDAO extends AbstractPostDAO<Comment> {
     private final String CREATE_COMMENT_TABLE_SQL = "CREATE TABLE IF NOT EXISTS "
             + tablePath + " ("
             + "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, "
+            + "postId VARCHAR(36) NOT NULL, "
             + "posterID VARCHAR(45), "
             + "text VARCHAR(3000), "
             + "likes INT, "
@@ -22,12 +23,12 @@ public class CommentDAO extends AbstractPostDAO<Comment> {
             + ")";
 
     private final String INSERT_COMMENT_SQL = "INSERT INTO " + tablePath +
-            "(posterID, text, likes, comments_count, createdAT, repost_count, byte_file_path, repliedUser) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            "(postId, posterID, text, likes, comments_count, createdAT, repost_count, byte_file_path, repliedUser) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private final String UPDATE_COMMENT_SQL = "UPDATE " + tablePath + " SET " +
             "text = ?, likes = ?, comments_count = ?, createdAT = ?, repost_count = ?, byte_file_path = ?, repliedUser = ? " +
-            "WHERE posterID = ?";
+            "WHERE postId = ?";
 
     public CommentDAO() {
         super("comments");
@@ -35,7 +36,8 @@ public class CommentDAO extends AbstractPostDAO<Comment> {
 
     @Override
     protected Comment mapResultSetToEntity(ResultSet resultSet) throws SQLException {
-        return new Comment(resultSet.getString("posterID"),
+        return new Comment(resultSet.getString("postId"),
+                resultSet.getString("posterID"),
                 resultSet.getString("text"),
                 resultSet.getInt("likes"),
                 resultSet.getInt("comments_count"),
@@ -52,20 +54,26 @@ public class CommentDAO extends AbstractPostDAO<Comment> {
 
     public void saveComment(Comment comment) throws SQLException {
         saveEntity(comment, INSERT_COMMENT_SQL, (ps, c) -> {
-            ps.setString(1, c.getUserId());
-            ps.setString(2, c.getText());
-            ps.setInt(3, c.getLikes());
-            ps.setInt(4, c.getComments());
-            ps.setDate(5, c.getCreatedAt());
-            ps.setInt(6, c.getReposts());
-            ps.setString(7, c.getByteFilePath());
-            ps.setString(8, c.getRepliedUser());
+            ps.setString(1, c.getPostId());
+            ps.setString(2, c.getUserId());
+            ps.setString(3, c.getText());
+            ps.setInt(4, c.getLikes());
+            ps.setInt(5, c.getComments());
+            ps.setDate(6, c.getCreatedAt());
+            ps.setInt(7, c.getReposts());
+            ps.setString(8, c.getByteFilePath());
+            ps.setString(9, c.getRepliedUser());
         });
     }
 
     public Comment getCommentByEmail(String email) throws SQLException {
         String query = "SELECT * FROM " + tablePath + " WHERE posterID = ?";
         return getEntity(query, email);
+    }
+
+    public Comment getCommentById(String commentId) throws SQLException {
+        String query = "SELECT * FROM " + tablePath + " WHERE postId = ?";
+        return getEntity(query, commentId);
     }
 
     public ArrayList<Comment> getAllComments() throws SQLException {
@@ -79,7 +87,12 @@ public class CommentDAO extends AbstractPostDAO<Comment> {
 
     public void deleteCommentByEmail(String email, Date date) throws SQLException {
         String query = "DELETE FROM " + tablePath + " WHERE posterID = ? AND createdAT = ?";
-        deletePostByEmail(email, date, query);
+        deletePostByEmail(email, date, query); // Date parameter is null for Comments
+    }
+
+    public void deleteCommentById(String commentId) throws SQLException {
+        String query = "DELETE FROM " + tablePath + " WHERE postId = ?";
+        deletePostByEmail(commentId, null, query); // Date parameter is null for Comments
     }
 
     public void deleteAllComments() throws SQLException {
