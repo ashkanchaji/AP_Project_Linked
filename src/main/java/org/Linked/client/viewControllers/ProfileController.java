@@ -345,13 +345,16 @@ public class ProfileController extends AbstractViewController{
     private VBox followShowVbox;
 
     @FXML
-    private final ToggleGroup status = new ToggleGroup();
+    private final ToggleGroup workStatus = new ToggleGroup();
 
     @FXML
     private Label educationLimitLabel;
 
     @FXML
     private Label contactLimitLabel;
+
+    @FXML
+    private Label workStatusLabel;
 
     ////////////////////////////////// ___ follow/ connect listView fields ___ /////////////////////////////////////////
     private final ObservableList<User> users = FXCollections.observableArrayList();
@@ -411,9 +414,9 @@ public class ProfileController extends AbstractViewController{
     @FXML
     public void initialize() {
         bannerImageView.fitWidthProperty().bind(profileBP.widthProperty());
-        jobRadioBtn.setToggleGroup(status);
-        hiringRadioBtn.setToggleGroup(status);
-        servicesRadioBtn.setToggleGroup(status);
+        jobRadioBtn.setToggleGroup(workStatus);
+        hiringRadioBtn.setToggleGroup(workStatus);
+        servicesRadioBtn.setToggleGroup(workStatus);
         editInfoVbox.setVisible(false);
         editInfoVbox.setDisable(true);
         followShowVbox.setVisible(false);
@@ -447,7 +450,7 @@ public class ProfileController extends AbstractViewController{
         headlineEditTA.setText(headline == null ? "" : headline.asText());
         countryEditTF.setText(countryName);
         cityEditTF.setText(cityName);
-        professionEditTF.setText(profession == null ? "" : profession.asText());
+        professionEditTF.setText(profession == null ? "" : profession.asText().split("::")[0]);
 
         avatarAddress = userJson.get("profilePicture") == null ? null : userJson.get("profilePicture").asText();
         bannerAddress = userJson.get("backgroundPicture") == null ? null : userJson.get("backgroundPicture").asText();
@@ -464,8 +467,23 @@ public class ProfileController extends AbstractViewController{
 
         fullNameLabel.setText(firstName + " " + (additionalName == null ? "" : (additionalName.asText() + " ")) + lastName);
         headLineTA.setText(headline == null ? "No Headline." : headline.asText());
-        professionLabel.setText(profession == null ? "No profession." : profession.asText());
+        professionLabel.setText(profession == null ? "No Profession" : profession.asText().split("::")[0]);
         cityAndCountryLabel.setText(cityName + ", " + countryName);
+        try {
+            workStatusLabel.setText(profession == null ? "" : profession.asText().split("::")[1]);
+            for (Toggle toggle : workStatus.getToggles()){
+                if (((RadioButton) toggle).getText().equals(profession == null ? "" : profession.asText().split("::")[1])){
+                    workStatus.selectToggle(toggle);
+                    break;
+                } else {
+                    workStatus.selectToggle(null);
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e){
+            workStatusLabel.setText("");
+            workStatus.selectToggle(null);
+        }
+
 
         //education
         HttpResponse educationResponse = getEducationResponse();
@@ -617,6 +635,11 @@ public class ProfileController extends AbstractViewController{
         switchScenes("/fxml/searchView.fxml", searchButton);
     }
 
+    @FXML
+    void on_homeButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/HomeView.fxml", homeButton);
+    }
+
     ////////////////////////////////////////// ___ profile general info ___ ////////////////////////////////////////////
 
     @FXML
@@ -659,7 +682,8 @@ public class ProfileController extends AbstractViewController{
         String newHeadline = headlineEditTA.getText();
         String newCountry = countryEditTF.getText();
         String newCity = cityEditTF.getText();
-        String newProfession = professionEditTF.getText();
+        RadioButton selectedWorkStatus = (RadioButton) workStatus.getSelectedToggle();
+        String newProfession = professionEditTF.getText() + "::" + (selectedWorkStatus == null ? "" : selectedWorkStatus.getText());
         User user = new User(currentUserEmail, firstNameEditTF.getText(), lastNameEditTF.getText(), password,
                 newAdditionalName, avatarAddress, bannerAddress, newHeadline, newCountry, newCity, newProfession,
                 JWTController.getJwtKey());

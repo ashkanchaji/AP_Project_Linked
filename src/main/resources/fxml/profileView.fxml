@@ -42,7 +42,7 @@
                         <Insets right="4.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Home">
+                  <Button fx:id="homeButton" mnemonicParsing="false" onAction="#on_homeButton_clicked" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Home">
                      <HBox.margin>
                         <Insets right="2.0" />
                      </HBox.margin>
@@ -157,11 +157,16 @@
                      <children>
                         <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="245.0" prefWidth="1578.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 20;" VBox.vgrow="ALWAYS">
                            <children>
-                              <Label fx:id="fullNameLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="750.0" text="Ashkan Chaji" translateX="50.0" translateY="50.0" VBox.vgrow="ALWAYS">
-                                 <font>
-                                    <Font name="System Bold Italic" size="24.0" />
-                                 </font>
-                              </Label>
+                              <HBox VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <Label fx:id="fullNameLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="625.0" text="Ashkan Chaji" translateX="50.0" translateY="50.0">
+                                       <font>
+                                          <Font name="System Bold Italic" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="workStatusLabel" alignment="BOTTOM_RIGHT" prefHeight="40.0" prefWidth="100.0" translateX="50.0" translateY="50.0" />
+                                 </children>
+                              </HBox>
                               <TextArea fx:id="headLineTA" depthTest="DISABLE" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="70.0" prefWidth="750.0" styleClass="headLineTA" stylesheets="@../Styling/profileStyle.css" translateX="25.0" translateY="55.0" wrapText="true" />
                               <HBox maxWidth="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="750.0" translateX="25.0" translateY="70.0">
                                  <children>
@@ -465,12 +470,12 @@
                         <Insets left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextArea fx:id="activityEduTF" prefHeight="64.0" prefWidth="300.0" promptText="Activity description" style="-fx-background-radius: 5; -fx-background-color: #e4f0ff;" wrapText="true">
+                  <TextArea fx:id="activityEduTF" prefHeight="64.0" prefWidth="300.0" promptText="Activity description" style="-fx-background-radius: 5; -fx-background-color: #e4f0ff;" styleClass="headLineTAEdit" stylesheets="@../Styling/profileStyle.css" wrapText="true">
                      <VBox.margin>
                         <Insets left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
                   </TextArea>
-                  <TextArea fx:id="additionalEduTF" prefHeight="64.0" prefWidth="300.0" promptText="Additional information" style="-fx-background-radius: 5; -fx-background-color: #e4f0ff;" wrapText="true">
+                  <TextArea fx:id="additionalEduTF" prefHeight="64.0" prefWidth="300.0" promptText="Additional information" style="-fx-background-radius: 5; -fx-background-color: #e4f0ff;" styleClass="headLineTAEdit" stylesheets="@../Styling/profileStyle.css" wrapText="true">
                      <VBox.margin>
                         <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
@@ -558,12 +563,12 @@
                         <Insets left="100.0" right="100.0" />
                      </VBox.margin>
                   </HBox>
-                  <TextArea fx:id="addressContactsTF" prefHeight="70.0" prefWidth="200.0" promptText="Address" style="-fx-background-radius: 5; -fx-background-color: #e4f0ff;" wrapText="true">
+                  <TextArea fx:id="addressContactsTF" prefHeight="70.0" prefWidth="200.0" promptText="Address" style="-fx-background-radius: 5; -fx-background-color: #e4f0ff;" styleClass="headLineTAEdit" stylesheets="@../Styling/profileStyle.css" wrapText="true">
                      <VBox.margin>
                         <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
                   </TextArea>
-                  <TextArea fx:id="otherAccountsContactsTF" prefHeight="70.0" prefWidth="200.0" promptText="Other accounts" style="-fx-background-radius: 5; -fx-background-color: #e4f0ff;" wrapText="true">
+                  <TextArea fx:id="otherAccountsContactsTF" prefHeight="70.0" prefWidth="200.0" promptText="Other accounts" style="-fx-background-radius: 5; -fx-background-color: #e4f0ff;" styleClass="headLineTAEdit" stylesheets="@../Styling/profileStyle.css" wrapText="true">
                      <VBox.margin>
                         <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
                      </VBox.margin>
