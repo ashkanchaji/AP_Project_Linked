@@ -104,8 +104,6 @@ public class ProfileController extends AbstractViewController{
     @FXML
     private TextField cityEditTF;
 
-    @FXML
-    private Button connectButton;
 
     @FXML
     private Label connectedCountLabel;
@@ -355,6 +353,21 @@ public class ProfileController extends AbstractViewController{
 
     @FXML
     private Label workStatusLabel;
+
+    @FXML
+    private Button closeConnectButton;
+
+    @FXML
+    private Button connectButton;
+
+    @FXML
+    private TextArea connectReqTA;
+
+    @FXML
+    private VBox connectVbox;
+
+    @FXML
+    private Button sendConnectButton;
 
     ////////////////////////////////// ___ follow/ connect listView fields ___ /////////////////////////////////////////
     private final ObservableList<User> users = FXCollections.observableArrayList();
@@ -900,12 +913,6 @@ public class ProfileController extends AbstractViewController{
     }
 
     ////////////////////////////////////////////// ___ connect ___ /////////////////////////////////////////////////////
-  
-    @FXML
-    void on_connectButton_clicked(ActionEvent event) {
-
-    }
-
     @FXML
     void on_connectedCountLabel_clicked(MouseEvent event) {
 
@@ -915,7 +922,43 @@ public class ProfileController extends AbstractViewController{
     void on_connectionCountLabel_clicked(MouseEvent event) {
 
     }
+    @FXML
+    void on_sendConnectButton_clicked(ActionEvent event) {
+        if (connectButton.getText().equals("Connect")){
+            String note = connectReqTA.getText();
+            Connect connect = new Connect(currentUserEmail, profileUserEmail , note);
+            String connectJson = gson.toJson(connect);
 
+            try {
+                HttpController.sendRequest(SERVER_ADDRESS + "/connect/" + currentUserEmail, HttpMethod.POST, connectJson, null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            connectButton.setText("Requested");
+        } else {
+            try {
+                HttpController.sendRequest(SERVER_ADDRESS + "/connect/" + currentUserEmail + "/" + profileUserEmail,
+                        HttpMethod.DELETE, null, null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            connectButton.setText("Connect");
+        }
+        initialize();
+
+    }
+    @FXML
+    void on_closeConnectButton_clicked(ActionEvent event) {
+        connectVbox.setDisable(true);
+        connectVbox.setVisible(false);
+
+    }
+
+    @FXML
+    void on_connectButton_clicked(ActionEvent event) {
+        connectVbox.setDisable(false);
+        connectVbox.setVisible(true);
+    }
     ////////////////////////////////////////// ___ server response ___ /////////////////////////////////////////////////
 
     private HttpResponse getUserResponse(){
@@ -1147,6 +1190,8 @@ public class ProfileController extends AbstractViewController{
         skillsVbox.setVisible(false);
         initialize();
     }
+
+
 
     /////////////////////////////////////// ___ getters and setters ___ ////////////////////////////////////////////////
 
