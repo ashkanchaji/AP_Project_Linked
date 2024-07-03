@@ -88,7 +88,7 @@ public class PostController extends AbstractViewController{
 
             // Save video file locally
             byte[] videoData = Base64.getDecoder().decode(videoFile.getVideoFile());
-            String videoFilePath = saveVideoLocally(videoData);
+            String videoFilePath = saveVideoLocally(videoData, post);
 
             // Create Media and MediaPlayer
             Media media = new Media(new File(videoFilePath).toURI().toString());
@@ -101,9 +101,9 @@ public class PostController extends AbstractViewController{
         dateLabel.setText(post.getCreatedAt().toString());
     }
 
-    private String saveVideoLocally(byte[] videoData) {
-        String fileName = "video.mp4"; // You can use postId or another unique identifier here
-        String filePath = "src/main/resources/videoFilePosts" + fileName; // Set your desired save path
+    private String saveVideoLocally(byte[] videoData, Post post) {
+        String fileName = post.getPostId() + ".mp4"; // You can use postId or another unique identifier here
+        String filePath = "src/main/resources/videoFilePosts/" + fileName; // Set your desired save path
 
         try {
             FileOutputStream fos = new FileOutputStream(filePath);

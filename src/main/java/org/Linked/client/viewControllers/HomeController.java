@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
@@ -124,10 +125,13 @@ public class HomeController extends AbstractViewController{
             }
 
             for (Node node : postView.getChildren()){
-                if (node instanceof MediaView && (videoResponse.getBody() == null || videoResponse.getBody().equals("No such video file found!"))){
-                    postView.getChildren().remove(node);
-                    break;
+                if (node instanceof StackPane) {
+                    if (videoResponse.getBody() == null || videoResponse.getBody().equals("No such video file found!")){
+                        postView.getChildren().remove(node);
+                        break;
+                    }
                 }
+
             }
 
             PostController controller = loader.getController();
