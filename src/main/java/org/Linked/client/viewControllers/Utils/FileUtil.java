@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 
-public class VideoFileUtil {
+public class FileUtil {
 
     public static String encodeFileToBase64(String filePath) throws IOException {
         Path path = Paths.get(filePath);
@@ -14,4 +14,3 @@ public class VideoFileUtil {
         return Base64.getEncoder().encodeToString(fileBytes);
     }
 }
-

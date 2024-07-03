@@ -6,12 +6,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.Linked.client.viewControllers.Http.HttpController;
@@ -19,22 +17,16 @@ import org.Linked.client.viewControllers.Http.HttpHeaders;
 import org.Linked.client.viewControllers.Http.HttpMethod;
 import org.Linked.client.viewControllers.Http.HttpResponse;
 import org.Linked.client.viewControllers.Utils.JWTController;
-import org.Linked.client.viewControllers.Utils.VideoFileUtil;
+import org.Linked.client.viewControllers.Utils.FileUtil;
 import org.Linked.server.Controller.Exeptions.CharacterNumberLimitException;
-import org.Linked.server.Model.Follow;
-import org.Linked.server.Model.Post;
-import org.Linked.server.Model.User;
-import org.Linked.server.Model.VideoFile;
+import org.Linked.server.Model.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
 
 public class HomeController extends AbstractViewController{
 
@@ -56,10 +48,16 @@ public class HomeController extends AbstractViewController{
     @FXML
     private GridPane postShowGridPane;
 
+    @FXML
+    private Button profileButton;
+
+    @FXML
+    private Button searchButton;
+
     private final String THIS_USER_EMAIL = JWTController.getSubjectFromJwt(JWTController.getJwtKey()).split(":")[0];
 
     private String videoFileBase64 = null;
-    private String photoPath = null;
+    private String photoFileBase64 = null;
 
     private ArrayList<User> allUsers;
     private ArrayList<Post> allPosts;
@@ -72,6 +70,7 @@ public class HomeController extends AbstractViewController{
         postLimitLabel.setVisible(false);
 
         videoFileBase64 = null;
+        photoFileBase64 = null;
 
         HttpResponse users;
         HttpResponse posts;
@@ -92,6 +91,9 @@ public class HomeController extends AbstractViewController{
         // Reverse the list of posts
         Collections.reverse(allPosts);
 
+        // Clear the grid pane before adding new posts
+        postShowGridPane.getChildren().clear();
+
         int row = 1;
         for (Post post : allPosts) {
             if (shouldDisplayPost(post)) {
@@ -99,6 +101,7 @@ public class HomeController extends AbstractViewController{
             }
         }
     }
+
 
     private boolean shouldDisplayPost(Post post) {
         if (post.getUserId().equals(THIS_USER_EMAIL)) {
@@ -117,23 +120,6 @@ public class HomeController extends AbstractViewController{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PostView.fxml"));
             VBox postView = loader.load();
 
-            HttpResponse videoResponse;
-            try {
-                videoResponse = HttpController.sendRequest(SERVER_ADDRESS + "/videoFiles/" + post.getPostId(), HttpMethod.GET, null, null);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            for (Node node : postView.getChildren()){
-                if (node instanceof StackPane) {
-                    if (videoResponse.getBody() == null || videoResponse.getBody().equals("No such video file found!")){
-                        postView.getChildren().remove(node);
-                        break;
-                    }
-                }
-
-            }
-
             PostController controller = loader.getController();
 
             User postUser = null;
@@ -151,8 +137,6 @@ public class HomeController extends AbstractViewController{
         }
         return row + 1;
     }
-
-
 
     @FXML
     void on_addNewPostButton_clicked(ActionEvent event) {
@@ -182,9 +166,21 @@ public class HomeController extends AbstractViewController{
             HttpHeaders headers = new HttpHeaders();
             headers.set("Content-Type", "application/json");
 
+            try {
+                HttpController.sendRequest(SERVER_ADDRESS + "/videoFiles/" + post.getPostId(), HttpMethod.POST, videoJsonBody, headers);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (photoFileBase64 != null) {
+            PhotoFile photoFile = new PhotoFile(post.getPostId(), photoFileBase64);
+
+            String photoJsonBody = gson.toJson(photoFile);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
 
             try {
-                HttpController.sendRequest(SERVER_ADDRESS + "/videoFiles/" + post.getPostId(), HttpMethod.POST, videoJsonBody, null);
+                HttpController.sendRequest(SERVER_ADDRESS + "/photoFiles/" + post.getPostId(), HttpMethod.POST, photoJsonBody, headers);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -196,7 +192,20 @@ public class HomeController extends AbstractViewController{
 
     @FXML
     void on_addPhotoButton_clicked(ActionEvent event) {
-
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose Photo File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.jpg")
+        ); // , "*.jpeg", "*.png", "*.gif"
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        if (selectedFile != null) {
+            try {
+                photoFileBase64 = FileUtil.encodeFileToBase64(selectedFile.getAbsolutePath());
+                videoFileBase64 = null;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @FXML
@@ -204,15 +213,26 @@ public class HomeController extends AbstractViewController{
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose Video File");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Video Files", "*.mp4", "*.avi", "*.mkv", "*.flv", "*.mov", "*.wmv")
-        );
+                new FileChooser.ExtensionFilter("Video Files", "*.mp4")
+        ); // , "*.avi", "*.mkv", "*.flv", "*.mov", "*.wmv"
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         if (selectedFile != null) {
             try {
-                videoFileBase64 = VideoFileUtil.encodeFileToBase64(selectedFile.getAbsolutePath());
+                videoFileBase64 = FileUtil.encodeFileToBase64(selectedFile.getAbsolutePath());
+                photoFileBase64 = null;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    @FXML
+    void on_searchButton_clicked(ActionEvent event){
+        switchScenes("/fxml/SearchView.fxml", searchButton);
+    }
+
+    @FXML
+    void on_profileButton_clicked(ActionEvent event){
+        switchScenes("/fxml/profileView.fxml", profileButton);
     }
 }

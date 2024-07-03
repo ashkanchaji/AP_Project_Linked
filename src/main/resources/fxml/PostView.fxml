@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1340.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.PostController">
+<VBox fx:id="postRootVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1340.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.PostController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1339.0" style="-fx-background-color: #c2c2c2; -fx-background-radius: 50;">
          <children>
@@ -55,7 +55,7 @@
             <Insets bottom="8.0" left="12.0" right="12.0" top="8.0" />
          </padding>
       </TextFlow>
-      <StackPane>
+      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1324.0" style="-fx-background-color: #c2c2c2; -fx-background-radius: 20;">
          <VBox.margin>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </VBox.margin>
@@ -73,7 +73,7 @@
                   <Image url="@../Images/Icons/Like.png" />
                </image>
             </ImageView>
-            <Button fx:id="likeLabel" mnemonicParsing="false" onAction="#on_likeLabel_clicked" style="-fx-background-color: transparent;" text="Like" />
+            <Button fx:id="likeLabel" mnemonicParsing="false" onAction="#on_likeLabel_clicked" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: transparent;" text="Like" />
             <ImageView fx:id="commentImageView" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#on_commentImageView_clicked" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
                   <Insets left="8.0" />

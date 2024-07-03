@@ -42,7 +42,7 @@
                      <HBox.margin>
                         <Insets left="8.0" />
                      </HBox.margin></ImageView>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="263.0" styleClass="tab_button" text="Serach">
+                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#on_searchButton_clicked" prefHeight="40.0" prefWidth="263.0" styleClass="tab_button" text="Serach">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font></Button>
@@ -72,7 +72,7 @@
                      <HBox.margin>
                         <Insets left="8.0" />
                      </HBox.margin></ImageView>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="263.0" styleClass="tab_button" text="Profile" />
+                  <Button fx:id="profileButton" mnemonicParsing="false" onAction="#on_profileButton_clicked" prefHeight="40.0" prefWidth="263.0" styleClass="tab_button" text="Profile" />
                </children>
             </HBox>
             <HBox>

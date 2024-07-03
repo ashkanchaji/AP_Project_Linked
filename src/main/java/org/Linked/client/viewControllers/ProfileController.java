@@ -995,9 +995,6 @@ public class ProfileController extends AbstractViewController{
             }
         }
 
-        followersFollowShowLbl.setStyle("-fx-underline: false;");
-        followingsFollowshowLbl.setStyle("-fx-underline: true;");
-
         usersListView.setItems(users);
 
     }
