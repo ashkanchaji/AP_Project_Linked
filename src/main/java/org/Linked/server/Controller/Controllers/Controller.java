@@ -9,6 +9,7 @@ import org.Linked.client.viewControllers.Utils.UserTypeAdapter;
 import org.Linked.server.Controller.DAO.*;
 import org.Linked.server.Controller.DAO.*;
 import org.Linked.server.Controller.DAO.*;
+import org.Linked.server.Controller.Util.ConnectTypeAdapter;
 import org.Linked.server.Controller.Util.EducationTypeAdapter;
 import org.Linked.server.Controller.Util.FollowTypeAdapter;
 import org.Linked.server.Model.*;
@@ -21,6 +22,7 @@ public abstract class Controller {
             .registerTypeAdapter(EducationSkills.class, new EducationSkillsTypeAdapter())
             .registerTypeAdapter(Post.class, new PostTypeAdapter())
             .registerTypeAdapter(ContactsInfo.class, new ContactsInfoTypeAdapter())
+            .registerTypeAdapter(Connect.class , new ConnectTypeAdapter())
             .create();
     protected static final org.Linked.server.Controller.DAO.UserDAO UserDAO = new UserDAO();
     protected static final JobDAO JobDAO = new JobDAO();

@@ -30,6 +30,7 @@ public class AbstractViewController {
             .registerTypeAdapter(EducationSkills.class, new EducationSkillsTypeAdapter())
             .registerTypeAdapter(Post.class, new PostTypeAdapter())
             .registerTypeAdapter(ContactsInfo.class, new ContactsInfoTypeAdapter())
+            .registerTypeAdapter(Connect.class , new ConnectTypeAdapter())
             .create();
     protected static final Type USER_LIST_TYPE = new TypeToken<ArrayList<User>>() {}.getType();
     protected static final Type FOLLOW_LIST_TYPE = new TypeToken<ArrayList<Follow>>() {}.getType();
