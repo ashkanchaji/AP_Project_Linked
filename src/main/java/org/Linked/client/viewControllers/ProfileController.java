@@ -968,7 +968,7 @@ public class ProfileController extends AbstractViewController{
 
     @FXML
     void on_connectionCountLabel_clicked(MouseEvent event) {
-        initializeFollowListView(true);
+        initializeConnectListView(true);
 
         HttpResponse connectsResponse;
 
@@ -995,11 +995,7 @@ public class ProfileController extends AbstractViewController{
             }
         }
 
-        followersFollowShowLbl.setStyle("-fx-underline: false;");
-        followingsFollowshowLbl.setStyle("-fx-underline: true;");
-
         usersListView.setItems(users);
-
     }
 
     @FXML
