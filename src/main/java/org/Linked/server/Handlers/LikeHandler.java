@@ -25,7 +25,8 @@ public class LikeHandler extends Handler {
             case "DELETE":
                 if (splitPath.length >= 3) {
                     String postId = splitPath[splitPath.length - 1];
-                    LikeController.deleteLike(postId);
+                    String likeJson = readRequestBody(exchange);
+                    LikeController.deleteLike(likeJson);
                 } else {
                     LikeController.deleteAllLikes();
                 }

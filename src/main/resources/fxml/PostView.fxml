@@ -13,90 +13,95 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox fx:id="postRootVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1340.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.PostController">
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.PostController">
    <children>
-      <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1339.0" style="-fx-background-color: #c2c2c2; -fx-background-radius: 50;">
+      <VBox fx:id="postRootVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1340.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 20;">
          <children>
-            <GNAvatarView fx:id="poserAvatar" onMouseClicked="#on_poserAvatar_clicked" prefHeight="80.0" prefWidth="80.0" type="CIRCLE">
-               <HBox.margin>
-                  <Insets left="8.0" />
-               </HBox.margin>
-            </GNAvatarView>
-            <Label fx:id="posterUserNameLabel" onMouseClicked="#on_posterUserNameLabel_clicked" prefHeight="25.0" prefWidth="250.0" text="User Name">
-               <HBox.margin>
-                  <Insets left="16.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="System Bold Italic" size="14.0" />
-               </font>
-            </Label>
-            <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="1020.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1339.0" style="-fx-background-color: #c2c2c2; -fx-background-radius: 50;">
                <children>
-                  <Label fx:id="dateLabel" alignment="CENTER" prefHeight="25.0" prefWidth="100.0">
+                  <GNAvatarView fx:id="poserAvatar" onMouseClicked="#on_poserAvatar_clicked" prefHeight="80.0" prefWidth="80.0" type="CIRCLE">
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin>
+                  </GNAvatarView>
+                  <Label fx:id="posterUserNameLabel" onMouseClicked="#on_posterUserNameLabel_clicked" prefHeight="25.0" prefWidth="250.0" text="User Name">
+                     <HBox.margin>
+                        <Insets left="16.0" />
+                     </HBox.margin>
                      <font>
-                        <Font name="System Bold Italic" size="13.0" />
+                        <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-               </children>
-               <HBox.margin>
-                  <Insets right="16.0" />
-               </HBox.margin>
-            </HBox>
-         </children>
-         <VBox.margin>
-            <Insets left="8.0" right="8.0" top="8.0" />
-         </VBox.margin>
-      </HBox>
-      <TextFlow fx:id="postTextTFlow" lineSpacing="1.0" prefHeight="185.0" prefWidth="1324.0" style="-fx-background-color: #FAF9F6; -fx-background-radius: 20;">
-         <VBox.margin>
-            <Insets left="8.0" right="8.0" top="8.0" />
-         </VBox.margin>
-         <padding>
-            <Insets bottom="8.0" left="12.0" right="12.0" top="8.0" />
-         </padding>
-      </TextFlow>
-      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1324.0" style="-fx-background-color: #c2c2c2; -fx-background-radius: 20;">
-         <VBox.margin>
-            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-         </VBox.margin>
-         <children>
-            <MediaView fx:id="postMediaPlayer" fitHeight="400.0" fitWidth="1324.0" />
-         </children>
-      </StackPane>
-      <HBox alignment="CENTER_LEFT">
-         <children>
-            <ImageView fx:id="likeImageView" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#on_likeImageView_clicked" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="8.0" />
-               </HBox.margin>
-               <image>
-                  <Image url="@../Images/Icons/Like.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="likeLabel" mnemonicParsing="false" onAction="#on_likeLabel_clicked" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: transparent;" text="Like" />
-            <ImageView fx:id="commentImageView" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#on_commentImageView_clicked" pickOnBounds="true" preserveRatio="true">
-               <HBox.margin>
-                  <Insets left="8.0" />
-               </HBox.margin>
-               <image>
-                  <Image url="@../Images/Icons/Chat.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="commentLabel" mnemonicParsing="false" onAction="#on_commentLabel_clicked" style="-fx-background-color: transparent;" text="Comment" />
-            <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="1142.0">
-               <children>
-                  <Button fx:id="showLikesButton" mnemonicParsing="false" onAction="#on_showLikesButton_clicked" style="-fx-background-color: transparent;" text="Show Likes" />
-                  <Button fx:id="showCommentsButton" mnemonicParsing="false" onAction="#on_showCommentsButton_clicked" style="-fx-background-radius: 50; -fx-background-color: transparent;" text="Show Comments">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="1020.0">
+                     <children>
+                        <Label fx:id="dateLabel" alignment="CENTER" prefHeight="25.0" prefWidth="100.0">
+                           <font>
+                              <Font name="System Bold Italic" size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
                      <HBox.margin>
                         <Insets right="16.0" />
                      </HBox.margin>
-                  </Button>
+                  </HBox>
                </children>
+               <VBox.margin>
+                  <Insets left="8.0" right="8.0" top="8.0" />
+               </VBox.margin>
+            </HBox>
+            <TextFlow fx:id="postTextTFlow" lineSpacing="1.0" prefHeight="185.0" prefWidth="1324.0" style="-fx-background-color: #FAF9F6; -fx-background-radius: 20;">
+               <VBox.margin>
+                  <Insets left="8.0" right="8.0" top="8.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="8.0" left="12.0" right="12.0" top="8.0" />
+               </padding>
+            </TextFlow>
+            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1324.0" style="-fx-background-color: #c2c2c2; -fx-background-radius: 20;">
+               <VBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </VBox.margin>
+               <children>
+                  <MediaView fx:id="postMediaPlayer" fitHeight="400.0" fitWidth="1324.0" />
+               </children>
+            </StackPane>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <ImageView fx:id="likeImageView" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#on_likeImageView_clicked" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../Images/Icons/Like.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="likeLabel" mnemonicParsing="false" onAction="#on_likeLabel_clicked" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: transparent;" />
+                  <ImageView fx:id="commentImageView" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#on_commentImageView_clicked" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../Images/Icons/Chat.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="commentLabel" mnemonicParsing="false" onAction="#on_commentLabel_clicked" style="-fx-background-color: transparent;" text="Comment" />
+                  <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="1142.0">
+                     <children>
+                        <Button fx:id="showLikesButton" mnemonicParsing="false" onAction="#on_showLikesButton_clicked" style="-fx-background-color: transparent;" text="Show Likes" />
+                        <Button fx:id="showCommentsButton" mnemonicParsing="false" onAction="#on_showCommentsButton_clicked" style="-fx-background-radius: 50; -fx-background-color: transparent;" text="Show Comments">
+                           <HBox.margin>
+                              <Insets right="16.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </VBox.margin>
             </HBox>
          </children>
-         <VBox.margin>
-            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-         </VBox.margin>
-      </HBox>
+      </VBox>
    </children>
-</VBox>
+</StackPane>

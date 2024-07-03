@@ -21,16 +21,12 @@ public class LikeController extends Controller {
 
         if (UserDAO.getUserByEmail(like.getLiker()) == null) throw new SQLException("User does not exist");
 
-        if (LikeDAO.getLikeByPostID(like.getPostId()) == null) {
-            LikeDAO.saveLike(like);
-        } else {
-            LikeDAO.updateLike(like);
-        }
+        LikeDAO.saveLike(like);
     }
 
     public static void deleteLike(String json) throws SQLException {
         Like like = gson.fromJson(json, Like.class);
-        LikeDAO.deleteLikeByPostID(like.getPostId());
+        LikeDAO.deleteLikeByPostID(like.getPostId(), like.getLiker());
     }
 
     public static void deleteAllLikes() throws SQLException {

@@ -1,11 +1,15 @@
 package org.Linked.client.viewControllers;
 
 import io.github.gleidson28.GNAvatarView;
+import javafx.beans.binding.Bindings;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -16,6 +20,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.util.Callback;
+import org.Linked.client.FXModels.ProfileSearchCell;
 import org.Linked.client.viewControllers.Http.HttpController;
 import org.Linked.client.viewControllers.Http.HttpMethod;
 import org.Linked.client.viewControllers.Http.HttpResponse;
@@ -76,17 +82,24 @@ public class PostController extends AbstractViewController{
 
     private String postID;
 
-    private ArrayList<User> likerUsers = new ArrayList<>();
+    private ArrayList<User> allUsers;
 
-    @FXML
-    public void initialize () {
+    private ListView<User> likesListView;
+    private ObservableList<User> likerUsers;
+    private VBox likesVbox;
+
+    @FXML void initialize() {
         likeLabel.setText(countLikes() + " Likes");
     }
 
-    public void initializePostData(Post post, User user) {
-        initialize();
-        posterEmail = user.getEmail();
+    public void initializePostData(Post post, User user, VBox likesVbox, ListView<User> likesListView, ObservableList<User> likerUsers) {
+        this.likesListView = likesListView;
+        this.likerUsers = likerUsers;
+        this.likesVbox = likesVbox;
+
         postID = post.getPostId();
+        likeLabel.setText(countLikes() + " Likes");
+        posterEmail = user.getEmail();
         if (user.getProfilePicture() != null && !user.getProfilePicture().isEmpty()) {
             poserAvatar.setImage(new Image(Paths.get(user.getProfilePicture()).toUri().toString()));
         } else {
@@ -147,7 +160,6 @@ public class PostController extends AbstractViewController{
         highlightHashtags(post.getText(), postTextTFlow);
         dateLabel.setText(post.getCreatedAt().toString());
     }
-
 
     private String saveFileLocally(byte[] fileData, Post post, String format, String folderName) {
         String fileName = post.getPostId() + format; // You can use postId or another unique identifier here
@@ -229,21 +241,48 @@ public class PostController extends AbstractViewController{
 
     @FXML
     void on_likeImageView_clicked(MouseEvent event) {
-        Like like = new Like(LOGGED_USER, posterEmail, postID);
+        ArrayList<Like> likes = getAllLikes();
 
-        String likeJson = gson.toJson(like);
+        boolean shouldAdd = true;
 
-        try {
-            HttpController.sendRequest(SERVER_ADDRESS + "/likes", HttpMethod.POST, likeJson, null);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        Like userLike = null;
+        for (Like like : likes){
+            if (like.getPostId().equals(postID) && like.getLiker().equals(LOGGED_USER)){
+                shouldAdd = false;
+                userLike = like;
+                break;
+            }
         }
+
+        if (shouldAdd) {
+            Like like = new Like(LOGGED_USER, posterEmail, postID);
+            String likeJson = gson.toJson(like);
+
+            try {
+                HttpController.sendRequest(SERVER_ADDRESS + "/likes", HttpMethod.POST, likeJson, null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            Image image = new Image(Paths.get("src/main/resources/Images/Icons/LikeColored.png").toUri().toString());
+            likeImageView.setImage(image);
+        } else {
+            String likeJson = gson.toJson(userLike);
+            try {
+                HttpController.sendRequest(SERVER_ADDRESS + "/likes/" + userLike.getPostId(), HttpMethod.DELETE, likeJson, null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Image image = new Image(Paths.get("src/main/resources/Images/Icons/Like.png").toUri().toString());
+            likeImageView.setImage(image);
+        }
+
         initialize();
     }
 
     @FXML
     void on_likeLabel_clicked(ActionEvent event) {
-
+        on_showLikesButton_clicked(event);
     }
 
     @FXML
@@ -253,28 +292,40 @@ public class PostController extends AbstractViewController{
 
     @FXML
     void on_showLikesButton_clicked(ActionEvent event) {
-
-    }
-
-    private int countLikes() {
         likerUsers.clear();
 
-        HttpResponse likesResponse;
-        HttpResponse allUsersResponse;
+        likesVbox.setVisible(true);
 
+        likesListView.setCellFactory(
+                new Callback<ListView<User>, ListCell<User>>() {
+                    @Override
+                    public ListCell<User> call(ListView<User> param) {
+                        return new ProfileSearchCell();
+                    }
+                }
+        );
+
+        // Bind the ListView's height to the total height of its cells
+        likesListView.prefHeightProperty().bind(Bindings.size(likerUsers).multiply(80));
+        likesListView.setOnMouseClicked(this::handleListViewClick);
+
+        HttpResponse allUsersResponse;
+        HttpResponse likesResponse;
         try {
-            likesResponse = HttpController.sendRequest(SERVER_ADDRESS + "/likes", HttpMethod.GET, null, null);
             allUsersResponse = HttpController.sendRequest(SERVER_ADDRESS + "/users", HttpMethod.GET, null, null);
+            likesResponse = HttpController.sendRequest(SERVER_ADDRESS + "/likes", HttpMethod.GET, null, null);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        ArrayList<Like> allLikes = gson.fromJson(likesResponse.getBody(), LIKE_LIST_TYPE);
-        ArrayList<User> allUsers = gson.fromJson(allUsersResponse.getBody(), USER_LIST_TYPE);
+        if (allUsersResponse.getStatusCode() != 200 || likesResponse.getStatusCode() != 200) throw new RuntimeException("Error getting user data");
 
-        for (Like like : allLikes){
+        allUsers = gson.fromJson(allUsersResponse.getBody(), USER_LIST_TYPE);
+        ArrayList<Like> likes = gson.fromJson(likesResponse.getBody(), LIKE_LIST_TYPE);
+
+        for (Like like : likes) {
             if (like.getPostId().equals(postID)){
-                for (User user : allUsers){
+                for (User user : allUsers) {
                     if (user.getEmail().equals(like.getLiker())){
                         likerUsers.add(user);
                     }
@@ -282,6 +333,44 @@ public class PostController extends AbstractViewController{
             }
         }
 
-        return likerUsers.size();
+        likesListView.setItems(likerUsers);
+    }
+
+    private void handleListViewClick(MouseEvent event) {
+        User selectedUser = likesListView.getSelectionModel().getSelectedItem();
+        if (selectedUser != null) {
+            ProfileController.setProfileUserEmail(selectedUser.getEmail());
+            switchScenes("/fxml/profileView.fxml", likesVbox);
+        }
+    }
+
+    private int countLikes() {
+        ArrayList<Like> allLikes = getAllLikes();
+
+        int i = 0;
+        for (Like like : allLikes){
+            if (like.getPostId().equals(postID)){
+                i++;
+
+                if (like.getLiker().equals(LOGGED_USER)){
+                    Image image = new Image(Paths.get("src/main/resources/Images/Icons/LikeColored.png").toUri().toString());
+                    likeImageView.setImage(image);
+                }
+            }
+        }
+
+        return i;
+    }
+
+    private ArrayList<Like> getAllLikes(){
+        HttpResponse likesResponse;
+
+        try {
+            likesResponse = HttpController.sendRequest(SERVER_ADDRESS + "/likes", HttpMethod.GET, null, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return gson.fromJson(likesResponse.getBody(), LIKE_LIST_TYPE);
     }
 }

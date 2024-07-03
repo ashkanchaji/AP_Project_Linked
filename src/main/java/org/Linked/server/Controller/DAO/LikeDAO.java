@@ -73,9 +73,16 @@ public class LikeDAO extends GenericDAO<Like> {
         }
     }
 
-    public void deleteLikeByPostID(String postID) throws SQLException {
-        String query = "DELETE FROM " + tablePath + " WHERE postId = ?";
-        deleteEntity(query, postID);
+    public void deleteLikeByPostID(String postID, String liker) throws SQLException {
+        String query = "DELETE FROM " + tablePath + " WHERE postId = ? AND liker = ?";
+
+        checkTableExistence();
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, postID);
+            statement.setString(2, liker);
+            statement.executeUpdate();
+        }
     }
 
     public void deleteAllLikes() throws SQLException {
