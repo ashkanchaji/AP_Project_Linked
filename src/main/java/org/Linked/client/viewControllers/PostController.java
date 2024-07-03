@@ -1,5 +1,6 @@
 package org.Linked.client.viewControllers;
 
+import com.google.gson.Gson;
 import io.github.gleidson28.GNAvatarView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,11 +15,18 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import org.Linked.client.viewControllers.Http.HttpController;
+import org.Linked.client.viewControllers.Http.HttpMethod;
+import org.Linked.client.viewControllers.Http.HttpResponse;
 import org.Linked.server.Model.Post;
 import org.Linked.server.Model.User;
+import org.Linked.server.Model.VideoFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,14 +75,45 @@ public class PostController extends AbstractViewController{
             poserAvatar.setImage(new Image(Paths.get("src/main/resources/Images/default_profile_image.jpeg").toUri().toString()));
         }
         posterUserNameLabel.setText(user.getEmail().split("@")[0]);
-        highlightHashtags(post.getText(), postTextTFlow);
-        if (post.getByteFilePath() != null && !post.getByteFilePath().isEmpty()){
-            Media media = new Media(new File(post.getByteFilePath()).toURI().toString());
+
+        HttpResponse videoResponse;
+        try {
+            videoResponse = HttpController.sendRequest(SERVER_ADDRESS + "/videoFiles/" + post.getPostId(), HttpMethod.GET, null, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (videoResponse.getBody() != null && !videoResponse.getBody().equals("No such video file found!")) {
+            VideoFile videoFile = gson.fromJson(videoResponse.getBody(), VideoFile.class);
+
+            // Save video file locally
+            byte[] videoData = Base64.getDecoder().decode(videoFile.getVideoFile());
+            String videoFilePath = saveVideoLocally(videoData);
+
+            // Create Media and MediaPlayer
+            Media media = new Media(new File(videoFilePath).toURI().toString());
             MediaPlayer mediaPlayer = new MediaPlayer(media);
             postMediaPlayer.setMediaPlayer(mediaPlayer);
             mediaPlayer.setAutoPlay(true);
         }
+
+        highlightHashtags(post.getText(), postTextTFlow);
         dateLabel.setText(post.getCreatedAt().toString());
+    }
+
+    private String saveVideoLocally(byte[] videoData) {
+        String fileName = "video.mp4"; // You can use postId or another unique identifier here
+        String filePath = "src/main/resources/videoFilePosts" + fileName; // Set your desired save path
+
+        try {
+            FileOutputStream fos = new FileOutputStream(filePath);
+            fos.write(videoData);
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return filePath;
     }
 
     private void highlightHashtags(String text, TextFlow textFlow) {
