@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class LikeHandler extends Handler{
+public class LikeHandler extends Handler {
     @Override
     protected String handleRequest(String method, String path, HttpExchange exchange, AtomicInteger statusCode) throws SQLException, IOException {
         String[] splitPath = path.split("/");
@@ -17,15 +17,16 @@ public class LikeHandler extends Handler{
                 if (splitPath.length >= 3) {
                     String email = splitPath[splitPath.length - 1];
                     String likeJson = LikeController.getLike(email);
-                    response = likeJson == null ? "No such job info found!" : likeJson;
+                    response = likeJson == null ? "No such like found!" : likeJson;
                 } else {
                     response = LikeController.getAllLikes();
                 }
                 break;
             case "DELETE":
                 if (splitPath.length >= 3) {
-                    String email = splitPath[splitPath.length - 1];
-                    LikeController.deleteLike(email);
+                    String postId = splitPath[splitPath.length - 1];
+                    String likeJson = readRequestBody(exchange);
+                    LikeController.deleteLike(likeJson);
                 } else {
                     LikeController.deleteAllLikes();
                 }
@@ -43,5 +44,4 @@ public class LikeHandler extends Handler{
         }
         return response;
     }
-
 }

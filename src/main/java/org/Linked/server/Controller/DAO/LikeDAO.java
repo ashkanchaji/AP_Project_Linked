@@ -1,4 +1,5 @@
 package org.Linked.server.Controller.DAO;
+
 import org.Linked.server.Model.Like;
 
 import java.sql.PreparedStatement;
@@ -6,13 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class LikeDAO extends  GenericDAO<Like> {
+public class LikeDAO extends GenericDAO<Like> {
 
     private final String CREATE_LIKES_TABLE_SQL = "CREATE TABLE IF NOT EXISTS "
             + tablePath + " ("
             + "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, "
             + "liker VARCHAR(45), "
-            + "liked VARCHAR(45)"
+            + "liked VARCHAR(45), "
+            + "postId VARCHAR(45)"
             + ")";
 
     public LikeDAO() {
@@ -23,7 +25,8 @@ public class LikeDAO extends  GenericDAO<Like> {
     protected Like mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         return new Like(
                 resultSet.getString("liker"),
-                resultSet.getString("liked")
+                resultSet.getString("liked"),
+                resultSet.getString("postId")
         );
     }
 
@@ -31,13 +34,15 @@ public class LikeDAO extends  GenericDAO<Like> {
     protected String getCreateTableSQL() {
         return CREATE_LIKES_TABLE_SQL;
     }
+
     public void saveLike(Like like) throws SQLException {
         String query = "INSERT INTO " + tablePath +
-                " (liker , liked) " +
-                "VALUES (?, ?)";
+                " (liker, liked, postId) " +
+                "VALUES (?, ?, ?)";
         saveEntity(like, query, (ps, j) -> {
             ps.setString(1, j.getLiker());
             ps.setString(2, j.getLiked());
+            ps.setString(3, j.getPostId());
         });
     }
 
@@ -46,29 +51,42 @@ public class LikeDAO extends  GenericDAO<Like> {
         return getEntity(query, email);
     }
 
+    public Like getLikeByPostID(String postID) throws SQLException {
+        String query = "SELECT * FROM " + tablePath + " WHERE postId = ?";
+        return getEntity(query, postID);
+    }
+
     public ArrayList<Like> getAllLikes() throws SQLException {
         String query = "SELECT * FROM " + tablePath;
         return getAllEntities(query);
     }
+
     public void updateLike(Like like) throws SQLException {
         String query = "UPDATE " + tablePath +
-                " SET liked = ? " +
+                " SET liked = ?, postId = ? " +
                 "WHERE liker = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, like.getLiked());
-            ps.setString(2, like.getLiker());
+            ps.setString(2, like.getPostId());
+            ps.setString(3, like.getLiker());
             ps.executeUpdate();
         }
     }
-    public void deleteLikeByEmail(String email) throws SQLException {
-        String query = "DELETE FROM " + tablePath + " WHERE liker = ?";
-        deleteEntity(query, email);
+
+    public void deleteLikeByPostID(String postID, String liker) throws SQLException {
+        String query = "DELETE FROM " + tablePath + " WHERE postId = ? AND liker = ?";
+
+        checkTableExistence();
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, postID);
+            statement.setString(2, liker);
+            statement.executeUpdate();
+        }
     }
 
     public void deleteAllLikes() throws SQLException {
         String query = "DELETE FROM " + tablePath;
         deleteAllEntities(query);
     }
-
-
 }

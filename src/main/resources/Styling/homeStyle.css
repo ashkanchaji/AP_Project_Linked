@@ -39,3 +39,49 @@
 .post_button:hover {
     -fx-background-color: #1b66bb;
 }
+
+.exit_button{
+    -fx-background-color: #fc5252;
+    -fx-background-radius: 100%;
+    -fx-text-fill: white;
+}
+
+.list-cell {
+    -fx-background-color: #347dab;
+    -fx-opacity: 0.95;
+    -fx-font-family: "Arial"; /* Choose a font family you like */
+    -fx-font-size: 14px;      /* Set the font size */
+}
+
+.list-cell .email-label {
+    -fx-font-family: "Verdana"; /* Different font for the name */
+    -fx-font-size: 16px;        /* Larger font size for the name */
+    -fx-font-weight: bold;      /* Bold font weight */
+}
+
+.list-cell .name-label {
+    -fx-font-family: "Courier New"; /* Different font for the email */
+    -fx-font-size: 14px;            /* Font size for the email */
+    -fx-text-fill: #E5E4E3;            /* Text color for the email */
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #24546a; /* Color of the scrollbar thumb */
+    -fx-background-radius: 5px; /* Rounded corners for the scrollbar thumb */
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: #347dab; /* Color of the scrollbar track */
+}
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent; /* Make the buttons transparent */
+    -fx-padding: 0; /* Remove any padding */
+    -fx-min-width: 0; /* Ensure the buttons do not take up space */
+    -fx-min-height: 0; /* Ensure the buttons do not take up space */
+    -fx-max-width: 0; /* Ensure the buttons do not take up space */
+    -fx-max-height: 0; /* Ensure the buttons do not take up space */
+    -fx-opacity: 0; /* Make the buttons invisible */
+    -fx-shape: ""; /* Remove the shape to avoid any drawing */
+}

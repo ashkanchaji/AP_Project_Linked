@@ -32,12 +32,15 @@ public class AbstractViewController {
             .registerTypeAdapter(ContactsInfo.class, new ContactsInfoTypeAdapter())
             .registerTypeAdapter(Connect.class , new ConnectTypeAdapter())
             .registerTypeAdapter(VideoFile.class, new VideoFileTypeAdapter())
+            .registerTypeAdapter(PhotoFile.class, new PhotoFileTypeAdapter())
+            .registerTypeAdapter(Like.class, new LikeTypeAdapter())
             .create();
     protected static final Type USER_LIST_TYPE = new TypeToken<ArrayList<User>>() {}.getType();
     protected static final Type FOLLOW_LIST_TYPE = new TypeToken<ArrayList<Follow>>() {}.getType();
     protected static final Type SKILL_LIST_TYPE = new TypeToken<ArrayList<String>>() {}.getType();
     protected static final Type POST_LIST_TYPE = new TypeToken<ArrayList<Post>>() {}.getType();
     protected static final Type CONNECT_LIST_TYPE = new TypeToken<ArrayList<Connect>>() {}.getType();
+    protected static final Type LIKE_LIST_TYPE = new TypeToken<ArrayList<Like>>() {}.getType();
 
     protected <T extends Node> void switchScenes (String path, T lastSceneNode) {
         try {

@@ -24,7 +24,7 @@ public class HttpController {
             }
 
             // Set request body for POST and PUT requests
-            if (method == HttpMethod.POST || method == HttpMethod.PUT) {
+            if (method == HttpMethod.POST || method == HttpMethod.PUT || (method == HttpMethod.DELETE && url.contains("likes"))) {
                 connection.setDoOutput(true);
                 OutputStream outputStream = connection.getOutputStream();
                 outputStream.write(body.getBytes());

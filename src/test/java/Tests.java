@@ -6,7 +6,7 @@ import org.Linked.server.Controller.Exeptions.InvalidEmailException;
 import org.Linked.server.Controller.Exeptions.InvalidPassException;
 import org.Linked.server.Model.Comment;
 import org.Linked.server.Model.Education;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
