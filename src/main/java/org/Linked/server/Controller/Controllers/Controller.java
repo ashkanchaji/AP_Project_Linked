@@ -20,10 +20,15 @@ public abstract class Controller {
             .registerTypeAdapter(Post.class, new PostTypeAdapter())
             .registerTypeAdapter(ContactsInfo.class, new ContactsInfoTypeAdapter())
 <<<<<<< HEAD
+<<<<<<< HEAD
             .registerTypeAdapter(Connect.class , new ConnectTypeAdapter())
 =======
             .registerTypeAdapter(VideoFile.class, new VideoFileTypeAdapter())
 >>>>>>> c44490830e57b1a0c9fccc2878bac58b6e45a7f7
+=======
+            .registerTypeAdapter(Connect.class , new ConnectTypeAdapter())
+            .registerTypeAdapter(VideoFile.class, new VideoFileTypeAdapter())
+>>>>>>> aec0d1f4bfc093e1ac6f0d320da84993e61d6cb8
             .create();
     protected static final org.Linked.server.Controller.DAO.UserDAO UserDAO = new UserDAO();
     protected static final JobDAO JobDAO = new JobDAO();
