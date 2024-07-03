@@ -14,16 +14,21 @@ import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.Linked.client.viewControllers.Http.HttpController;
+import org.Linked.client.viewControllers.Http.HttpHeaders;
 import org.Linked.client.viewControllers.Http.HttpMethod;
 import org.Linked.client.viewControllers.Http.HttpResponse;
 import org.Linked.client.viewControllers.Utils.JWTController;
+import org.Linked.client.viewControllers.Utils.VideoFileUtil;
 import org.Linked.server.Controller.Exeptions.CharacterNumberLimitException;
 import org.Linked.server.Model.Follow;
 import org.Linked.server.Model.Post;
 import org.Linked.server.Model.User;
+import org.Linked.server.Model.VideoFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -52,8 +57,8 @@ public class HomeController extends AbstractViewController{
 
     private final String THIS_USER_EMAIL = JWTController.getSubjectFromJwt(JWTController.getJwtKey()).split(":")[0];
 
-    private String videoPath;
-    private String photoPath;
+    private String videoFileBase64 = null;
+    private String photoPath = null;
 
     private ArrayList<User> allUsers;
     private ArrayList<Post> allPosts;
@@ -64,6 +69,8 @@ public class HomeController extends AbstractViewController{
     @FXML
     public void initialize() {
         postLimitLabel.setVisible(false);
+
+        videoFileBase64 = null;
 
         HttpResponse users;
         HttpResponse posts;
@@ -109,8 +116,15 @@ public class HomeController extends AbstractViewController{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PostView.fxml"));
             VBox postView = loader.load();
 
+            HttpResponse videoResponse;
+            try {
+                videoResponse = HttpController.sendRequest(SERVER_ADDRESS + "/videoFiles/" + post.getPostId(), HttpMethod.GET, null, null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
             for (Node node : postView.getChildren()){
-                if (node instanceof MediaView && (post.getByteFilePath() == null || post.getByteFilePath().isEmpty())){
+                if (node instanceof MediaView && (videoResponse.getBody() == null || videoResponse.getBody().equals("No such video file found!"))){
                     postView.getChildren().remove(node);
                     break;
                 }
@@ -155,6 +169,23 @@ public class HomeController extends AbstractViewController{
             throw new RuntimeException(e);
         }
 
+        if (videoFileBase64 != null) {
+
+            VideoFile videoFile = new VideoFile(post.getPostId(), videoFileBase64);
+
+            String videoJsonBody = gson.toJson(videoFile);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
+
+            try {
+                HttpController.sendRequest(SERVER_ADDRESS + "/videoFiles/" + post.getPostId(), HttpMethod.POST, videoJsonBody, null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         newPostTextArea.setText(null);
         initialize();
     }
@@ -172,7 +203,12 @@ public class HomeController extends AbstractViewController{
                 new FileChooser.ExtensionFilter("Video Files", "*.mp4", "*.avi", "*.mkv", "*.flv", "*.mov", "*.wmv")
         );
         File selectedFile = fileChooser.showOpenDialog(new Stage());
-        videoPath = selectedFile == null ? null : selectedFile.getAbsolutePath();
+        if (selectedFile != null) {
+            try {
+                videoFileBase64 = VideoFileUtil.encodeFileToBase64(selectedFile.getAbsolutePath());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
-
 }

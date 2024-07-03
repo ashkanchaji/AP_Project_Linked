@@ -2,10 +2,7 @@ package org.Linked.server.Controller.Controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.Linked.client.viewControllers.Utils.ContactsInfoTypeAdapter;
-import org.Linked.client.viewControllers.Utils.EducationSkillsTypeAdapter;
-import org.Linked.client.viewControllers.Utils.PostTypeAdapter;
-import org.Linked.client.viewControllers.Utils.UserTypeAdapter;
+import org.Linked.client.viewControllers.Utils.*;
 import org.Linked.server.Controller.DAO.*;
 import org.Linked.server.Controller.DAO.*;
 import org.Linked.server.Controller.DAO.*;
@@ -23,6 +20,7 @@ public abstract class Controller {
             .registerTypeAdapter(Post.class, new PostTypeAdapter())
             .registerTypeAdapter(ContactsInfo.class, new ContactsInfoTypeAdapter())
             .registerTypeAdapter(Connect.class , new ConnectTypeAdapter())
+            .registerTypeAdapter(VideoFile.class, new VideoFileTypeAdapter())
             .create();
     protected static final org.Linked.server.Controller.DAO.UserDAO UserDAO = new UserDAO();
     protected static final JobDAO JobDAO = new JobDAO();

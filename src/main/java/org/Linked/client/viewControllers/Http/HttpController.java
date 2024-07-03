@@ -51,6 +51,8 @@ public class HttpController {
             reader.close();
 
             return new HttpResponse(responseCode, response.toString());
+        } catch (IOException e) {
+            throw new IOException("Error communicating with server: " + e.getMessage(), e);
         } finally {
             if (connection != null) {
                 connection.disconnect();
