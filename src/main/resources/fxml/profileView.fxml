@@ -852,7 +852,7 @@
                         </ScrollPane>
                      </children>
                   </VBox>
-                  <VBox fx:id="addEduVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" stylesheets="@../Styling/profileStyle.css" translateX="-240.0">
+                  <VBox fx:id="addEduVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" stylesheets="@../Styling/profileStyle.css" translateX="-240.0" visible="false">
                      <children>
                         <TextField fx:id="instituteEduAddTF" prefHeight="30.0" promptText="institute name" style="-fx-background-radius: 5; -fx-background-color: #e4f0ff;">
                            <VBox.margin>

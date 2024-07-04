@@ -1347,7 +1347,7 @@ public class ProfileController extends AbstractViewController{
         HttpResponse educations;
 
         try {
-            educations = HttpController.sendRequest(SERVER_ADDRESS + "/education", HttpMethod.PUT, null, null);
+            educations = HttpController.sendRequest(SERVER_ADDRESS + "/education", HttpMethod.GET, null, null);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -1371,7 +1371,7 @@ public class ProfileController extends AbstractViewController{
 
     private int loadConnect (Education edu , int row){
         try {
-            FXMLLoader loader = FXMLLoader.load(getClass().getResource("/fxml/AllEducationController"));
+            FXMLLoader loader = FXMLLoader.load(getClass().getResource("/fxml/allEducationView.fxml"));
             VBox educationView = loader.load();
 
             AllEducationController controller = loader.getController();
