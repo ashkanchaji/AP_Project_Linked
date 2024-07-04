@@ -15,6 +15,7 @@ public class ConnectTypeAdapter extends TypeAdapter<Connect> {
         out.name("sender").value(connect.getSender());
         out.name("receiver").value(connect.getReceiver());
         out.name("notes").value(connect.getNotes());
+        out.name("pending").value(connect.isPending());
         out.endObject();
     }
 
@@ -23,6 +24,7 @@ public class ConnectTypeAdapter extends TypeAdapter<Connect> {
         String sender = null;
         String receiver = null;
         String notes = null;
+        boolean pending = false;
 
         in.beginObject();
         while (in.hasNext()) {
@@ -37,6 +39,9 @@ public class ConnectTypeAdapter extends TypeAdapter<Connect> {
                 case "notes":
                     notes = in.nextString();
                     break;
+                case "pending":
+                    pending = in.nextBoolean();
+                    break;
                 default:
                     in.skipValue();
                     break;
@@ -44,6 +49,6 @@ public class ConnectTypeAdapter extends TypeAdapter<Connect> {
         }
         in.endObject();
 
-        return new Connect(sender, receiver, notes);
+        return new Connect(sender, receiver, notes, pending);
     }
 }

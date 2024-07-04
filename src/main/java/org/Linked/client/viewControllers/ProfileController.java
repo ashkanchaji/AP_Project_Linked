@@ -487,12 +487,15 @@ public class ProfileController extends AbstractViewController{
         editInfoVbox.setVisible(false);
         editInfoVbox.setDisable(true);
         followShowVbox.setVisible(false);
+        connectVbox.setVisible(false);
 
         followersCount = calculateFollowers();
         followingCount = calculateFollowings();
 
         followingsCountLabel.setText(followingCount + " Followings");
         followersCountLabel.setText(followersCount + " Followers");
+
+        connectionCountLabel.setText(calculateConnections() + " Connections");
 
         /* ___ GET USER INFO ___ */
 
@@ -692,6 +695,34 @@ public class ProfileController extends AbstractViewController{
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
+            try {
+                HttpResponse connectResponse = HttpController.sendRequest(SERVER_ADDRESS + "/connect/" + currentUserEmail +
+                        "/" + profileUserEmail, HttpMethod.GET, null, null);
+                if (!connectResponse.getBody().equals("No such connect info found!")) {
+                    Connect connect = gson.fromJson(connectResponse.getBody(), Connect.class);
+                    if (connect.isPending()){
+                        connectButton.setText("Requested");
+                    } else {
+                        connectButton.setText("Connected");
+                    }
+                } else {
+                    HttpResponse connectResponse2 = HttpController.sendRequest(SERVER_ADDRESS + "/connect/" + profileUserEmail +
+                            "/" + currentUserEmail, HttpMethod.GET, null, null);
+                    if (!connectResponse2.getBody().equals("No such connect info found!")){
+                        Connect connect = gson.fromJson(connectResponse2.getBody(), Connect.class);
+                        if (connect.isPending()){
+                            connectButton.setText("Pending");
+                        } else {
+                            connectButton.setText("Connected");
+                        }
+                    } else {
+                        connectButton.setText("Connect");
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -705,6 +736,11 @@ public class ProfileController extends AbstractViewController{
     @FXML
     void on_homeButton_clicked(ActionEvent event) {
         switchScenes("/fxml/HomeView.fxml", homeButton);
+    }
+
+    @FXML
+    void on_notificationButton_clicked(ActionEvent event){
+        switchScenes("/fxml/NotificationView.fxml", notificationButton);
     }
 
     ////////////////////////////////////////// ___ profile general info ___ ////////////////////////////////////////////
@@ -970,18 +1006,31 @@ public class ProfileController extends AbstractViewController{
 
     @FXML
     void on_sendConnectButton_clicked(ActionEvent event) {
-        if (connectButton.getText().equals("Connect")){
-            String note = connectReqTA.getText();
-            Connect connect = new Connect(currentUserEmail, profileUserEmail , note);
-            String connectJson = gson.toJson(connect);
+        String note = connectReqTA.getText();
+        Connect connect = new Connect(currentUserEmail, profileUserEmail , note, true);
+        String connectJson = gson.toJson(connect);
 
-            try {
-                HttpController.sendRequest(SERVER_ADDRESS + "/connect/" + currentUserEmail, HttpMethod.POST, connectJson, null);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            connectButton.setText("Requested");
-        } else {
+        try {
+            HttpController.sendRequest(SERVER_ADDRESS + "/connect/" + currentUserEmail, HttpMethod.POST, connectJson, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        connectButton.setText("Requested");
+
+        initialize();
+    }
+    @FXML
+    void on_closeConnectButton_clicked(ActionEvent event) {
+        connectVbox.setVisible(false);
+
+    }
+
+    @FXML
+    void on_connectButton_clicked(ActionEvent event) {
+        if (connectButton.getText().equals("Connect")) {
+            connectVbox.setDisable(false);
+            connectVbox.setVisible(true);
+        } else if (connectButton.getText().equals("Requested")){
             try {
                 HttpController.sendRequest(SERVER_ADDRESS + "/connect/" + currentUserEmail + "/" + profileUserEmail,
                         HttpMethod.DELETE, null, null);
@@ -989,21 +1038,8 @@ public class ProfileController extends AbstractViewController{
                 throw new RuntimeException(e);
             }
             connectButton.setText("Connect");
+            initialize();
         }
-        initialize();
-
-    }
-    @FXML
-    void on_closeConnectButton_clicked(ActionEvent event) {
-        connectVbox.setDisable(true);
-        connectVbox.setVisible(false);
-
-    }
-
-    @FXML
-    void on_connectButton_clicked(ActionEvent event) {
-        connectVbox.setDisable(false);
-        connectVbox.setVisible(true);
     }
 
     @FXML
@@ -1024,11 +1060,11 @@ public class ProfileController extends AbstractViewController{
 
         for (User user : allUsers) {
             for (Connect connect : connects) {
-                if (connect.getSender().equals(profileUserEmail)){
+                if (connect.getSender().equals(profileUserEmail) && !connect.isPending()){
                     if (connect.getReceiver().equals(user.getEmail()))
                         users.add(user);
                 }
-                else if (connect.getReceiver().equals(profileUserEmail)){
+                else if (connect.getReceiver().equals(profileUserEmail) && !connect.isPending()){
                     if (connect.getSender().equals(user.getEmail()))
                         users.add(user);
                 }
@@ -1036,13 +1072,11 @@ public class ProfileController extends AbstractViewController{
         }
 
         usersListView.setItems(users);
-
     }
 
     @FXML
     void on_closeConnectLW_clicked(ActionEvent event) {
         connectionListViewVbox.setVisible(false);
-        connectionListViewVbox.setDisable(true);
     }
 
     private void initializeConnectListView(boolean visibility) {
@@ -1061,11 +1095,11 @@ public class ProfileController extends AbstractViewController{
                 }
         );
         connectionListView.prefHeightProperty().bind(Bindings.size(users).multiply(80));
-        connectionListView.setOnMouseClicked(this::handleListViewClick);
+        connectionListView.setOnMouseClicked(this::handleConnectionListViewClick);
 
         HttpResponse allUsersResponse;
         try {
-            allUsersResponse = HttpController.sendRequest(SERVER_ADDRESS + "/connect", HttpMethod.GET, null, null);
+            allUsersResponse = HttpController.sendRequest(SERVER_ADDRESS + "/users", HttpMethod.GET, null, null);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -1076,8 +1110,6 @@ public class ProfileController extends AbstractViewController{
     }
 
     private int calculateConnections() {
-        initializeConnectListView(false);
-
         HttpResponse connectsResponse;
 
         try {
@@ -1089,23 +1121,23 @@ public class ProfileController extends AbstractViewController{
         if (connectsResponse.getStatusCode() != 200) throw new RuntimeException("Error getting user data");
 
         connects = gson.fromJson(connectsResponse.getBody(), CONNECT_LIST_TYPE);
-
-        for (User user : allUsers) {
-            for (Connect connect : connects) {
-                if (connect.getSender().equals(profileUserEmail)){
-                    if (connect.getReceiver().equals(user.getEmail()))
-                        users.add(user);
-                }
-                else if (connect.getReceiver().equals(profileUserEmail)){
-                    if (connect.getSender().equals(user.getEmail()))
-                        users.add(user);
-                }
+        int i = 0;
+        for (Connect connect : connects) {
+            if (!connect.isPending()){
+                i++;
             }
         }
 
-        return users.size();
+        return i;
     }
 
+    private void handleConnectionListViewClick(MouseEvent event) {
+        User selectedUser = connectionListView.getSelectionModel().getSelectedItem();
+        if (selectedUser != null) {
+            ProfileController.setProfileUserEmail(selectedUser.getEmail());
+            switchScenes("/fxml/profileView.fxml", connectionListViewVbox);
+        }
+    }
 
     ////////////////////////////////////////// ___ server response ___ /////////////////////////////////////////////////
 

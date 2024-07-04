@@ -9,38 +9,37 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="600.0" style="-fx-background-radius: 50; -fx-background-color: #c2c2c2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.ConnectRequestController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="1340.0" style="-fx-background-radius: 50; -fx-background-color: #c2c2c2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.ConnectRequestController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-background-radius: 50;" styleClass="tab" stylesheets="@../Styling/connectRequest.css">
          <VBox.margin>
-            <Insets left="8.0" right="8.0" top="8.0" />
+            <Insets left="16.0" right="16.0" top="8.0" />
          </VBox.margin>
          <children>
-            <GNAvatarView fx:id="avatarPicture" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" translateX="15.0" type="CIRCLE" />
-            <Label fx:id="usernameLabel" prefHeight="18.0" prefWidth="138.0" text="UserName" translateX="30.0">
+            <GNAvatarView fx:id="avatarPicture" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#on_avatarPicture_clicked" prefHeight="50.0" prefWidth="50.0" translateX="15.0" type="CIRCLE" />
+            <Label fx:id="usernameLabel" onMouseClicked="#on_usernameLabel_clicked" prefHeight="18.0" prefWidth="138.0" text="UserName" translateX="30.0">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
-            <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#on_tickButton_clicked" pickOnBounds="true" preserveRatio="true" translateX="290.0">
+            <ImageView fx:id="acceptLabel" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#on_acceptLabel_clicked" pickOnBounds="true" preserveRatio="true" translateX="1030.0">
                <image>
                   <Image url="@../Images/Icons/icons8-tick-48.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#on_closeButton_clicked" pickOnBounds="true" preserveRatio="true" translateX="300.0">
+            <ImageView fx:id="rejectLabel" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#on_rejectLabel_clicked" pickOnBounds="true" preserveRatio="true" translateX="1040.0">
                <image>
                   <Image url="@../Images/Icons/icons8-close-48.png" />
                </image>
             </ImageView>
          </children>
       </HBox>
-      <Label fx:id="requestInfoLabel" alignment="TOP_LEFT" prefHeight="45.0" prefWidth="562.0" text="I want  make a connection with you">
+      <Label fx:id="requestInfoLabel" alignment="TOP_LEFT" prefHeight="58.0" prefWidth="1309.0" wrapText="true">
          <VBox.margin>
-            <Insets bottom="8.0" left="16.0" right="16.0" top="16.0" />
+            <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
          </VBox.margin>
          <font>
-            <Font size="13.0" />
+            <Font name="System Bold Italic" size="13.0" />
          </font>
       </Label>
    </children>
