@@ -1371,14 +1371,14 @@ public class ProfileController extends AbstractViewController{
 
     private int loadConnect (Education edu , int row){
         try {
-            FXMLLoader loader = FXMLLoader.load(getClass().getResource("/fxml/allEducationView.fxml"));
-            VBox educationView = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/allEducationView.fxml"));
+            VBox educationView = loader.load(); // Load the FXML file and get the root element
 
             AllEducationController controller = loader.getController();
             controller.initializeEdu(edu);
             showAllEduGridpane.add(educationView , 0 , row);
 
-
+//            showAllEduGridpane.add(educationView, 0, row);
         }catch(IOException e){
             throw  new RuntimeException();
         }
