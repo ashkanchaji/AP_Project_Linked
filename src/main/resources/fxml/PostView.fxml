@@ -13,7 +13,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-
 <StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.PostController">
    <children>
       <VBox fx:id="postRootVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1340.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 20;">
@@ -25,7 +24,7 @@
                         <Insets left="8.0" />
                      </HBox.margin>
                   </GNAvatarView>
-                  <Label fx:id="posterUserNameLabel" onMouseClicked="#on_posterUserNameLabel_clicked" prefHeight="25.0" prefWidth="250.0" text="User Name">
+                  <Label fx:id="posterUserNameLabel" onMouseClicked="#on_posterUserNameLabel_clicked" prefHeight="25.0" prefWidth="511.0" text="User Name">
                      <HBox.margin>
                         <Insets left="16.0" />
                      </HBox.margin>
@@ -33,7 +32,7 @@
                         <Font name="System Bold Italic" size="14.0" />
                      </font>
                   </Label>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="1020.0">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="714.0">
                      <children>
                         <Label fx:id="dateLabel" alignment="CENTER" prefHeight="25.0" prefWidth="100.0">
                            <font>
@@ -85,15 +84,18 @@
                         <Image url="@../Images/Icons/Chat.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="commentLabel" mnemonicParsing="false" onAction="#on_commentLabel_clicked" style="-fx-background-color: transparent;" text="Comment" />
-                  <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="1142.0">
+                  <Button fx:id="commentLabel" mnemonicParsing="false" onAction="#on_commentLabel_clicked" prefWidth="74.0" style="-fx-background-color: transparent;" text="Comment" />
+                  <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="1107.0">
                      <children>
-                        <Button fx:id="showLikesButton" mnemonicParsing="false" onAction="#on_showLikesButton_clicked" style="-fx-background-color: transparent;" text="Show Likes" />
                         <Button fx:id="showCommentsButton" mnemonicParsing="false" onAction="#on_showCommentsButton_clicked" style="-fx-background-radius: 50; -fx-background-color: transparent;" text="Show Comments">
                            <HBox.margin>
-                              <Insets right="16.0" />
+                              <Insets />
                            </HBox.margin>
                         </Button>
+                        <Button fx:id="showLikesButton" mnemonicParsing="false" onAction="#on_showLikesButton_clicked" style="-fx-background-color: transparent;" text="Show Likes">
+                           <HBox.margin>
+                              <Insets right="16.0" />
+                           </HBox.margin></Button>
                      </children>
                   </HBox>
                </children>
