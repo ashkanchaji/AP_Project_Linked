@@ -43,6 +43,8 @@ public class AbstractViewController {
     protected static final Type COMMENT_LIST_TYPE = new TypeToken<ArrayList<Comment>>() {}.getType();
     protected static final Type CONNECT_LIST_TYPE = new TypeToken<ArrayList<Connect>>() {}.getType();
     protected static final Type LIKE_LIST_TYPE = new TypeToken<ArrayList<Like>>() {}.getType();
+    protected static final Type EDUCATION_LIST_TYPE = new TypeToken<ArrayList<Education>>() {}.getType();
+
 
     protected <T extends Node> void switchScenes (String path, T lastSceneNode) {
         try {
