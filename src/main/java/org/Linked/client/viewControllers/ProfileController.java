@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -32,6 +33,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ProfileController extends AbstractViewController{
 
@@ -383,6 +385,36 @@ public class ProfileController extends AbstractViewController{
 
     @FXML
     private GridPane showAllEduGridpane;
+
+    @FXML
+    private Button addEduButton;
+
+    @FXML
+    private VBox addEduVbox;
+
+    @FXML
+    private TextField majorEduAddTF;
+
+    @FXML
+    private TextField instituteEduAddTF;
+
+    @FXML
+    private TextArea additionalEduAddTA;
+
+    @FXML
+    private Button cancelEduAddButton;
+
+    @FXML
+    private TextField gradeEduAddTF;
+
+    @FXML
+    private TextArea activityEduAddTA;
+
+    @FXML
+    private DatePicker registerDateAddDP;
+
+    @FXML
+    private DatePicker graduateDateAddDP;
 
 
 
@@ -1227,7 +1259,6 @@ public class ProfileController extends AbstractViewController{
         String newOtherAccs = otherAccountsContactsTF.getText();
         LocalDate birthdayLD = birthdayContactsDP.getValue();
         java.sql.Date newBirthday = birthdayLD == null ? null : java.sql.Date.valueOf(birthdayLD);
-
         ContactsInfo contactsInfo = null;
         try {
             contactsInfo = new ContactsInfo(1, profileUserEmail, newContactEmail, newNumber, newPhoneType, newAddress, newBirthday, newOtherAccs);
@@ -1251,6 +1282,7 @@ public class ProfileController extends AbstractViewController{
 
     //////////////////////////////////////////// ___ education bar ___ /////////////////////////////////////////////////
 
+    private ArrayList<Education> allEducation;
     @FXML
     void on_editEduButton_clicked(ActionEvent event) {
         educationVbox.setDisable(false);
@@ -1312,6 +1344,47 @@ public class ProfileController extends AbstractViewController{
         showAllEduVbox.setVisible(true);
         showAllEduVbox.setDisable(false);
 
+        HttpResponse educations;
+
+        try {
+            educations = HttpController.sendRequest(SERVER_ADDRESS + "/education", HttpMethod.GET, null, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        allEducation = gson.fromJson(educations.getBody() , EDUCATION_LIST_TYPE);
+
+        //Reverse the collection
+        Collections.reverse(allEducation);
+
+        // Clear the grid pane before adding new edu
+        showAllEduGridpane.getChildren().clear();
+
+        int row = 1;
+        for (Education edu : allEducation){
+            if (edu.getEmail().equals(profileUserEmail)){
+                row = loadConnect(edu , row);
+            }
+        }
+
+    }
+
+    private int loadConnect (Education edu , int row){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/allEducationView.fxml"));
+            VBox educationView = loader.load(); // Load the FXML file and get the root element
+
+            AllEducationController controller = loader.getController();
+            User eduUser = null;
+            controller.initializeEdu(edu);
+
+//            showAllEduGridpane.add(educationView, 0, row);
+        }catch(IOException e){
+            throw  new RuntimeException();
+        }
+        return row + 1;
+
+
     }
 
     @FXML
@@ -1333,6 +1406,55 @@ public class ProfileController extends AbstractViewController{
         showAllEduVbox.setVisible(false);
         showAllEduVbox.setDisable(true);
 
+    }
+
+    @FXML
+    void on_addEduButton_clicked(ActionEvent event) {
+        addEduVbox.setDisable(false);
+        addEduVbox.setVisible(true);
+    }
+
+    @FXML
+    void on_cancelEduAddButton_clicked(ActionEvent event) {
+        addEduVbox.setVisible(false);
+        addEduVbox.setDisable(true);
+    }
+
+    @FXML
+    void on_addEduVboxButton_clicked(ActionEvent event) {
+        String newInstituteName = instituteEduAddTF.getText();
+        String newMajor = majorEduAddTF.getText();
+        String newGrade = gradeEduAddTF.getText();
+        String newActivityDescription = activityEduAddTA.getText();
+        String newAdditionalInformation = additionalEduAddTA.getText();
+        LocalDate localDate1 = registerDateAddDP.getValue();
+        java.sql.Date newRegisterDate = localDate1 == null ? null : java.sql.Date.valueOf(localDate1);
+        LocalDate localDate2 = graduateDateAddDP.getValue();
+        java.sql.Date newGraduateDate = localDate2 == null ? null : java.sql.Date.valueOf(localDate2);
+        TextField[] skills = new TextField[] {skill1SkillsTF, skill2SkillsTF, skill3SkillsTF, skill4SkillsTF, skill5SkillsTF};
+        ArrayList<String> newSkills = new ArrayList<>();
+
+        for (TextField skill : skills){
+            newSkills.add(skill.getText());
+        }
+
+        Education education = null;
+        try {
+            education = new Education(1, profileUserEmail , newInstituteName , newMajor, newRegisterDate ,
+                    newGraduateDate , newGrade , newActivityDescription ,newSkills, newAdditionalInformation);
+        } catch (CharacterNumberLimitException e) {
+            educationLimitLabel.setVisible(true);
+            return;
+        }
+
+
+        String educationJson = gson.toJson(education);
+
+        try {
+            HttpResponse response = HttpController.sendRequest(SERVER_ADDRESS + "/education", HttpMethod.PUT, educationJson, null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     ////////////////////////////////////////////// ___ skills bar ___ //////////////////////////////////////////////////
