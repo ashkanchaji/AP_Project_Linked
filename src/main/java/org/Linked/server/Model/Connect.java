@@ -4,25 +4,24 @@ import org.Linked.server.Controller.Exeptions.CharacterNumberLimitException;
 
 public class Connect extends Model {
 
-    private  String sender;
-
+    private String sender;
     private String receiver;
-
     private String notes;
+    private boolean pending;
 
-    public Connect(int type , String sender , String receiver , String notes) throws CharacterNumberLimitException {
+    public Connect(int type, String sender, String receiver, String notes, boolean pending) throws CharacterNumberLimitException {
         this.sender = sender;
         this.receiver = receiver;
-        if (notes.length() > 500)
-            throw  new CharacterNumberLimitException();
-        else
-            this.notes = notes;
+        if (notes.length() > 500) throw new CharacterNumberLimitException();
+        else this.notes = notes;
+        this.pending = pending;
     }
 
-    public Connect(String sender , String receiver , String notes){
+    public Connect(String sender, String receiver, String notes, boolean pending) {
         this.sender = sender;
         this.receiver = receiver;
         this.notes = notes;
+        this.pending = pending;
     }
 
     public String getSender() {
@@ -37,6 +36,10 @@ public class Connect extends Model {
         return notes;
     }
 
+    public boolean isPending() {
+        return pending;
+    }
+
     public void setSender(String sender) {
         this.sender = sender;
     }
@@ -49,13 +52,12 @@ public class Connect extends Model {
         this.notes = notes;
     }
 
-    @Override
-    public String toString(){
-        return "(Connect)" +
-                "{ sender:" + sender+
-                " notes:" + notes +
-                "receiver :" + receiver;
+    public void setPending(boolean pending) {
+        this.pending = pending;
     }
 
+    @Override
+    public String toString() {
+        return "(Connect){ sender:" + sender + " notes:" + notes + " receiver:" + receiver + " pending:" + pending + " }";
+    }
 }
-

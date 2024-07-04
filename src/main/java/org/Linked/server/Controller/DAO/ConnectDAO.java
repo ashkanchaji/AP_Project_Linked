@@ -1,7 +1,6 @@
 package org.Linked.server.Controller.DAO;
 
 import org.Linked.server.Model.Connect;
-import org.Linked.server.Model.Follow;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,18 +13,21 @@ public class ConnectDAO extends GenericDAO<Connect> {
             + "id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, "
             + "sender VARCHAR(45), "
             + "receiver VARCHAR(45), "
-            + "notes VARCHAR(500)"
+            + "notes VARCHAR(500), "
+            + "pending BOOLEAN"
             + ")";
 
     public ConnectDAO() {
         super("connect_info");
     }
+
     @Override
     protected Connect mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         return new Connect(
                 resultSet.getString("sender"),
                 resultSet.getString("receiver"),
-                resultSet.getString("notes")
+                resultSet.getString("notes"),
+                resultSet.getBoolean("pending")
         );
     }
 
@@ -36,17 +38,18 @@ public class ConnectDAO extends GenericDAO<Connect> {
 
     public void saveConnect(Connect connect) throws SQLException {
         String query = "INSERT INTO " + tablePath +
-                "(sender , receiver , notes) " +
-                "VALUES (?, ?, ?)";
+                "(sender, receiver, notes, pending) " +
+                "VALUES (?, ?, ?, ?)";
         saveEntity(connect, query, (ps, j) -> {
             ps.setString(1, j.getSender());
             ps.setString(2, j.getReceiver());
             ps.setString(3, j.getNotes());
+            ps.setBoolean(4, j.isPending());
         });
     }
 
-    public Connect getConnectByEmail(String senderEmail , String receiverEmail) throws SQLException {
-        String query = "SELECT * FROM " + tablePath + "WHERE sender = ? AND receiver = ? " ;
+    public Connect getConnectByEmail(String senderEmail, String receiverEmail) throws SQLException {
+        String query = "SELECT * FROM " + tablePath + " WHERE sender = ? AND receiver = ?";
         checkTableExistence();
 
         Connect entity = null;
@@ -63,25 +66,28 @@ public class ConnectDAO extends GenericDAO<Connect> {
     }
 
     public ArrayList<Connect> getAllConnects() throws SQLException {
+        checkTableExistence();
         String query = "SELECT * FROM " + tablePath;
         return getAllEntities(query);
     }
 
     public void updateConnect(Connect connect) throws SQLException {
+        checkTableExistence();
         String query = "UPDATE " + tablePath +
-                " SET receiver = ?, notes = ? " +
+                " SET receiver = ?, notes = ?, pending = ? " +
                 "WHERE sender = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, connect.getReceiver());
             ps.setString(2, connect.getNotes());
-            ps.setString(3, connect.getSender());
+            ps.setBoolean(3, connect.isPending());
+            ps.setString(4, connect.getSender());
             ps.executeUpdate();
         }
     }
 
-    public void deleteConnectByEmail(String senderEmail , String receiverEmail) throws SQLException {
-        String query = "DELETE FROM " + tablePath + " WHERE sender = ? AND receiver = ?";
+    public void deleteConnectByEmail(String senderEmail, String receiverEmail) throws SQLException {
         checkTableExistence();
+        String query = "DELETE FROM " + tablePath + " WHERE sender = ? AND receiver = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, senderEmail);
@@ -91,16 +97,28 @@ public class ConnectDAO extends GenericDAO<Connect> {
     }
 
     public void deleteAllConnects() throws SQLException {
+        checkTableExistence();
         String query = "DELETE FROM " + tablePath;
         deleteAllEntities(query);
     }
 
     public ArrayList<Connect> getConnectsBySender(String sender) throws SQLException {
-        String query = "SELECT * FROM " + tablePath + " WHERE sender = ?";
-        return getEntities(query, sender);
+        checkTableExistence();
+        String query = "SELECT * FROM " + tablePath + " WHERE sender = ? OR receiver = ?";
+        ArrayList<Connect> connects = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, sender);
+            statement.setString(2, sender);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                connects.add(mapResultSetToEntity(resultSet));
+            }
+        }
+        return connects;
     }
 
-    // This method can use the existing getAllEntities method as a template
     private ArrayList<Connect> getEntities(String query, String parameter) throws SQLException {
         checkTableExistence();
 
@@ -115,6 +133,4 @@ public class ConnectDAO extends GenericDAO<Connect> {
         }
         return entities;
     }
-
-
 }
