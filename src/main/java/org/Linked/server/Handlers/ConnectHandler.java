@@ -2,7 +2,6 @@ package org.Linked.server.Handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import org.Linked.server.Controller.Controllers.ConnectController;
-import org.Linked.server.Controller.Controllers.FollowController;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -26,8 +25,7 @@ public class ConnectHandler extends Handler {
 
                     String connectJson = ConnectController.getConnect(senderEmail, receiverEmail);
                     response = connectJson.equals("null") ? "No such connect info found!" : connectJson;
-                }
-                else{
+                } else {
                     response = ConnectController.getAllConnects();
                 }
                 break;
@@ -35,10 +33,9 @@ public class ConnectHandler extends Handler {
                 if (splitPath.length >= 3) {
                     String senderEmail = splitPath[splitPath.length - 2];
                     String receiverEmail = splitPath[splitPath.length - 1];
-                    ConnectController.deleteConnect(senderEmail , receiverEmail);
-
+                    ConnectController.deleteConnect(senderEmail, receiverEmail);
                 } else {
-                    ConnectController.deleteAllConnect();
+                    ConnectController.deleteAllConnects();
                 }
                 response = "success";
                 break;
