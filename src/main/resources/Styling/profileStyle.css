@@ -53,6 +53,12 @@
     -fx-faint-focus-color:  #e4f0ff;
 }
 
+.showAllEduButton{
+    -fx-background-color: transparent;
+
+
+}
+
 .titled-pane {
     -fx-background-color: #e4f0ff; /* Light orange background */
     -fx-text-fill:  black; /* Black text color */

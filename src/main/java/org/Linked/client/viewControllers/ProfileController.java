@@ -13,10 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -375,6 +372,17 @@ public class ProfileController extends AbstractViewController{
 
     @FXML
     private VBox connectionListViewVbox;
+
+    @FXML
+    private Label showAllEduLabel;
+
+
+    @FXML
+    private VBox showAllEduVbox;
+
+
+    @FXML
+    private GridPane showAllEduGridpane;
 
 
 
@@ -1265,6 +1273,34 @@ public class ProfileController extends AbstractViewController{
         educationVbox.setDisable(true);
         educationVbox.setVisible(false);
         initialize();
+    }
+
+    @FXML
+    void on_showAllEduLabel_clicked(MouseEvent event) {
+        showAllEduVbox.setVisible(true);
+        showAllEduVbox.setDisable(false);
+
+    }
+
+    @FXML
+    void on_showAllEduLabel_enterd(MouseEvent event) {
+        showAllEduLabel.setStyle("-fx-underline: true");
+        showAllEduLabel.setStyle("-fx-font-weight: 800");
+
+
+    }
+
+    @FXML
+    void on_showAllEduLabel_exit(MouseEvent event) {
+        showAllEduLabel.setStyle("-fx-underline: false");
+        showAllEduLabel.setStyle("-fx-font-weight: 0");
+    }
+
+    @FXML
+    void on_showAllEduCloseButton_clicked(ActionEvent event) {
+        showAllEduVbox.setVisible(false);
+        showAllEduVbox.setDisable(true);
+
     }
 
     ////////////////////////////////////////////// ___ skills bar ___ //////////////////////////////////////////////////

@@ -17,6 +17,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -233,6 +235,13 @@
                                                 <Font name="System Bold Italic" size="24.0" />
                                              </font>
                                           </Label>
+                                          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="350.0" translateY="12.0">
+                                             <image>
+                                                <Image url="@../Images/Icons/icons8-arrow-30.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label fx:id="showAllEduLabel" onMouseClicked="#on_showAllEduLabel_clicked" onMouseEntered="#on_showAllEduLabel_enterd" onMouseExited="#on_showAllEduLabel_exit" prefHeight="18.0" prefWidth="198.0" text="Show all educations" translateX="200.0" translateY="20.0" />
+                                          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="360.0" translateY="15.0" />
                                           <Button fx:id="editEduButton" mnemonicParsing="false" onAction="#on_editEduButton_clicked" prefHeight="25.0" prefWidth="75.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Edit" textFill="WHITE" translateX="1150.0" translateY="10.0">
                                              <font>
                                                 <Font name="System Bold Italic" size="12.0" />
@@ -800,6 +809,35 @@
                               <String fx:value="scroll-bar" />
                            </styleClass>
                         </ListView>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="showAllEduVbox" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="94.0" prefWidth="500.0">
+                           <children>
+                              <Label text="All education">
+                                 <font>
+                                    <Font name="System Bold Italic" size="21.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="showAllEduCloseButton" mnemonicParsing="false" onAction="#on_showAllEduCloseButton_clicked" prefHeight="24.0" prefWidth="26.0" styleClass="exit_button" text="X" translateX="160.0" translateY="-20.0" />
+                           </children>
+                        </HBox>
+                        <ScrollPane prefHeight="475.0" prefWidth="502.0">
+                           <content>
+                              <GridPane fx:id="showAllEduGridpane" prefHeight="450.0" prefWidth="479.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                 <padding>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                                 </padding>
+                              </GridPane>
+                           </content>
+                           <VBox.margin>
+                              <Insets bottom="8.0" left="20.0" right="20.0" top="8.0" />
+                           </VBox.margin>
+                        </ScrollPane>
                      </children>
                   </VBox>
                </children>
