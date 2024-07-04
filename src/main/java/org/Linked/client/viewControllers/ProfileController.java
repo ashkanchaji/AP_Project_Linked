@@ -1375,8 +1375,8 @@ public class ProfileController extends AbstractViewController{
             VBox educationView = loader.load();
 
             AllEducationController controller = loader.getController();
-            User eduUser = null;
             controller.initializeEdu(edu);
+            showAllEduGridpane.add(educationView , 0 , row);
 
 
         }catch(IOException e){
@@ -1398,7 +1398,7 @@ public class ProfileController extends AbstractViewController{
     @FXML
     void on_showAllEduLabel_exit(MouseEvent event) {
         showAllEduLabel.setStyle("-fx-underline: false");
-        showAllEduLabel.setStyle("-fx-font-weight: 0");
+        showAllEduLabel.setStyle("-fx-font-weight: 10");
     }
 
     @FXML
@@ -1455,6 +1455,9 @@ public class ProfileController extends AbstractViewController{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        addEduVbox.setDisable(true);
+        addEduVbox.setVisible(false);
     }
 
     ////////////////////////////////////////////// ___ skills bar ___ //////////////////////////////////////////////////
