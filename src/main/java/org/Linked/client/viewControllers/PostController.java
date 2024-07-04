@@ -97,7 +97,8 @@ public class PostController extends AbstractViewController{
         this.likerUsers = likerUsers;
         this.likesVbox = likesVbox;
 
-        postID = post.getPostId();
+        postID = post instanceof Comment ? ((Comment) post).getCommentId() : post.getPostId();
+
         likeLabel.setText(countLikes() + " Likes");
         posterEmail = user.getEmail();
         if (user.getProfilePicture() != null && !user.getProfilePicture().isEmpty()) {
@@ -105,10 +106,25 @@ public class PostController extends AbstractViewController{
         } else {
             poserAvatar.setImage(new Image(Paths.get("src/main/resources/Images/default_profile_image.jpeg").toUri().toString()));
         }
-        posterUserNameLabel.setText(user.getEmail().split("@")[0]);
+
+        if (post instanceof Comment) {
+            commentLabel.setVisible(false);
+            commentLabel.setDisable(true);
+
+            commentImageView.setVisible(false);
+            commentLabel.setDisable(true);
+
+            showCommentsButton.setVisible(false);
+            showCommentsButton.setDisable(true);
+
+            posterUserNameLabel.setText(user.getEmail().split("@")[0] + "'s comment on " +
+                    ((Comment) post).getRepliedUser().split("@")[0] + "'s post");
+        } else {
+            posterUserNameLabel.setText(user.getEmail().split("@")[0]);
+        }
 
         try {
-            HttpResponse videoResponse = HttpController.sendRequest(SERVER_ADDRESS + "/videoFiles/" + post.getPostId(), HttpMethod.GET, null, null);
+            HttpResponse videoResponse = HttpController.sendRequest(SERVER_ADDRESS + "/videoFiles/" + postID, HttpMethod.GET, null, null);
             if (videoResponse.getBody() == null || videoResponse.getBody().equals("No such video file found!")) {
                 Node stackPane = null;
                 for (Node node : postRootVbox.getChildren()) {
@@ -119,7 +135,7 @@ public class PostController extends AbstractViewController{
                     }
                 }
 
-                HttpResponse photoResponse = HttpController.sendRequest(SERVER_ADDRESS + "/photoFiles/" + post.getPostId(), HttpMethod.GET, null, null);
+                HttpResponse photoResponse = HttpController.sendRequest(SERVER_ADDRESS + "/photoFiles/" + postID, HttpMethod.GET, null, null);
 
                 if (!(photoResponse.getBody() == null || photoResponse.getBody().equals("No such photo file found!"))) {
                     PhotoFile photoFile = gson.fromJson(photoResponse.getBody(), PhotoFile.class);
@@ -231,12 +247,14 @@ public class PostController extends AbstractViewController{
 
     @FXML
     void on_commentImageView_clicked(MouseEvent event) {
-
+        CommentController.setCommentedPostID(postID);
+        CommentController.setCommentedPosterID(posterEmail);
+        switchScenes("/fxml/CommentView.fxml", commentImageView);
     }
 
     @FXML
     void on_commentLabel_clicked(ActionEvent event) {
-
+        on_showCommentsButton_clicked(event);
     }
 
     @FXML
@@ -287,7 +305,9 @@ public class PostController extends AbstractViewController{
 
     @FXML
     void on_showCommentsButton_clicked(ActionEvent event) {
-
+        CommentController.setCommentedPostID(postID);
+        CommentController.setCommentedPosterID(posterEmail);
+        switchScenes("/fxml/CommentView.fxml", showCommentsButton);
     }
 
     @FXML

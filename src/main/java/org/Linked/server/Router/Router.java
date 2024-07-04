@@ -20,7 +20,7 @@ public class Router {
         server.handleValidRequests("/follow", new FollowHandler()::handle);
         server.handleValidRequests("/connect", new ConnectHandler()::handle);
         server.handleValidRequests("/reposts", new RepostHandler()::handle);
-        server.handleValidRequests("/comments", new ContactsHandler()::handle);
+        server.handleValidRequests("/comments", new CommentHandler()::handle);
         server.handleValidRequests("/likes", new LikeHandler()::handle);
         server.handleValidRequests("/hashtags", new HashtagHandler()::handle);
     }

@@ -2,6 +2,7 @@ package org.Linked.server.Controller.Controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.Linked.client.viewControllers.CommentController;
 import org.Linked.client.viewControllers.Utils.*;
 import org.Linked.server.Controller.DAO.*;
 import org.Linked.server.Controller.DAO.*;
@@ -18,6 +19,7 @@ public abstract class Controller {
             .registerTypeAdapter(Education.class, new EducationTypeAdapter())
             .registerTypeAdapter(EducationSkills.class, new EducationSkillsTypeAdapter())
             .registerTypeAdapter(Post.class, new PostTypeAdapter())
+            .registerTypeAdapter(Comment.class, new CommentTypeAdapter())
             .registerTypeAdapter(ContactsInfo.class, new ContactsInfoTypeAdapter())
             .registerTypeAdapter(Connect.class , new ConnectTypeAdapter())
             .registerTypeAdapter(VideoFile.class, new VideoFileTypeAdapter())
