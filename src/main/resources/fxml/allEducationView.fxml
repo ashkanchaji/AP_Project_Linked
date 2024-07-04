@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="244.0" prefWidth="502.0" style="-fx-background-radius: 50; -fx-background-color: #E5E4E3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AllEducationController">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="584.0" style="-fx-background-radius: 50; -fx-background-color: #A9A9A9;">
+         <VBox.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </VBox.margin>
+         <children>
+            <ImageView fitHeight="52.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true" translateX="20.0">
+               <image>
+                  <Image url="@../Images/Icons/icons8-education-50.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <Label fx:id="instituteNameSELabel" text="Institute name">
+         <VBox.margin>
+            <Insets left="30.0" right="8.0" top="2.0" />
+         </VBox.margin>
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="majorSELabel" text="Major">
+         <VBox.margin>
+            <Insets left="30.0" right="8.0" top="2.0" />
+         </VBox.margin>
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="registrationSELabel" text="Registration date">
+         <VBox.margin>
+            <Insets left="30.0" right="8.0" top="2.0" />
+         </VBox.margin>
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="graduationSELabel" text="Graduation date">
+         <VBox.margin>
+            <Insets left="30.0" right="8.0" top="2.0" />
+         </VBox.margin>
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="gradeSELabel" text="Grade">
+         <VBox.margin>
+            <Insets left="30.0" right="8.0" top="2.0" />
+         </VBox.margin>
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="activityDesSELAbel" text="Activity description">
+         <VBox.margin>
+            <Insets left="30.0" right="8.0" top="2.0" />
+         </VBox.margin>
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="addInfoSELabel" text="Additional info">
+         <VBox.margin>
+            <Insets left="30.0" right="8.0" top="2.0" />
+         </VBox.margin>
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</VBox>

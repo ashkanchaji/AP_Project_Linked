@@ -101,7 +101,7 @@
                   </ImageView>
                   <Button fx:id="settingButton" mnemonicParsing="false" onAction="#on_settingButton_clicked" prefHeight="40.0" prefWidth="263.0" styleClass="tab" text="Setting">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Button>
                </children>
