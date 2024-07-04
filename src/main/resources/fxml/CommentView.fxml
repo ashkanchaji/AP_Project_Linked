@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../Styling/homeStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.CommentController">
+   <left>
+      <VBox prefHeight="1080.0" prefWidth="336.0" styleClass="tab" BorderPane.alignment="CENTER">
+         <children>
+            <HBox>
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/newIcon/icons8-home-24.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin></ImageView>
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="263.0" styleClass="tab_button" text="Home">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/newIcon/icons8-search-50.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin></ImageView>
+                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#on_searchButton_clicked" prefHeight="40.0" prefWidth="263.0" styleClass="tab_button" text="Serach">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font></Button>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/newIcon/icons8-notification-24.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin></ImageView>
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="263.0" styleClass="tab_button" text="Notification">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font></Button>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/newIcon/icons8-user-24.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin></ImageView>
+                  <Button fx:id="profileButton" mnemonicParsing="false" onAction="#on_profileButton_clicked" prefHeight="40.0" prefWidth="263.0" styleClass="tab_button" text="Profile" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/newIcon/icons8-setting-30.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="8.0" />
+                     </HBox.margin></ImageView>
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="263.0" styleClass="tab_button" text="Setting">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets top="8.0" />
+         </padding>
+      </VBox>
+   </left>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="1362.0" style="-fx-background-color: #E5E4E3; -fx-background-radius: 5;">
+               <children>
+                  <TextArea fx:id="newPostTextArea" prefHeight="200.0" prefWidth="200.0" promptText="Share an article, photo, video or idea." styleClass="textPostTAEdit" stylesheets="@../Styling/homeStyle.css" wrapText="true">
+                     <font>
+                        <Font name="System Italic" size="17.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </VBox.margin>
+                  </TextArea>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="goBackButton" mnemonicParsing="false" onAction="#on_goBackButton_clicked" prefHeight="35.0" prefWidth="75.0" style="-fx-background-radius: 50;" styleClass="post_button" stylesheets="@../Styling/homeStyle.css" text="Go back">
+                           <HBox.margin>
+                              <Insets left="8.0" right="32.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="addVideoButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#on_addVideoButton_clicked" prefHeight="35.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="post_button" stylesheets="@../Styling/homeStyle.css" text="Add Video">
+                           <HBox.margin>
+                              <Insets left="8.0" right="8.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="addPhotoButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#on_addPhotoButton_clicked" prefHeight="35.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="post_button" stylesheets="@../Styling/homeStyle.css" text="Add Photo">
+                           <HBox.margin>
+                              <Insets left="8.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="addNewCommentButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#on_addNewCommentButton_clicked" prefHeight="35.0" prefWidth="150.0" style="-fx-background-radius: 50;" styleClass="post_button" stylesheets="@../Styling/homeStyle.css" text="Comment" translateX="860.0">
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
+                        </Button>
+                        <Label fx:id="commentLimitLabel" text="Your comment text is too long." textFill="RED" translateX="525.0" />
+                     </children>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets left="4.0" top="8.0" />
+               </VBox.margin>
+            </VBox>
+            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1362.0">
+               <VBox.margin>
+                  <Insets left="4.0" top="4.0" />
+               </VBox.margin>
+               <children>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1362.0" style="-fx-background-color: #FAF9F6;">
+                     <content>
+                        <GridPane fx:id="postShowGridPane" alignment="TOP_RIGHT" prefHeight="781.0" prefWidth="1359.0" style="-fx-background-radius: 20;" vgap="8.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                        </GridPane>
+                     </content>
+                  </ScrollPane>
+                  <VBox fx:id="likesVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;">
+                     <children>
+                        <HBox alignment="BOTTOM_CENTER" prefHeight="50.0" prefWidth="500.0">
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="35.0" text="Likes" translateX="25.0">
+                                 <font>
+                                    <Font name="System Bold Italic" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="likesExitButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#on_likesExitButton_clicked" prefHeight="25.0" prefWidth="25.0" styleClass="exit_button" stylesheets="@../Styling/homeStyle.css" text="X" translateX="200.0" translateY="-10.0" />
+                           </children>
+                        </HBox>
+                        <ListView fx:id="likesListView" prefHeight="500.0" prefWidth="400.0" style="-fx-background-color: #347dab; -fx-background-radius: 20;" stylesheets="@../Styling/homeStyle.css">
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" top="20.0" />
+                           </VBox.margin>
+                           <styleClass>
+                              <String fx:value="scroll-bar" />
+                              <String fx:value="list-cell" />
+                           </styleClass>
+                        </ListView>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

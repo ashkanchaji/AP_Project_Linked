@@ -41,8 +41,8 @@ public class PostController extends Controller {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Comment-related methods
-    public static String getComment(String email) throws SQLException {
-        Comment comment = CommentDAO.getCommentByEmail(email);
+    public static String getComment(String commentId) throws SQLException {
+        Comment comment = CommentDAO.getCommentById(commentId);
         return comment == null ? null : gson.toJson(comment);
     }
 
@@ -56,16 +56,15 @@ public class PostController extends Controller {
 
         if (UserDAO.getUserByEmail(comment.getUserId()) == null) throw new SQLException("User does not exist");
 
-        if (CommentDAO.getCommentByEmail(comment.getUserId()) == null) {
+        if (CommentDAO.getCommentById(comment.getCommentId()) == null) {
             CommentDAO.saveComment(comment);
         } else {
             CommentDAO.updateComment(comment);
         }
     }
 
-    public static void deleteComment(String json) throws SQLException {
-        Comment comment = gson.fromJson(json, Comment.class);
-        CommentDAO.deleteCommentByEmail(comment.getUserId(), comment.getCreatedAt());
+    public static void deleteCommentById(String commentId) throws SQLException {
+        CommentDAO.deleteCommentById(commentId);
     }
 
     public static void deleteAllComments() throws SQLException {

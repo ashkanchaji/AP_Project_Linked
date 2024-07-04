@@ -15,8 +15,8 @@ public class CommentHandler extends Handler {
         switch (method) {
             case "GET":
                 if (splitPath.length >= 3) {
-                    String email = splitPath[splitPath.length - 1];
-                    String commentJson = PostController.getComment(email);
+                    String commentId = splitPath[splitPath.length - 1];
+                    String commentJson = PostController.getComment(commentId);
                     response = commentJson == null ? "No such comment found!" : commentJson;
                 } else {
                     response = PostController.getAllComments();
@@ -24,8 +24,8 @@ public class CommentHandler extends Handler {
                 break;
             case "DELETE":
                 if (splitPath.length >= 3) {
-                    String commentJson = new String(exchange.getRequestBody().readAllBytes());
-                    PostController.deleteComment(commentJson);
+                    String commentId = splitPath[splitPath.length - 1];
+                    PostController.deleteCommentById(commentId);
                 } else {
                     PostController.deleteAllComments();
                 }
