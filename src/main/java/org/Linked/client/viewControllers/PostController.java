@@ -373,7 +373,7 @@ public class PostController extends AbstractViewController{
                 i++;
 
                 if (like.getLiker().equals(LOGGED_USER)){
-                    Image image = new Image(Paths.get("src/main/resources/Images/Icons/LikeColored.png").toUri().toString());
+                    Image image = new Image(Paths.get("src/main/resources/Images/Icons/likeBlue.png").toUri().toString());
                     likeImageView.setImage(image);
                 }
             }
