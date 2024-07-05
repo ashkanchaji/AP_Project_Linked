@@ -35,6 +35,7 @@ public class AbstractViewController {
             .registerTypeAdapter(VideoFile.class, new VideoFileTypeAdapter())
             .registerTypeAdapter(PhotoFile.class, new PhotoFileTypeAdapter())
             .registerTypeAdapter(Like.class, new LikeTypeAdapter())
+            .registerTypeAdapter(DirectMessage.class, new DirectMessageTypeAdapter())
             .create();
     protected static final Type USER_LIST_TYPE = new TypeToken<ArrayList<User>>() {}.getType();
     protected static final Type FOLLOW_LIST_TYPE = new TypeToken<ArrayList<Follow>>() {}.getType();
@@ -44,6 +45,7 @@ public class AbstractViewController {
     protected static final Type CONNECT_LIST_TYPE = new TypeToken<ArrayList<Connect>>() {}.getType();
     protected static final Type LIKE_LIST_TYPE = new TypeToken<ArrayList<Like>>() {}.getType();
     protected static final Type EDUCATION_LIST_TYPE = new TypeToken<ArrayList<Education>>() {}.getType();
+    protected static final Type DM_LIST_TYPE = new TypeToken<ArrayList<DirectMessage>>() {}.getType();
 
 
     protected <T extends Node> void switchScenes (String path, T lastSceneNode) {

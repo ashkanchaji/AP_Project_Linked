@@ -13,6 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -119,6 +120,32 @@ public class PostController extends AbstractViewController{
 
             posterUserNameLabel.setText(user.getEmail().split("@")[0] + "'s comment on " +
                     ((Comment) post).getRepliedUser().split("@")[0] + "'s post");
+        } else if (post instanceof DirectMessage) {
+            for (Node node : postRootVbox.getChildren()){
+                if (node instanceof HBox) {
+                    for (Node node1 : ((HBox) node).getChildren()){
+                        if (node1 instanceof Button) {
+                            postRootVbox.getChildren().remove(node);
+                            break;
+                        }
+                    }
+                }
+            }
+            posterUserNameLabel.setText(user.getEmail().split("@")[0]);
+//            commentLabel.setVisible(false);
+//            commentLabel.setDisable(true);
+//
+//            commentImageView.setVisible(false);
+//            commentImageView.setDisable(true);
+//
+//            showCommentsButton.setVisible(false);
+//            showCommentsButton.setDisable(true);
+//
+//            likeLabel.setVisible(false);
+//            likeLabel.setDisable(true);
+//
+//            likeImageView.setVisible(false);
+//            l
         } else {
             posterUserNameLabel.setText(user.getEmail().split("@")[0]);
         }

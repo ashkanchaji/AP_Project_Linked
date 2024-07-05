@@ -82,39 +82,39 @@ public class UserController extends Controller{
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static String getContactInfo (String email) throws SQLException{
+    public static String getContactInfo(String email) throws SQLException {
         ContactsInfo contactsInfo = ContactsInfoDAO.getContactsInfoByEmail(email);
         return contactsInfo == null ? null : gson.toJson(contactsInfo);
     }
 
-    public static String getAllContactInfos () throws SQLException {
+    public static String getAllContactInfos() throws SQLException {
         ArrayList<ContactsInfo> contacts = ContactsInfoDAO.getAllContactsInfo();
         return gson.toJson(contacts);
     }
 
-    public static void createContact (String json) throws SQLException{
+    public static void createContact(String json) throws SQLException {
         ContactsInfo contactsInfo = gson.fromJson(json, ContactsInfo.class);
 
         if (UserDAO.getUserByEmail(contactsInfo.getEmail()) == null) throw new SQLException("User does not exist"); // ***
 
-        if (ContactsInfoDAO.getContactsInfoByEmail(contactsInfo.getEmail()) == null){
+        if (ContactsInfoDAO.getContactsInfoByEmail(contactsInfo.getEmail()) == null) {
             ContactsInfoDAO.saveContactsInfo(contactsInfo);
         } else {
             ContactsInfoDAO.updateContactsInfo(contactsInfo);
         }
     }
 
-    public static void updateContacts (String json) throws SQLException {
+    public static void updateContacts(String json) throws SQLException {
         ContactsInfo contactsInfo = gson.fromJson(json, ContactsInfo.class);
 
         ContactsInfoDAO.updateContactsInfo(contactsInfo);
     }
 
-    public static void deleteContact (String email) throws SQLException{
+    public static void deleteContact(String email) throws SQLException {
         ContactsInfoDAO.deleteContactsInfoByEmail(email);
     }
 
-    public static void deleteAllContacts () throws SQLException {
+    public static void deleteAllContacts() throws SQLException {
         ContactsInfoDAO.deleteAllContactsInfo();
     }
 }
