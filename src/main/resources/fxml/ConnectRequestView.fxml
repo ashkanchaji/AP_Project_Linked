@@ -22,6 +22,11 @@
                   <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
+            <ImageView fx:id="acceptLabel" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#on_acceptLabel_clicked" pickOnBounds="true" preserveRatio="true" translateX="1030.0">
+               <image>
+                  <Image url="@../Images/Icons/icons8-tick-48.png" />
+               </image>
+            </ImageView>
             <ImageView fx:id="rejectLabel" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#on_rejectLabel_clicked" pickOnBounds="true" preserveRatio="true" translateX="1040.0">
                <image>
                   <Image url="@../Images/Icons/icons8-close-48.png" />
