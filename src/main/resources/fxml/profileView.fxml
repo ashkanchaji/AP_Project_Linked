@@ -41,7 +41,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Images/Icons/Home.png" />
+                              <Image url="@../Images/newIcon/icons8-home-24.png" />
                            </image>
                            <HBox.margin>
                               <Insets right="4.0" />
@@ -51,6 +51,9 @@
                            <HBox.margin>
                               <Insets right="2.0" />
                            </HBox.margin>
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
                         </Button>
                      </children>
                   </HBox>
@@ -61,7 +64,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Images/Icons/Search.png" />
+                              <Image url="@../Images/newIcon/icons8-search-50.png" />
                            </image>
                            <HBox.margin>
                               <Insets left="2.0" right="2.0" />
@@ -71,6 +74,9 @@
                            <HBox.margin>
                               <Insets right="2.0" />
                            </HBox.margin>
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
                         </Button>
                      </children>
                   </HBox>
@@ -81,7 +87,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Images/Icons/Notifications.png" />
+                              <Image url="@../Images/newIcon/icons8-notification-24.png" />
                            </image>
                            <HBox.margin>
                               <Insets left="2.0" right="4.0" />
@@ -91,6 +97,9 @@
                            <HBox.margin>
                               <Insets right="2.0" />
                            </HBox.margin>
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
                         </Button>
                      </children>
                   </HBox>
@@ -101,16 +110,19 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Images/Icons/ProfilePerson.png" />
+                              <Image url="@../Images/newIcon/icons8-user-24.png" />
                            </image>
                            <HBox.margin>
                               <Insets left="3.0" right="4.0" />
                            </HBox.margin>
                         </ImageView>
-                        <Button fx:id="profileButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Profile">
+                        <Button fx:id="profileButton" mnemonicParsing="false" onAction="#on_profileButton_clicked" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Profile">
                            <HBox.margin>
                               <Insets right="2.0" />
                            </HBox.margin>
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
                         </Button>
                      </children>
                   </HBox>
@@ -121,16 +133,19 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Images/Icons/Setting.png" />
+                              <Image url="@../Images/Icons/icons8-log-out-30.png" />
                            </image>
                            <HBox.margin>
-                              <Insets right="4.0" />
+                              <Insets left="3.0" right="4.0" />
                            </HBox.margin>
                         </ImageView>
-                        <Button fx:id="settingButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Setting">
+                        <Button fx:id="settingButton" mnemonicParsing="false" onAction="#on_logoutButton_clicked" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Log out">
                            <HBox.margin>
                               <Insets right="2.0" />
                            </HBox.margin>
+                           <font>
+                              <Font name="System Bold Italic" size="14.0" />
+                           </font>
                         </Button>
                      </children>
                   </HBox>
@@ -852,7 +867,7 @@
                         </ScrollPane>
                      </children>
                   </VBox>
-                  <VBox fx:id="addEduVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" stylesheets="@../Styling/profileStyle.css" translateX="-240.0">
+                  <VBox fx:id="addEduVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" stylesheets="@../Styling/profileStyle.css" translateX="-240.0" visible="false">
                      <children>
                         <TextField fx:id="instituteEduAddTF" prefHeight="30.0" promptText="institute name" style="-fx-background-radius: 5; -fx-background-color: #e4f0ff;">
                            <VBox.margin>

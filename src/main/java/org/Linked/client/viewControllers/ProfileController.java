@@ -742,6 +742,17 @@ public class ProfileController extends AbstractViewController{
     void on_notificationButton_clicked(ActionEvent event){
         switchScenes("/fxml/NotificationView.fxml", notificationButton);
     }
+    @FXML
+    void on_logoutButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/LoginView.fxml" , settingButton );
+    }
+
+    @FXML
+    void on_profileButton_clicked(ActionEvent event){
+        switchScenes("/fxml/profileView.fxml", profileButton);
+    }
+
+
 
     ////////////////////////////////////////// ___ profile general info ___ ////////////////////////////////////////////
 
