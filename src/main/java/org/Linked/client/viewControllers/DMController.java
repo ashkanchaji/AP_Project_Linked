@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -22,6 +23,7 @@ import org.Linked.server.Model.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -76,12 +78,13 @@ public class DMController extends AbstractViewController{
     private String photoFileBase64 = null;
     private String pdfFileBase64 = null;
 
-    private ArrayList<User> allUsers;
+    private User DMUser;
+
     private ArrayList<DirectMessage> allDM;
 
     @FXML
     private void initialize() {
-        newDMTextArea.setPromptText("Share an article, photo, video or idea with " + DMedUser);
+        newDMTextArea.setPromptText("Share an article, photo, video or idea with " + DMedUser.split("@")[0]);
 
         DMLimitLabel.setText("Your Massage text is too long.");
         DMLimitLabel.setVisible(false);
@@ -90,25 +93,35 @@ public class DMController extends AbstractViewController{
         photoFileBase64 = null;
         pdfFileBase64 = null;
 
-        HttpResponse users;
+        HttpResponse dmUser;
         HttpResponse DMs;
 
         try {
-            users = HttpController.sendRequest(SERVER_ADDRESS + "/users", HttpMethod.GET, null, null);
+            dmUser = HttpController.sendRequest(SERVER_ADDRESS + "/users/" + DMedUser, HttpMethod.GET, null, null);
             DMs = HttpController.sendRequest(SERVER_ADDRESS + "/directMessage", HttpMethod.GET, null, null);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        allUsers = gson.fromJson(users.getBody(), USER_LIST_TYPE);
+        DMUser = gson.fromJson(dmUser.getBody(), User.class);
         allDM = gson.fromJson(DMs.getBody(), DM_LIST_TYPE);
+
+        Image image;
+        if (DMUser.getProfilePicture() == null || DMUser.getProfilePicture().isEmpty()) {
+            image = new Image(Paths.get("src/main/resources/Images/default_profile_image.jpeg").toUri().toString());
+        } else {
+            image = new Image(Paths.get(DMUser.getProfilePicture()).toUri().toString());
+        }
+
+        currDMAvatarPicture.setImage(image);
+        currDMUsernameLabel.setText(DMedUser.split("@")[0]);
 
         DMShowGridPane.getChildren().clear();
 
         int row = 1;
         for (DirectMessage dm : allDM) {
             if (shouldDisplayDM(dm)){
-
+                row = loadDM(dm, row);
             }
         }
     }
@@ -186,7 +199,15 @@ public class DMController extends AbstractViewController{
                 throw new RuntimeException(e);
             }
         } else if (pdfFileBase64 != null) {
-
+            PDFFile pdfFile = new PDFFile(DM.getDmId(), pdfFileBase64);
+            String pdfJsonBody = gson.toJson(pdfFile);
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+            try {
+                HttpController.sendRequest(SERVER_ADDRESS + "/pdfFiles/" + DM.getDmId(), HttpMethod.POST, pdfJsonBody, headers);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         newDMTextArea.setText(null);
