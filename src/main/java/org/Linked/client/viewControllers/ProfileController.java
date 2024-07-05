@@ -1522,4 +1522,5 @@ public class ProfileController extends AbstractViewController{
     public static void setProfileUserEmail(String profileUserEmail) {
         ProfileController.profileUserEmail = profileUserEmail;
     }
+    
 }
