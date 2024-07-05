@@ -2,6 +2,9 @@ module ProjectLinked {
     requires javafx.graphics;
     requires javafx.fxml;
     requires javafx.controls;
+    requires javafx.media;
+    requires javafx.web; // Only need to reference javafx.web, not javafx.scene.web
+
     requires java.sql;
     requires com.google.gson;
     requires jdk.httpserver;
@@ -9,7 +12,7 @@ module ProjectLinked {
     requires com.fasterxml.jackson.databind;
     requires GNAvatarView;
     requires de.jensd.fx.glyphs.fontawesome;
-    requires javafx.media;
+    requires java.desktop;
 
     opens org.Linked.client to javafx.fxml;
     opens org.Linked.client.viewControllers to javafx.fxml;

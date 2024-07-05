@@ -424,6 +424,9 @@ public class ProfileController extends AbstractViewController{
     @FXML
     private RadioButton contactsNetworkContacts;
 
+    @FXML
+    private Button messageButton;
+
     private ToggleGroup birthDayToggle = new ToggleGroup();
 
 
@@ -707,11 +710,13 @@ public class ProfileController extends AbstractViewController{
         if (profileUserEmail.equals(currentUserEmail)) {
             followButton.setVisible(false);
             connectButton.setVisible(false);
+            messageButton.setVisible(false);
         } else {
             editInfoButton.setVisible(false);
             editContactButton.setVisible(false);
             editEduButton.setVisible(false);
             editSkillsButton.setVisible(false);
+            messageButton.setVisible(false);
 
             try {
                 HttpResponse httpResponse = HttpController.sendRequest(SERVER_ADDRESS + "/follow/" + currentUserEmail +
@@ -734,6 +739,7 @@ public class ProfileController extends AbstractViewController{
                         connectButton.setText("Requested");
                     } else {
                         connectButton.setText("Connected");
+                        messageButton.setVisible(true);
                     }
                 } else {
                     HttpResponse connectResponse2 = HttpController.sendRequest(SERVER_ADDRESS + "/connect/" + profileUserEmail +
@@ -744,6 +750,7 @@ public class ProfileController extends AbstractViewController{
                             connectButton.setText("Pending");
                         } else {
                             connectButton.setText("Connected");
+                            messageButton.setVisible(true);
                         }
                     } else {
                         connectButton.setText("Connect");
@@ -923,6 +930,14 @@ public class ProfileController extends AbstractViewController{
         editInfoVbox.setDisable(true);
         editInfoVbox.setVisible(false);
         initialize();
+    }
+
+    /////////////////////////////////////////////// ___ message ___ ////////////////////////////////////////////////////
+
+    @FXML
+    void on_messageButton_clicked(ActionEvent event) {
+        DMController.setDMedUser(profileUserEmail);
+        switchScenes("/fxml/DMView.fxml", messageButton);
     }
 
     //////////////////////////////////////////////// ___ follow ___ ////////////////////////////////////////////////////

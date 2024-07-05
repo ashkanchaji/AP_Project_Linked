@@ -17,6 +17,7 @@ public class Router {
         server.handleValidRequests("/posts", new PostHandler()::handle);
         server.handleValidRequests("/videoFiles", new VideoFileHandler()::handle);
         server.handleValidRequests("/photoFiles", new PhotoFileHandler()::handle);
+        server.handleValidRequests("/pdfFiles", new PDFFileHandler()::handle);
         server.handleValidRequests("/follow", new FollowHandler()::handle);
         server.handleValidRequests("/connect", new ConnectHandler()::handle);
         server.handleValidRequests("/reposts", new RepostHandler()::handle);

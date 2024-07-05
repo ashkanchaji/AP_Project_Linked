@@ -51,7 +51,7 @@
             </HBox>
             <TextFlow fx:id="postTextTFlow" lineSpacing="1.0" prefHeight="185.0" prefWidth="1324.0" style="-fx-background-color: #FAF9F6; -fx-background-radius: 20;">
                <VBox.margin>
-                  <Insets left="8.0" right="8.0" top="8.0" />
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </VBox.margin>
                <padding>
                   <Insets bottom="8.0" left="12.0" right="12.0" top="8.0" />
@@ -62,7 +62,10 @@
                   <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                </VBox.margin>
                <children>
-                  <MediaView fx:id="postMediaPlayer" fitHeight="400.0" fitWidth="1324.0" />
+                  <MediaView fx:id="postMediaPlayer" fitHeight="400.0" fitWidth="1324.0">
+                     <StackPane.margin>
+                        <Insets bottom="8.0" />
+                     </StackPane.margin></MediaView>
                </children>
             </StackPane>
             <HBox alignment="CENTER_LEFT">
@@ -100,7 +103,7 @@
                   </HBox>
                </children>
                <VBox.margin>
-                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                  <Insets bottom="8.0" left="8.0" right="8.0" />
                </VBox.margin>
             </HBox>
          </children>

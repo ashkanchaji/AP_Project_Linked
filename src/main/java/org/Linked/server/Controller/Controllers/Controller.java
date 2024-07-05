@@ -24,6 +24,7 @@ public abstract class Controller {
             .registerTypeAdapter(Connect.class , new ConnectTypeAdapter())
             .registerTypeAdapter(VideoFile.class, new VideoFileTypeAdapter())
             .registerTypeAdapter(PhotoFile.class, new PhotoFileTypeAdapter())
+            .registerTypeAdapter(PDFFile.class, new PDFFileTypeAdapter())
             .registerTypeAdapter(Like.class, new LikeTypeAdapter())
             .registerTypeAdapter(DirectMessage.class, new DirectMessageTypeAdapter())
             .create();
