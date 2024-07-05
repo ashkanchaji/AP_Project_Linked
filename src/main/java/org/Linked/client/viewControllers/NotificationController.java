@@ -51,6 +51,8 @@ public class NotificationController extends AbstractViewController{
     @FXML
     private Button settingButton;
 
+
+
     private final String LOGGED_USER = JWTController.getSubjectFromJwt(JWTController.getJwtKey()).split(":")[0];
 
     private User loggedUser;
@@ -133,28 +135,37 @@ public class NotificationController extends AbstractViewController{
         on_currAvatarPicture_clicked(event);
     }
 
-    @FXML
-    void on_homeButton_clicked(ActionEvent event) {
 
-    }
 
     @FXML
     void on_notificationButton_clicked(ActionEvent event) {
-
+        switchScenes("/fxml/NotificationView.fxml" , notificationButton);
     }
 
     @FXML
-    void on_profileButton_clicked(ActionEvent event) {
-
+    void on_homeButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/HomeView.fxml" , homeButton);
     }
 
     @FXML
-    void on_searchButton_clicked(ActionEvent event) {
-
+    void on_searchButton_clicked(ActionEvent event){
+        switchScenes("/fxml/SearchView.fxml", searchButton);
     }
+
+    @FXML
+    void on_profileButton_clicked(ActionEvent event){
+        switchScenes("/fxml/profileView.fxml", profileButton);
+    }
+
 
     @FXML
     void on_settingButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/LoginView.fxml", settingButton);
 
     }
+    @FXML
+    void on_logoutButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/LoginView.fxml" , settingButton );
+    }
+
 }

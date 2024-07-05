@@ -309,7 +309,7 @@ public class PostController extends AbstractViewController{
                 throw new RuntimeException(e);
             }
 
-            Image image = new Image(Paths.get("src/main/resources/Images/Icons/LikeColored.png").toUri().toString());
+            Image image = new Image(Paths.get("src/main/resources/Images/Icons/likeBlue.png").toUri().toString());
             likeImageView.setImage(image);
         } else {
             String likeJson = gson.toJson(userLike);
@@ -318,7 +318,7 @@ public class PostController extends AbstractViewController{
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            Image image = new Image(Paths.get("src/main/resources/Images/Icons/Like.png").toUri().toString());
+            Image image = new Image(Paths.get("src/main/resources/Images/Icons/like2.png").toUri().toString());
             likeImageView.setImage(image);
         }
 
@@ -400,7 +400,7 @@ public class PostController extends AbstractViewController{
                 i++;
 
                 if (like.getLiker().equals(LOGGED_USER)){
-                    Image image = new Image(Paths.get("src/main/resources/Images/Icons/LikeColored.png").toUri().toString());
+                    Image image = new Image(Paths.get("src/main/resources/Images/Icons/likeBlue.png").toUri().toString());
                     likeImageView.setImage(image);
                 }
             }

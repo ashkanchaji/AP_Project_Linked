@@ -1,0 +1,8 @@
+.tab_button {
+    -fx-background-color: transparent;
+}
+
+.tab_button:hover {
+    -fx-background-color: #000000;
+    -fx-text-fill: #4fa7ee;
+}

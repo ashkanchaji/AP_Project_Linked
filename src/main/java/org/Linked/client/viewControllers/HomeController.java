@@ -67,6 +67,17 @@ public class HomeController extends AbstractViewController{
     @FXML
     private VBox likesVbox;
 
+    @FXML
+    private Button homeButton;
+
+    @FXML
+    private Button notificationButton;
+
+    @FXML
+    private Button settingButton;
+
+
+
     private final ObservableList<User> likerUsers = FXCollections.observableArrayList();
 
 
@@ -267,5 +278,20 @@ public class HomeController extends AbstractViewController{
     @FXML
     void on_likesExitButton_clicked(ActionEvent event) {
         likesVbox.setVisible(false);
+    }
+
+    @FXML
+    void on_notificationButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/NotificationView.fxml" , notificationButton);
+    }
+
+    @FXML
+    void on_homeButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/HomeView.fxml" , homeButton);
+    }
+
+    @FXML
+    void on_logoutButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/LoginView.fxml" , settingButton );
     }
 }

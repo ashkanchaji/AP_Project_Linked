@@ -43,6 +43,9 @@ public class SearchController extends AbstractViewController{
     @FXML
     private Button settingButton;
 
+
+
+
     @FXML
     private ListView<User> usersListView;
 
@@ -115,4 +118,26 @@ public class SearchController extends AbstractViewController{
             switchScenes("/fxml/profileView.fxml", searchBoxTF);
         }
     }
+
+    @FXML
+    void on_notificationButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/NotificationView.fxml" , notificationButton);
+    }
+
+    @FXML
+    void on_homeButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/HomeView.fxml" , homeButton);
+    }
+
+    @FXML
+    void on_searchButton_clicked(ActionEvent event){
+        switchScenes("/fxml/SearchView.fxml", searchButton);
+    }
+
+    @FXML
+    void on_logoutButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/LoginView.fxml" , settingButton );
+    }
+
+
 }
