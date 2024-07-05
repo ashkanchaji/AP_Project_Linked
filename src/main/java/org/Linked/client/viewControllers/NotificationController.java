@@ -65,6 +65,8 @@ public class NotificationController extends AbstractViewController{
 
     private ArrayList<Follow> userFollows;
     private ArrayList<Connect> userConnects;
+    private ArrayList<Follow> follows;
+
 
     @FXML
     public void initialize () {
@@ -105,7 +107,7 @@ public class NotificationController extends AbstractViewController{
             }
         }
 
-        ////Show notification about following
+        ////Show notification about posts
         HttpResponse allPost;
 
         try {
@@ -122,6 +124,26 @@ public class NotificationController extends AbstractViewController{
         for (Post post : posts){
             if (shouldDisplayNotif(post)){
                 row2 = loadMessNotif(post , row2);
+            }
+        }
+        /////// show notification about following
+        HttpResponse allFollows;
+
+        try{
+            allFollows = HttpController.sendRequest(SERVER_ADDRESS + "/follows" , HttpMethod.GET , null , null);
+
+        }catch(IOException e){
+            throw  new RuntimeException();
+        }
+
+        follows = gson.fromJson(allFollows.getBody() , FOLLOW_LIST_TYPE);
+
+        Collections.reverse(follows);
+
+        int row3 = 1;
+        for (Follow follow : follows){
+            if (follow.getFollower().equals(loggedUser.getEmail())){
+                row3 =  loadFollowNotif(follow , row3);
             }
         }
 
@@ -205,6 +227,29 @@ public class NotificationController extends AbstractViewController{
         }
 
         return row + 1;
+    }
+
+    private int loadFollowNotif(Follow follow , int row){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NotifMessage.fxml"));
+            VBox followNotif = loader.load();
+
+            NotifMessageController controller = loader.getController();
+
+            User followSender = null ;
+            for(User user : users){
+                if (user.getEmail().equals(follow.getFollowing())){
+                    followSender = user;
+                    controller.initializeFollowNotif(followSender);
+                }
+            }
+            if (followSender == null) {return row + 1;}
+
+            notificGridPane.add(followNotif, 0, row);
+        }catch (IOException e){
+            throw  new RuntimeException();
+        }
+        return  row + 1;
     }
 
     @FXML

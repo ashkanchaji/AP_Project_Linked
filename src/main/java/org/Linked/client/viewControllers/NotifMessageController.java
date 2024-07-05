@@ -51,6 +51,22 @@ public class NotifMessageController extends AbstractViewController {
 
     }
 
+    public void initializeFollowNotif(User sender){
+        notifSender = sender;
+
+        Image image;
+        if (sender.getProfilePicture() == null || sender.getProfilePicture().isEmpty()){
+            image = new Image(Paths.get("src/main/resources/Images/default_profile_image.jpeg").toUri().toString());
+        } else {
+            image = new Image(Paths.get(sender.getProfilePicture()).toUri().toString());
+        }
+
+        avatarPicture.setImage(image);
+        requestInfoLabel.setText(sender.getEmail().split("@")[0] + " started following you ");
+        usernameLabel.setText(sender.getEmail().split("@")[0]);
+
+    }
+
 }
 
 
