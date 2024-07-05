@@ -392,6 +392,9 @@ public class ProfileController extends AbstractViewController{
     private Button addEduButton;
 
     @FXML
+    private Button addEduVboxButton;
+
+    @FXML
     private VBox addEduVbox;
 
     @FXML
