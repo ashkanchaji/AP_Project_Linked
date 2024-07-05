@@ -3,7 +3,6 @@ package org.Linked.client.viewControllers.Utils;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import org.Linked.server.Controller.Exeptions.CharacterNumberLimitException;
 import org.Linked.server.Model.ContactsInfo;
 
 import java.io.IOException;
@@ -21,6 +20,7 @@ public class ContactsInfoTypeAdapter extends TypeAdapter<ContactsInfo> {
         out.name("address").value(contactsInfo.getAddress());
         out.name("birthday").value(contactsInfo.getBirthday() != null ? contactsInfo.getBirthday().toString() : null);
         out.name("contactUs").value(contactsInfo.getContactUs());
+        out.name("birthdayVisibility").value(contactsInfo.getBirthdayVisibility()); // Added line
         out.endObject();
     }
 
@@ -33,6 +33,7 @@ public class ContactsInfoTypeAdapter extends TypeAdapter<ContactsInfo> {
         String address = null;
         Date birthday = null;
         String contactUs = null;
+        String birthdayVisibility = null; // Added line
 
         in.beginObject();
         while (in.hasNext()) {
@@ -60,6 +61,9 @@ public class ContactsInfoTypeAdapter extends TypeAdapter<ContactsInfo> {
                 case "contactUs":
                     contactUs = in.nextString();
                     break;
+                case "birthdayVisibility": // Added case
+                    birthdayVisibility = in.nextString();
+                    break;
                 default:
                     in.skipValue();
                     break;
@@ -67,6 +71,6 @@ public class ContactsInfoTypeAdapter extends TypeAdapter<ContactsInfo> {
         }
         in.endObject();
 
-        return new ContactsInfo(email, contactEmail, phoneNumber, phoneType, address, birthday, contactUs);
+        return new ContactsInfo(email, contactEmail, phoneNumber, phoneType, address, birthday, contactUs, birthdayVisibility);
     }
 }

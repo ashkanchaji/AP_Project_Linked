@@ -34,6 +34,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ProfileController extends AbstractViewController{
 
@@ -416,6 +418,10 @@ public class ProfileController extends AbstractViewController{
     @FXML
     private DatePicker graduateDateAddDP;
 
+    @FXML
+    private RadioButton contactsNetworkContacts;
+
+    private ToggleGroup birthDayToggle = new ToggleGroup();
 
 
     ////////////////////////////////// ___ follow/ connect listView fields ___ /////////////////////////////////////////
@@ -466,6 +472,7 @@ public class ProfileController extends AbstractViewController{
     private JsonNode phoneType;
     private JsonNode address;
     private JsonNode birthday;
+    private JsonNode birthdayVisibility;
     private JsonNode otherAccounts;
 
     /////////////////////////////////////////// ___ Skills fields ___ //////////////////////////////////////////////////
@@ -484,6 +491,12 @@ public class ProfileController extends AbstractViewController{
         jobRadioBtn.setToggleGroup(workStatus);
         hiringRadioBtn.setToggleGroup(workStatus);
         servicesRadioBtn.setToggleGroup(workStatus);
+
+        everyoneBirthContactsRB.setToggleGroup(birthDayToggle);
+        contactsNetworkContacts.setToggleGroup(birthDayToggle);
+        contactsOnlyBirthContactsRB.setToggleGroup(birthDayToggle);
+        nobodyBirthContactsRB.setToggleGroup(birthDayToggle);
+
         editInfoVbox.setVisible(false);
         editInfoVbox.setDisable(true);
         followShowVbox.setVisible(false);
@@ -613,6 +626,7 @@ public class ProfileController extends AbstractViewController{
             phoneType = contactsJson.get("phoneType");
             address = contactsJson.get("address");
             birthday = contactsJson.get("birthday");
+            birthdayVisibility = contactsJson.get("birthdayVisibility");
             otherAccounts = contactsJson.get("contactUs");
 
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -640,12 +654,24 @@ public class ProfileController extends AbstractViewController{
                 }
             }
 
+            String birthDayVisibility = null;
+
+            if (birthdayVisibility != null) {
+                for (Toggle toggle : birthDayToggle.getToggles()){
+                    if (((RadioButton) toggle).getText().equals(birthdayVisibility.asText())){
+                        birthDayToggle.selectToggle(toggle);
+                        birthDayVisibility = birthdayVisibility.asText();
+                        break;
+                    }
+                }
+            }
+
             String selectedButtonName = phoneType == null ? "" : "(" + phoneType.asText() + ") ";
 
             emailContactsLabel.setText(email == null ? "Email: -" : "Email: " + email.asText());
             numberContactsLabel.setText(phoneNumber == null ? "Number: -" : "Number: " + selectedButtonName + phoneNumber.asText());
             addressContactsLabel.setText(address == null ? "Address: -" : "Address: " + address.asText());
-            birthdayContactsLabel.setText(birthday == null ? "Birthday: -" : "Birthday: " + birthday.asText());
+            checkBirthdayShow(birthDayVisibility, birthday);
             otherAccContactsLabel.setText(otherAccounts == null ? "Other accounts: -" : "Other accounts: " + otherAccounts.asText());
         }
 
@@ -725,6 +751,86 @@ public class ProfileController extends AbstractViewController{
             }
         }
     }
+
+    private void checkBirthdayShow(String birthDayVisibility, JsonNode birthday) {
+        if (birthDayVisibility == null || birthDayVisibility.equals("Everyone")) {
+            birthdayContactsLabel.setText(birthday == null ? "Birthday: -" : "Birthday: " + birthday.asText());
+        } else if (birthDayVisibility.equals("Contact Network")) {
+            try {
+                // Fetch first level connections
+                Set<String> firstLevelConnections = fetchConnections(profileUserEmail);
+
+                // Fetch second level connections
+                Set<String> secondLevelConnections = new HashSet<>();
+                for (String connection : firstLevelConnections) {
+                    secondLevelConnections.addAll(fetchConnections(connection));
+                }
+
+                // Fetch third level connections
+                Set<String> thirdLevelConnections = new HashSet<>();
+                for (String connection : secondLevelConnections) {
+                    thirdLevelConnections.addAll(fetchConnections(connection));
+                }
+
+                // Combine all levels of connections
+                Set<String> allConnections = new HashSet<>(firstLevelConnections);
+                allConnections.addAll(secondLevelConnections);
+                allConnections.addAll(thirdLevelConnections);
+
+                // Check if the current user is within third-level connections
+                if (allConnections.contains(currentUserEmail)) {
+                    birthdayContactsLabel.setText(birthday == null ? "Birthday: -" : "Birthday: " + birthday.asText());
+                } else {
+                    birthdayContactsLabel.setText("Birthday: -");
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (birthDayVisibility.equals("Contacts Only")) {
+            try {
+                ArrayList<Connect> connects = fetchDirectConnections(profileUserEmail);
+
+                for (Connect connect : connects) {
+                    if ((connect.getSender().equals(profileUserEmail) || connect.getReceiver().equals(profileUserEmail)) && !connect.isPending()) {
+                        birthdayContactsLabel.setText(birthday == null ? "Birthday: -" : "Birthday: " + birthday.asText());
+                        return;
+                    }
+                }
+                birthdayContactsLabel.setText("Birthday: -");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            if (profileUserEmail.equals(currentUserEmail)) {
+                birthdayContactsLabel.setText(birthday == null ? "Birthday: -" : "Birthday: " + birthday.asText());
+            } else {
+                birthdayContactsLabel.setText("Birthday: -");
+            }
+        }
+    }
+
+    private Set<String> fetchConnections(String email) throws IOException {
+        HttpResponse connectsResponse = HttpController.sendRequest(SERVER_ADDRESS + "/connect/" + email, HttpMethod.GET, null, null);
+        ArrayList<Connect> connects = gson.fromJson(connectsResponse.getBody(), CONNECT_LIST_TYPE);
+
+        Set<String> connections = new HashSet<>();
+        for (Connect connect : connects) {
+            if (!connect.isPending()) {
+                if (connect.getSender().equals(email)) {
+                    connections.add(connect.getReceiver());
+                } else {
+                    connections.add(connect.getSender());
+                }
+            }
+        }
+        return connections;
+    }
+
+    private ArrayList<Connect> fetchDirectConnections(String email) throws IOException {
+        HttpResponse connectsResponse = HttpController.sendRequest(SERVER_ADDRESS + "/connect/" + email, HttpMethod.GET, null, null);
+        return gson.fromJson(connectsResponse.getBody(), CONNECT_LIST_TYPE);
+    }
+
 
     ////////////////////////////////////////// ___ left bar buttons ___ ////////////////////////////////////////////////
 
@@ -1259,9 +1365,12 @@ public class ProfileController extends AbstractViewController{
         String newOtherAccs = otherAccountsContactsTF.getText();
         LocalDate birthdayLD = birthdayContactsDP.getValue();
         java.sql.Date newBirthday = birthdayLD == null ? null : java.sql.Date.valueOf(birthdayLD);
+
+        String birthdayVisibility = ((RadioButton)birthDayToggle.getSelectedToggle()).getText();
+
         ContactsInfo contactsInfo = null;
         try {
-            contactsInfo = new ContactsInfo(1, profileUserEmail, newContactEmail, newNumber, newPhoneType, newAddress, newBirthday, newOtherAccs);
+            contactsInfo = new ContactsInfo(1, profileUserEmail, newContactEmail, newNumber, newPhoneType, newAddress, newBirthday, newOtherAccs, birthdayVisibility);
         } catch (CharacterNumberLimitException e) {
             contactLimitLabel.setVisible(true);
             return;

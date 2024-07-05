@@ -21,6 +21,7 @@ public class Router {
         server.handleValidRequests("/connect", new ConnectHandler()::handle);
         server.handleValidRequests("/reposts", new RepostHandler()::handle);
         server.handleValidRequests("/comments", new CommentHandler()::handle);
+        server.handleValidRequests("/directMessage", new DirectMessageHandler()::handle);
         server.handleValidRequests("/likes", new LikeHandler()::handle);
         server.handleValidRequests("/hashtags", new HashtagHandler()::handle);
     }
