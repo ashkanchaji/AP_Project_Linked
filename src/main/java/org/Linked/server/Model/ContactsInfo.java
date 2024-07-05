@@ -13,8 +13,9 @@ public class ContactsInfo extends Model {
     private Date birthday;
     //سیاست نمایش تولد
     private String contactUs; //rah ertebati ani
+    private String birthdayVisibility; // New field
 
-    public ContactsInfo(int type, String email, String contactEmail, String phoneNumber, String phoneType, String address, Date birthday, String contactUs) throws CharacterNumberLimitException {
+    public ContactsInfo(int type, String email, String contactEmail, String phoneNumber, String phoneType, String address, Date birthday, String contactUs, String birthdayVisibility) throws CharacterNumberLimitException {
         if (contactEmail.length() > 40)
             throw new CharacterNumberLimitException();
         else
@@ -41,9 +42,10 @@ public class ContactsInfo extends Model {
             throw new CharacterNumberLimitException();
         else
             this.contactUs = contactUs;
+        this.birthdayVisibility = birthdayVisibility;
     }
 
-    public ContactsInfo(String email, String contactEmail, String phoneNumber, String phoneType, String address, Date birthday, String contactUs) {
+    public ContactsInfo(String email, String contactEmail, String phoneNumber, String phoneType, String address, Date birthday, String contactUs, String birthdayVisibility) {
         this.email = email;
         this.contactEmail = contactEmail;
         this.phoneNumber = phoneNumber;
@@ -51,14 +53,16 @@ public class ContactsInfo extends Model {
         this.address = address;
         this.birthday = birthday;
         this.contactUs = contactUs;
+        this.birthdayVisibility = birthdayVisibility;
     }
 
-    public String getContactEmail() {
-        return contactEmail;
+    // Add getter and setter for birthdayVisibility
+    public String getBirthdayVisibility() {
+        return birthdayVisibility;
     }
 
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
+    public void setBirthdayVisibility(String birthdayVisibility) {
+        this.birthdayVisibility = birthdayVisibility;
     }
 
     public String getEmail() {
@@ -67,6 +71,14 @@ public class ContactsInfo extends Model {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
     }
 
     public String getPhoneNumber() {

@@ -25,6 +25,7 @@ public abstract class Controller {
             .registerTypeAdapter(VideoFile.class, new VideoFileTypeAdapter())
             .registerTypeAdapter(PhotoFile.class, new PhotoFileTypeAdapter())
             .registerTypeAdapter(Like.class, new LikeTypeAdapter())
+            .registerTypeAdapter(DirectMessage.class, new DirectMessageTypeAdapter())
             .create();
     protected static final org.Linked.server.Controller.DAO.UserDAO UserDAO = new UserDAO();
     protected static final JobDAO JobDAO = new JobDAO();

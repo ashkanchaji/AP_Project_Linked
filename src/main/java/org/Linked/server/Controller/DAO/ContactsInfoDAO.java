@@ -17,7 +17,8 @@ public class ContactsInfoDAO extends GenericDAO<ContactsInfo> {
             + "phoneType VARCHAR(40), "
             + "address VARCHAR(220), "
             + "birthday DATE, "
-            + "contactUS VARCHAR(1000)"
+            + "contactUS VARCHAR(1000), "
+            + "birthdayVisibility VARCHAR(40)" // New field
             + ")";
 
     public ContactsInfoDAO() {
@@ -33,7 +34,8 @@ public class ContactsInfoDAO extends GenericDAO<ContactsInfo> {
                 resultSet.getString("phoneType"),
                 resultSet.getString("address"),
                 resultSet.getDate("birthday"),
-                resultSet.getString("contactUS")
+                resultSet.getString("contactUS"),
+                resultSet.getString("birthdayVisibility") // New field
         );
     }
 
@@ -44,8 +46,8 @@ public class ContactsInfoDAO extends GenericDAO<ContactsInfo> {
 
     public void saveContactsInfo(ContactsInfo contactsInfo) throws SQLException {
         String query = "INSERT INTO " + tablePath +
-                "(email, contactEmail, phoneNumber, phoneType, address, birthday, contactUS) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                "(email, contactEmail, phoneNumber, phoneType, address, birthday, contactUS, birthdayVisibility) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         saveEntity(contactsInfo, query, (ps, c) -> {
             ps.setString(1, c.getEmail());
             ps.setString(2, c.getContactEmail());
@@ -54,6 +56,7 @@ public class ContactsInfoDAO extends GenericDAO<ContactsInfo> {
             ps.setString(5, c.getAddress());
             ps.setDate(6, c.getBirthday());
             ps.setString(7, c.getContactUs());
+            ps.setString(8, c.getBirthdayVisibility()); // New field
         });
     }
 
@@ -69,7 +72,7 @@ public class ContactsInfoDAO extends GenericDAO<ContactsInfo> {
 
     public void updateContactsInfo(ContactsInfo contactsInfo) throws SQLException {
         String query = "UPDATE " + tablePath +
-                " SET contactEmail = ?, phoneNumber = ?, phoneType = ?, address = ?, birthday = ?, contactUS = ?" +
+                " SET contactEmail = ?, phoneNumber = ?, phoneType = ?, address = ?, birthday = ?, contactUS = ?, birthdayVisibility = ?" + // Modified query
                 " WHERE email = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, contactsInfo.getContactEmail());
@@ -78,7 +81,8 @@ public class ContactsInfoDAO extends GenericDAO<ContactsInfo> {
             ps.setString(4, contactsInfo.getAddress());
             ps.setDate(5, contactsInfo.getBirthday());
             ps.setString(6, contactsInfo.getContactUs());
-            ps.setString(7, contactsInfo.getEmail());
+            ps.setString(7, contactsInfo.getBirthdayVisibility()); // New field
+            ps.setString(8, contactsInfo.getEmail());
             ps.executeUpdate();
         }
     }

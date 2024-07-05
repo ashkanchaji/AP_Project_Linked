@@ -89,6 +89,7 @@ public class HomeController extends AbstractViewController{
     private ArrayList<User> allUsers;
     private ArrayList<Post> allPosts;
     private ArrayList<Follow> userFollows;
+    private ArrayList<Connect> userConnects;
 
     @FXML
     public void initialize() {
@@ -103,11 +104,13 @@ public class HomeController extends AbstractViewController{
         HttpResponse users;
         HttpResponse posts;
         HttpResponse follows;
+        HttpResponse connects;
 
         try {
             users = HttpController.sendRequest(SERVER_ADDRESS + "/users", HttpMethod.GET, null, null);
             posts = HttpController.sendRequest(SERVER_ADDRESS + "/posts", HttpMethod.GET, null, null);
             follows = HttpController.sendRequest(SERVER_ADDRESS + "/follow/" + THIS_USER_EMAIL, HttpMethod.GET, null, null);
+            connects = HttpController.sendRequest(SERVER_ADDRESS + "/connect/" + THIS_USER_EMAIL, HttpMethod.GET, null, null);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -115,6 +118,7 @@ public class HomeController extends AbstractViewController{
         allUsers = gson.fromJson(users.getBody(), USER_LIST_TYPE);
         allPosts = gson.fromJson(posts.getBody(), POST_LIST_TYPE);
         userFollows = gson.fromJson(follows.getBody(), FOLLOW_LIST_TYPE);
+        userConnects = gson.fromJson(connects.getBody(), CONNECT_LIST_TYPE);
 
         // Reverse the list of posts
         Collections.reverse(allPosts);
@@ -130,17 +134,29 @@ public class HomeController extends AbstractViewController{
         }
     }
 
+
     private boolean shouldDisplayPost(Post post) {
+        // Check if the post is made by the current user
         if (post.getUserId().equals(THIS_USER_EMAIL)) {
             return true;
         }
+        // Check if the post is made by a user followed by the current user
         for (Follow follow : userFollows) {
             if (post.getUserId().equals(follow.getFollowing())) {
                 return true;
             }
         }
+        // Check if the post is made by a user connected with the current user
+        for (Connect connect : userConnects) {
+            if ((post.getUserId().equals(connect.getSender()) || post.getUserId().equals(connect.getReceiver())) &&
+                    !connect.isPending()) {
+                return true;
+            }
+        }
+        // If none of the above conditions are met, do not display the post
         return false;
     }
+
 
     private int loadPost(Post post, int row) {
         try {
