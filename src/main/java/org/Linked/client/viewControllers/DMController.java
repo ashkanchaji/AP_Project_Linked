@@ -10,6 +10,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import org.Linked.client.viewControllers.Http.HttpController;
@@ -57,16 +58,41 @@ public class DMController extends AbstractViewController{
     private Button goBackButton;
 
     @FXML
+    private Button homeButton;
+
+    @FXML
+    private HBox homeHbox;
+
+    @FXML
     private TextArea newDMTextArea;
+
+    @FXML
+    private Button notificationButton;
+
+    @FXML
+    private HBox notificationHbox;
 
     @FXML
     private Button profileButton;
 
     @FXML
+    private HBox profileHbox;
+
+    @FXML
     private Button searchButton;
 
     @FXML
+    private HBox searchHbox;
+
+    @FXML
     private Button sendDMButton;
+
+    @FXML
+    private Button settingButton;
+
+    @FXML
+    private HBox settingHbox;
+
 
 
 
@@ -287,13 +313,29 @@ public class DMController extends AbstractViewController{
     }
 
     @FXML
-    void on_profileButton_clicked(ActionEvent event) {
+    void on_notificationButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/NotificationView.fxml" , notificationButton);
+    }
+
+    @FXML
+    void on_homeButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/HomeView.fxml" , homeButton);
+    }
+
+    @FXML
+    void on_searchButton_clicked(ActionEvent event){
+        switchScenes("/fxml/SearchView.fxml", searchButton);
+    }
+
+    @FXML
+    void on_profileButton_clicked(ActionEvent event){
+        ProfileController.setProfileUserEmail(THIS_USER_EMAIL);
         switchScenes("/fxml/profileView.fxml", profileButton);
     }
 
     @FXML
-    void on_searchButton_clicked(ActionEvent event) {
-        switchScenes("/fxml/SearchView.fxml", searchButton);
+    void on_logoutButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/LoginView.fxml" , settingButton );
     }
 
     public static String getDMedUser() {

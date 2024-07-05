@@ -851,7 +851,7 @@
                         </ListView>
                      </children>
                   </VBox>
-                  <VBox fx:id="showAllEduVbox" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
+                  <VBox fx:id="showAllEduVbox" maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.95" prefHeight="600.0" prefWidth="565.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" translateX="-240.0" visible="false">
                      <children>
                         <HBox alignment="CENTER" prefHeight="94.0" prefWidth="500.0">
                            <children>
@@ -865,7 +865,7 @@
                         </HBox>
                         <ScrollPane prefHeight="475.0" prefWidth="502.0">
                            <content>
-                              <GridPane fx:id="showAllEduGridpane" prefHeight="450.0" prefWidth="479.0">
+                              <GridPane fx:id="showAllEduGridpane" prefHeight="486.0" prefWidth="570.0" style="-fx-background-color: #347dab;" vgap="4.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 </columnConstraints>
@@ -880,7 +880,7 @@
                         </ScrollPane>
                      </children>
                   </VBox>
-                  <VBox fx:id="addEduVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" stylesheets="@../Styling/profileStyle.css" visible="false">
+                  <VBox fx:id="addEduVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" stylesheets="@../Styling/profileStyle.css" translateX="-240.0" visible="false">
                      <children>
                         <TextField fx:id="instituteEduAddTF" prefHeight="30.0" promptText="institute name" style="-fx-background-radius: 5; -fx-background-color: #e4f0ff;">
                            <VBox.margin>

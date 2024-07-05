@@ -32,10 +32,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class ProfileController extends AbstractViewController{
 
@@ -1467,7 +1464,7 @@ public class ProfileController extends AbstractViewController{
         String educationJson = gson.toJson(education);
 
         try {
-            HttpResponse response = HttpController.sendRequest(SERVER_ADDRESS + "/education", HttpMethod.PUT, educationJson, null);
+            HttpResponse response = HttpController.sendRequest(SERVER_ADDRESS + "/education", HttpMethod.POST, educationJson, null);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -1500,7 +1497,7 @@ public class ProfileController extends AbstractViewController{
 
         int row = 1;
         for (Education edu : allEducation){
-            if (edu.getEmail().equals(profileUserEmail)){
+            if (edu.getEmail().contains(profileUserEmail)){
                 row = loadConnect(edu , row);
             }
         }
@@ -1575,6 +1572,8 @@ public class ProfileController extends AbstractViewController{
         for (TextField skill : skills){
             newSkills.add(skill.getText());
         }
+
+        Random random = new Random();
 
         Education education = null;
         try {

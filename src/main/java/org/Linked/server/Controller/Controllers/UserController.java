@@ -72,6 +72,13 @@ public class UserController extends Controller{
         }
     }
 
+    public static void onlyCreateEducation (String json) throws SQLException {
+        Education education = gson.fromJson(json, Education.class);
+
+        if (UserDAO.getUserByEmail(education.getEmail()) == null) throw new SQLException("User does not exist"); // ***
+        EducationDAO.saveEducation(education);
+    }
+
     public static void deleteEducation (String email) throws SQLException {
         EducationDAO.deleteEducationByEmail(email);
     }
@@ -99,7 +106,8 @@ public class UserController extends Controller{
 
         if (ContactsInfoDAO.getContactsInfoByEmail(contactsInfo.getEmail()) == null) {
             ContactsInfoDAO.saveContactsInfo(contactsInfo);
-        } else {
+        }
+        else {
             ContactsInfoDAO.updateContactsInfo(contactsInfo);
         }
     }

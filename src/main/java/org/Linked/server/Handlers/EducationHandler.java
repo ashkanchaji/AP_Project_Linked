@@ -32,9 +32,13 @@ public class EducationHandler extends Handler {
                 response = "success";
                 break;
             case "POST":
-            case "PUT":
                 String eduJson = readRequestBody(exchange);
                 UserController.createEducation(eduJson);
+                response = "success";
+                break;
+            case "PUT":
+                String educationJson = readRequestBody(exchange);
+                UserController.onlyCreateEducation(educationJson);
                 response = "success";
                 break;
             default:
