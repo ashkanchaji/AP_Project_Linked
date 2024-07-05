@@ -125,9 +125,9 @@
                   <Insets left="4.0" top="8.0" />
                </VBox.margin>
             </HBox>
-            <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="1362.0" style="-fx-background-color: #FAF9F6;">
+            <ScrollPane fitToHeight="true" fitToWidth="true" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="1362.0" style="-fx-background-color: #FAF9F6;">
                <content>
-                  <GridPane fx:id="DMShowGridPane" alignment="TOP_RIGHT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="726.0" prefWidth="1359.0" style="-fx-background-radius: 20;" vgap="8.0">
+                  <GridPane fx:id="DMShowGridPane" alignment="TOP_RIGHT" prefHeight="726.0" prefWidth="1359.0" style="-fx-background-radius: 20;" vgap="8.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      </columnConstraints>

@@ -21,6 +21,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.util.Callback;
 import org.Linked.client.FXModels.ProfileSearchCell;
 import org.Linked.client.viewControllers.Http.HttpController;
@@ -39,6 +41,8 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.awt.Desktop;
+
 
 public class PostController extends AbstractViewController{
 
@@ -78,6 +82,9 @@ public class PostController extends AbstractViewController{
     @FXML
     private VBox postRootVbox;
 
+    @FXML
+    private Label pdfNameLabel = new Label();
+
     private String posterEmail;
     private final String LOGGED_USER = JWTController.getSubjectFromJwt(JWTController.getJwtKey()).split(":")[0];
 
@@ -98,7 +105,13 @@ public class PostController extends AbstractViewController{
         this.likerUsers = likerUsers;
         this.likesVbox = likesVbox;
 
-        postID = post instanceof Comment ? ((Comment) post).getCommentId() : post.getPostId();
+        if (post instanceof Comment) {
+            postID = ((Comment) post).getCommentId();
+        } else if (post instanceof DirectMessage) {
+            postID = ((DirectMessage) post).getDmId();
+        } else {
+            postID = post.getPostId();
+        }
 
         likeLabel.setText(countLikes() + " Likes");
         posterEmail = user.getEmail();
@@ -121,79 +134,109 @@ public class PostController extends AbstractViewController{
             posterUserNameLabel.setText(user.getEmail().split("@")[0] + "'s comment on " +
                     ((Comment) post).getRepliedUser().split("@")[0] + "'s post");
         } else if (post instanceof DirectMessage) {
-            for (Node node : postRootVbox.getChildren()){
+            ArrayList<Node> nodesToRemove = new ArrayList<>(); // Collect nodes to remove
+
+            for (Node node : postRootVbox.getChildren()) {
                 if (node instanceof HBox) {
-                    for (Node node1 : ((HBox) node).getChildren()){
+                    for (Node node1 : ((HBox) node).getChildren()) {
                         if (node1 instanceof Button) {
-                            postRootVbox.getChildren().remove(node);
+                            nodesToRemove.add(node); // Add node to the removal list
                             break;
                         }
                     }
                 }
             }
+
+            postRootVbox.getChildren().removeAll(nodesToRemove); // Remove nodes outside the loop
             posterUserNameLabel.setText(user.getEmail().split("@")[0]);
-//            commentLabel.setVisible(false);
-//            commentLabel.setDisable(true);
-//
-//            commentImageView.setVisible(false);
-//            commentImageView.setDisable(true);
-//
-//            showCommentsButton.setVisible(false);
-//            showCommentsButton.setDisable(true);
-//
-//            likeLabel.setVisible(false);
-//            likeLabel.setDisable(true);
-//
-//            likeImageView.setVisible(false);
-//            l
         } else {
             posterUserNameLabel.setText(user.getEmail().split("@")[0]);
         }
 
         try {
-            HttpResponse videoResponse = HttpController.sendRequest(SERVER_ADDRESS + "/videoFiles/" + postID, HttpMethod.GET, null, null);
-            if (videoResponse.getBody() == null || videoResponse.getBody().equals("No such video file found!")) {
+            HttpResponse pdfResponse = HttpController.sendRequest(SERVER_ADDRESS + "/pdfFiles/" + postID, HttpMethod.GET, null, null);
+            if (pdfResponse.getBody() != null && !pdfResponse.getBody().equals("No such PDF file found!")) {
+                PDFFile pdfFile = gson.fromJson(pdfResponse.getBody(), PDFFile.class);
+                byte[] pdfData = Base64.getDecoder().decode(pdfFile.getPdfFile());
+                String pdfFileName = pdfFile.getPostId();
+                String pdfFilePath = saveFileLocally(pdfData, post, ".pdf", "pdfFilePosts");
+
+                // Remove existing media player or photo view if present
                 Node stackPane = null;
                 for (Node node : postRootVbox.getChildren()) {
                     if (node instanceof StackPane) {
-                        stackPane = node;
-                        ((StackPane) node).getChildren().clear();
-                        break;
+                        if (((StackPane) node).getChildren().contains(postMediaPlayer)) {
+                            ((StackPane) node).getChildren().clear();
+                            stackPane = node;
+                            break;
+                        }
                     }
                 }
 
-                HttpResponse photoResponse = HttpController.sendRequest(SERVER_ADDRESS + "/photoFiles/" + postID, HttpMethod.GET, null, null);
+                // Set up pdfNameLabel
+                pdfNameLabel.setText(pdfFileName + ".pdf"); // Set PDF file name
+                pdfNameLabel.setStyle("-fx-font-size: 16pt;");
 
-                if (!(photoResponse.getBody() == null || photoResponse.getBody().equals("No such photo file found!"))) {
-                    PhotoFile photoFile = gson.fromJson(photoResponse.getBody(), PhotoFile.class);
+                // Attach action to open PDF file on label click
+                pdfNameLabel.setOnMouseClicked(event -> {
+                    try {
+                        File file = new File(pdfFilePath); // Use the path directly here
+                        if (file.exists()) {
+                            Desktop.getDesktop().open(file);
+                        } else {
+                            System.out.println("File does not exist: " + pdfFilePath);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
 
-                    // Save photo file locally
-                    byte[] photoData = Base64.getDecoder().decode(photoFile.getPhotoFile());
-                    String photoFilePath = saveFileLocally(photoData, post, ".jpg", "photoFilePosts");
-
-                    ImageView postPhotoIV = new ImageView(new File(photoFilePath).toURI().toString());
-                    postPhotoIV.setPreserveRatio(true);
-                    postPhotoIV.setFitHeight(((StackPane) stackPane).getPrefHeight());
-                    postPhotoIV.setFitWidth(((StackPane) stackPane).getPrefWidth());
-
-                    ((StackPane) stackPane).getChildren().add(postPhotoIV);
-                } else {
-                    postRootVbox.getChildren().remove(stackPane);
-                }
+                ((StackPane)stackPane).getChildren().add(pdfNameLabel);
             } else {
-                VideoFile videoFile = gson.fromJson(videoResponse.getBody(), VideoFile.class);
+                HttpResponse videoResponse = HttpController.sendRequest(SERVER_ADDRESS + "/videoFiles/" + postID, HttpMethod.GET, null, null);
+                if (videoResponse.getBody() == null || videoResponse.getBody().equals("No such video file found!")) {
+                    Node stackPane = null;
+                    for (Node node : postRootVbox.getChildren()) {
+                        if (node instanceof StackPane) {
+                            stackPane = node;
+                            ((StackPane) node).getChildren().clear();
+                            break;
+                        }
+                    }
 
-                // Save video file locally
-                byte[] videoData = Base64.getDecoder().decode(videoFile.getVideoFile());
-                String videoFilePath = saveFileLocally(videoData, post, ".mp4", "videoFilePosts");
+                    HttpResponse photoResponse = HttpController.sendRequest(SERVER_ADDRESS + "/photoFiles/" + postID, HttpMethod.GET, null, null);
 
-                // Create Media and MediaPlayer
-                Media media = new Media(new File(videoFilePath).toURI().toString());
-                MediaPlayer mediaPlayer = new MediaPlayer(media);
-                postMediaPlayer.setMediaPlayer(mediaPlayer);
-                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-                mediaPlayer.setVolume(0.0);
-                mediaPlayer.setAutoPlay(true);
+                    if (!(photoResponse.getBody() == null || photoResponse.getBody().equals("No such photo file found!"))) {
+                        PhotoFile photoFile = gson.fromJson(photoResponse.getBody(), PhotoFile.class);
+
+                        // Save photo file locally
+                        byte[] photoData = Base64.getDecoder().decode(photoFile.getPhotoFile());
+                        String photoFilePath = saveFileLocally(photoData, post, ".jpg", "photoFilePosts");
+
+                        ImageView postPhotoIV = new ImageView(new File(photoFilePath).toURI().toString());
+                        postPhotoIV.setPreserveRatio(true);
+                        postPhotoIV.setFitHeight(((StackPane) stackPane).getPrefHeight());
+                        postPhotoIV.setFitWidth(((StackPane) stackPane).getPrefWidth());
+
+                        ((StackPane) stackPane).getChildren().add(postPhotoIV);
+                    } else {
+                        postRootVbox.getChildren().remove(stackPane);
+                    }
+                } else {
+                    VideoFile videoFile = gson.fromJson(videoResponse.getBody(), VideoFile.class);
+
+                    // Save video file locally
+                    byte[] videoData = Base64.getDecoder().decode(videoFile.getVideoFile());
+                    String videoFilePath = saveFileLocally(videoData, post, ".mp4", "videoFilePosts");
+
+                    // Create Media and MediaPlayer
+                    Media media = new Media(new File(videoFilePath).toURI().toString());
+                    MediaPlayer mediaPlayer = new MediaPlayer(media);
+                    postMediaPlayer.setMediaPlayer(mediaPlayer);
+                    mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+                    mediaPlayer.setVolume(0.0);
+                    mediaPlayer.setAutoPlay(true);
+                }
             }
 
         } catch (IOException e) {
