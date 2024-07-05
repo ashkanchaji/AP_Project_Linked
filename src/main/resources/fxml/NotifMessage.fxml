@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.gleidson28.GNAvatarView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="1340.0" style="-fx-background-radius: 50; -fx-background-color: #c2c2c2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-background-radius: 50;" styleClass="tab" stylesheets="@../Styling/connectRequest.css">
+         <children>
+            <GNAvatarView fx:id="avatarPicture" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#on_avatarPicture_clicked" prefHeight="50.0" prefWidth="50.0" translateX="15.0" type="CIRCLE" />
+            <Label fx:id="usernameLabel" onMouseClicked="#on_usernameLabel_clicked" prefHeight="18.0" prefWidth="138.0" text="UserName" translateX="30.0">
+               <font>
+                  <Font name="System Bold Italic" size="16.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="rejectLabel" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#on_rejectLabel_clicked" pickOnBounds="true" preserveRatio="true" translateX="1060.0">
+               <image>
+                  <Image url="@../Images/Icons/icons8-notification-24.png" />
+               </image>
+            </ImageView>
+         </children>
+         <VBox.margin>
+            <Insets left="16.0" right="16.0" top="8.0" />
+         </VBox.margin>
+      </HBox>
+      <Label fx:id="requestInfoLabel" alignment="TOP_LEFT" prefHeight="58.0" prefWidth="1309.0" wrapText="true">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="8.0" left="16.0" right="16.0" top="8.0" />
+         </VBox.margin>
+      </Label>
+   </children>
+</VBox>

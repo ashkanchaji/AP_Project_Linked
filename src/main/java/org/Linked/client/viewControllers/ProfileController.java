@@ -392,6 +392,9 @@ public class ProfileController extends AbstractViewController{
     private Button addEduButton;
 
     @FXML
+    private Button addEduVboxButton;
+
+    @FXML
     private VBox addEduVbox;
 
     @FXML
@@ -1646,5 +1649,5 @@ public class ProfileController extends AbstractViewController{
     public static void setProfileUserEmail(String profileUserEmail) {
         ProfileController.profileUserEmail = profileUserEmail;
     }
-    
+
 }

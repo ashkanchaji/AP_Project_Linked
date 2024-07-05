@@ -260,7 +260,16 @@
                                           </ImageView>
                                           <Label fx:id="showAllEduLabel" onMouseClicked="#on_showAllEduLabel_clicked" onMouseEntered="#on_showAllEduLabel_enterd" onMouseExited="#on_showAllEduLabel_exit" prefHeight="18.0" prefWidth="198.0" text="Show all educations" translateX="200.0" translateY="20.0" />
                                           <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="360.0" translateY="15.0" />
-                                          <Button fx:id="editEduButton" mnemonicParsing="false" onAction="#on_editEduButton_clicked" prefHeight="25.0" prefWidth="75.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Edit" textFill="WHITE" translateX="1150.0" translateY="10.0">
+                                          <Button fx:id="addEduButton" mnemonicParsing="false" onAction="#on_addEduButton_clicked" prefHeight="30.0" prefWidth="100.0" text="Add" translateX="750.0" translateY="10.0">
+                                             <styleClass>
+                                                <String fx:value="button-edu" />
+                                                <String fx:value="profile_button" />
+                                             </styleClass>
+                                             <font>
+                                                <Font name="System Bold Italic" size="12.0" />
+                                             </font>
+                                          </Button>
+                                          <Button fx:id="editEduButton" mnemonicParsing="false" onAction="#on_editEduButton_clicked" prefHeight="30.0" prefWidth="100.0" style="-fx-background-radius: 50;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Edit" textFill="WHITE" translateX="775.0" translateY="10.0">
                                              <font>
                                                 <Font name="System Bold Italic" size="12.0" />
                                              </font>
@@ -297,7 +306,7 @@
                                           <Insets bottom="8.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <Label fx:id="addInfoEduLabel" prefHeight="21.0" prefWidth="1237.0" text="Additional info: " translateX="25.0" translateY="-5.0" wrapText="true">
+                                    <Label fx:id="addInfoEduLabel" prefHeight="21.0" prefWidth="1237.0" text="Additional information" translateX="25.0" translateY="-5.0" wrapText="true">
                                        <VBox.margin>
                                           <Insets bottom="8.0" />
                                        </VBox.margin>
@@ -869,6 +878,76 @@
                               <Insets bottom="8.0" left="20.0" right="20.0" top="8.0" />
                            </VBox.margin>
                         </ScrollPane>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="addEduVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.95" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: #347dab; -fx-background-radius: 15;" stylesheets="@../Styling/profileStyle.css">
+                     <children>
+                        <TextField fx:id="instituteEduAddTF" prefHeight="30.0" promptText="institute name" style="-fx-background-radius: 5; -fx-background-color: #e4f0ff;">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="30.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="majorEduAddTF" prefHeight="30.0" promptText="major" style="-fx-background-radius: 5; -fx-background-color: #e4f0ff;">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="gradeEduAddTF" prefHeight="30.0" promptText="Grade" style="-fx-background-radius: 5; -fx-background-color: #e4f0ff;">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextArea fx:id="activityEduAddTA" prefHeight="64.0" prefWidth="300.0" promptText="Activity description" style="-fx-background-radius: 5; -fx-background-color: #e4f0ff;" styleClass="headLineTAEdit" stylesheets="@../Styling/profileStyle.css" wrapText="true">
+                           <VBox.margin>
+                              <Insets left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextArea>
+                        <TextArea fx:id="additionalEduAddTA" prefHeight="64.0" prefWidth="300.0" promptText="Additional information" style="-fx-background-radius: 5; -fx-background-color: #e4f0ff;" styleClass="headLineTAEdit" stylesheets="@../Styling/profileStyle.css" wrapText="true">
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </TextArea>
+                        <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0">
+                           <children>
+                              <DatePicker fx:id="registerDateAddDP" prefHeight="20.0" prefWidth="120.0" promptText="Register date" />
+                              <DatePicker fx:id="graduateDateAddDP" prefHeight="20.0" prefWidth="120.0" promptText="Graduate Date">
+                                 <HBox.margin>
+                                    <Insets left="60.0" />
+                                 </HBox.margin>
+                              </DatePicker>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Label fx:id="educationLimitLabel1" alignment="CENTER" prefHeight="18.0" prefWidth="301.0" text="One of the fields is too long." textFill="RED" visible="false">
+                           <VBox.margin>
+                              <Insets left="100.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="30.0" prefWidth="200.0" stylesheets="@../Styling/profileStyle.css">
+                           <children>
+                              <Button fx:id="addEduVboxButton" mnemonicParsing="false" onAction="#on_addEduVboxButton_clicked" prefHeight="26.0" prefWidth="100.0" style="-fx-background-radius: 15;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Add">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="cancelEduAddButton" mnemonicParsing="false" onAction="#on_cancelEduAddButton_clicked" prefWidth="100.0" style="-fx-background-radius: 15;" styleClass="profile_button" stylesheets="@../Styling/profileStyle.css" text="Cancel">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="100.0" right="100.0" top="20.0" />
+                           </VBox.margin>
+                        </HBox>
                      </children>
                   </VBox>
                </children>
