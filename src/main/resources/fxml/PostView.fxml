@@ -72,7 +72,7 @@
                         <Insets left="8.0" />
                      </HBox.margin>
                      <image>
-                        <Image url="@../Images/Icons/Like.png" />
+                        <Image url="@../Images/Icons/like2.png" />
                      </image>
                   </ImageView>
                   <Button fx:id="likeLabel" mnemonicParsing="false" onAction="#on_likeLabel_clicked" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: transparent;" />
@@ -81,7 +81,7 @@
                         <Insets left="8.0" />
                      </HBox.margin>
                      <image>
-                        <Image url="@../Images/Icons/Chat.png" />
+                        <Image url="@../Images/Icons/icons8-comment-30.png" />
                      </image>
                   </ImageView>
                   <Button fx:id="commentLabel" mnemonicParsing="false" onAction="#on_commentLabel_clicked" prefWidth="74.0" style="-fx-background-color: transparent;" text="Comment" />

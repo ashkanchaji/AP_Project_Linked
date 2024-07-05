@@ -68,6 +68,15 @@ public class CommentController extends AbstractViewController{
     @FXML
     private Button goBackButton;
 
+    @FXML
+    private Button homeButton;
+
+    @FXML
+    private Button notificationButton;
+
+    @FXML
+    private Button settingButton;
+
     private final ObservableList<User> likerUsers = FXCollections.observableArrayList();
 
 
@@ -242,6 +251,22 @@ public class CommentController extends AbstractViewController{
                 e.printStackTrace();
             }
         }
+    }
+
+    @FXML
+    void on_notificationButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/NotificationView.fxml" , notificationButton );
+    }
+
+
+    @FXML
+    void on_logoutButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/LoginView.fxml" , settingButton );
+    }
+
+    @FXML
+    void on_homeButton_clicked(ActionEvent event) {
+        switchScenes("/fxml/HomeView.fxml" , homeButton);
     }
 
     @FXML
