@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="1340.0" style="-fx-background-radius: 50; -fx-background-color: #c2c2c2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="1340.0" style="-fx-background-radius: 50; -fx-background-color: #c2c2c2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.NotifMessageController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="200.0" style="-fx-background-radius: 50;" styleClass="tab" stylesheets="@../Styling/connectRequest.css">
          <children>
@@ -19,7 +19,7 @@
                   <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
-            <ImageView fx:id="rejectLabel" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#on_rejectLabel_clicked" pickOnBounds="true" preserveRatio="true" translateX="1060.0">
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="1060.0">
                <image>
                   <Image url="@../Images/Icons/icons8-notification-24.png" />
                </image>
