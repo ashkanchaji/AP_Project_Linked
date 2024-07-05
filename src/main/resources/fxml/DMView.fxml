@@ -17,96 +17,115 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../Styling/homeStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.Linked.client.viewControllers.DMController">
    <left>
-      <VBox prefHeight="1080.0" prefWidth="336.0" styleClass="tab" BorderPane.alignment="CENTER">
-         <children>
-            <HBox>
-               <children>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/newIcon/icons8-home-24.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets left="8.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="263.0" styleClass="tab_button" text="Home">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
-            <HBox>
-               <children>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/newIcon/icons8-search-50.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets left="8.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#on_searchButton_clicked" prefHeight="40.0" prefWidth="263.0" styleClass="tab_button" text="Serach">
-                     <font>
-                        <Font name="Arial Bold" size="12.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
-            <HBox>
-               <children>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/newIcon/icons8-notification-24.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets left="8.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="263.0" styleClass="tab_button" text="Notification">
-                     <font>
-                        <Font name="Arial" size="12.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
-            <HBox>
-               <children>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/newIcon/icons8-user-24.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets left="8.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Button fx:id="profileButton" mnemonicParsing="false" onAction="#on_profileButton_clicked" prefHeight="40.0" prefWidth="263.0" styleClass="tab_button" text="Profile" />
-               </children>
-            </HBox>
-            <HBox>
-               <children>
-                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Images/newIcon/icons8-setting-30.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets left="8.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="263.0" styleClass="tab_button" text="Setting">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
-         </children>
+      <VBox prefHeight="1080.0" prefWidth="336.0" spacing="16.0" styleClass="tab" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
          <padding>
             <Insets top="8.0" />
          </padding>
+         <children>
+            <HBox fx:id="homeHbox" alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="258.0">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/newIcon/icons8-home-24.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="4.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Button fx:id="homeButton" mnemonicParsing="false" onAction="#on_homeButton_clicked" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Home">
+                     <HBox.margin>
+                        <Insets right="2.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox fx:id="searchHbox" alignment="CENTER_LEFT">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/newIcon/icons8-search-50.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#on_searchButton_clicked" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Search">
+                     <HBox.margin>
+                        <Insets right="2.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox fx:id="notificationHbox" alignment="CENTER_LEFT">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/newIcon/icons8-notification-24.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="2.0" right="4.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Button fx:id="notificationButton" mnemonicParsing="false" onAction="#on_notificationButton_clicked" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Notifications">
+                     <HBox.margin>
+                        <Insets right="2.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox fx:id="profileHbox" alignment="CENTER_LEFT">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/newIcon/icons8-user-24.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="3.0" right="4.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Button fx:id="profileButton" mnemonicParsing="false" onAction="#on_profileButton_clicked" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Profile">
+                     <HBox.margin>
+                        <Insets right="2.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox fx:id="settingHbox" alignment="CENTER_LEFT">
+               <children>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Images/Icons/icons8-log-out-30.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="3.0" right="4.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Button fx:id="settingButton" mnemonicParsing="false" onAction="#on_logoutButton_clicked" prefHeight="40.0" prefWidth="290.0" style="-fx-background-radius: 10;" styleClass="tab_button" stylesheets="@../Styling/profileStyle.css" text="Log out">
+                     <HBox.margin>
+                        <Insets right="2.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
       </VBox>
    </left>
    <center>
