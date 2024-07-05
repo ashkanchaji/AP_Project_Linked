@@ -4,6 +4,7 @@ import io.github.gleidson28.GNAvatarView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -16,6 +17,7 @@ import org.Linked.client.viewControllers.Http.HttpMethod;
 import org.Linked.client.viewControllers.Http.HttpResponse;
 import org.Linked.client.viewControllers.Utils.JWTController;
 import org.Linked.server.Model.Connect;
+import org.Linked.server.Model.Follow;
 import org.Linked.server.Model.Post;
 import org.Linked.server.Model.User;
 
@@ -59,6 +61,10 @@ public class NotificationController extends AbstractViewController{
 
     private ArrayList<User> users;
     private ArrayList<Connect> connects;
+    private ArrayList<Post> posts;
+
+    private ArrayList<Follow> userFollows;
+    private ArrayList<Connect> userConnects;
 
     @FXML
     public void initialize () {
@@ -98,6 +104,59 @@ public class NotificationController extends AbstractViewController{
                 row = loadRequest(connect, row);
             }
         }
+
+        ////Show notification about following
+        HttpResponse allPost;
+
+        try {
+            allPost = HttpController.sendRequest(SERVER_ADDRESS + "/posts" , HttpMethod.GET , null , null);
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+
+        posts = gson.fromJson(allPost.getBody() , POST_LIST_TYPE);
+
+        Collections.reverse(posts);
+
+        int row2 = 1;
+        for (Post post : posts){
+            if (shouldDisplayNotif(post)){
+                row2 = loadMessNotif(post , row2);
+            }
+        }
+
+    }
+
+    private boolean shouldDisplayNotif(Post post) {
+
+        HttpResponse follows;
+        HttpResponse connects;
+
+        try {
+                follows = HttpController.sendRequest(SERVER_ADDRESS + "/follow/" + LOGGED_USER, HttpMethod.GET, null, null);
+            connects = HttpController.sendRequest(SERVER_ADDRESS + "/connect/" + LOGGED_USER, HttpMethod.GET, null, null);
+        } catch (IOException e){
+            throw  new RuntimeException();
+        }
+
+        userFollows = gson.fromJson(follows.getBody(), FOLLOW_LIST_TYPE);
+        userConnects = gson.fromJson(connects.getBody(), CONNECT_LIST_TYPE);
+
+        // Check if the post is made by a user followed by the current user
+        for (Follow follow : userFollows) {
+            if (post.getUserId().equals(follow.getFollowing())) {
+                return true;
+            }
+        }
+        // Check if the post is made by a user connected with the current user
+        for (Connect connect : userConnects) {
+            if ((post.getUserId().equals(connect.getSender()) || post.getUserId().equals(connect.getReceiver())) &&
+                    !connect.isPending()) {
+                return true;
+            }
+        }
+        // If none of the above conditions are met, do not display the notif
+        return false;
     }
 
     private int loadRequest(Connect connect, int row) {
@@ -122,6 +181,30 @@ public class NotificationController extends AbstractViewController{
             throw new RuntimeException(e);
         }
         return row;
+    }
+
+    private int loadMessNotif(Post post , int row){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NotifMessage.fxml"));
+            VBox messageNotif = loader.load();
+
+            NotifMessageController controller = loader.getController();
+
+            User notifSender = null ;
+            for(User user : users){
+                if (user.getEmail().equals(post.getUserId())){
+                    notifSender = user;
+                    controller.initializeNotifMess(notifSender);
+                }
+            }
+            if (notifSender == null) {return row + 1;}
+
+            notificGridPane.add(messageNotif, 0, row);
+        }catch (IOException e){
+            throw  new RuntimeException();
+        }
+
+        return row + 1;
     }
 
     @FXML
