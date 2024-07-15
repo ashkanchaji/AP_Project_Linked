@@ -65,17 +65,21 @@
     -fx-text-fill: #E5E4E3;            /* Text color for the email */
 }
 
-.scroll-bar:vertical .thumb {
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
     -fx-background-color: #24546a; /* Color of the scrollbar thumb */
     -fx-background-radius: 5px; /* Rounded corners for the scrollbar thumb */
 }
 
-.scroll-bar:vertical .track {
+.scroll-bar:vertical .track,
+.scroll-bar:horizontal .track {
     -fx-background-color: #347dab; /* Color of the scrollbar track */
 }
 
 .scroll-bar:vertical .increment-button,
-.scroll-bar:vertical .decrement-button {
+.scroll-bar:vertical .decrement-button,
+.scroll-bar:horizontal .increment-button,
+.scroll-bar:horizontal .decrement-button {
     -fx-background-color: transparent; /* Make the buttons transparent */
     -fx-padding: 0; /* Remove any padding */
     -fx-min-width: 0; /* Ensure the buttons do not take up space */

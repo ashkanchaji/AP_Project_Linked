@@ -37,7 +37,7 @@ public class  Education extends Model{
             this.activitiesInfo = activitiesInfo;
         if (skills != null && !skills.isEmpty()){
             for (String skill : skills){
-                if (skill.length() > 40)
+                if (skill.length() > 1000)
                     throw new CharacterNumberLimitException();
             }
         }
