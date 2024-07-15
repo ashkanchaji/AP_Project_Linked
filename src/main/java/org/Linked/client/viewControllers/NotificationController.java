@@ -144,14 +144,14 @@ public class NotificationController extends AbstractViewController{
 
         // Check if the post is made by a user followed by the current user
         for (Follow follow : userFollows) {
-            if (post.getUserId().equals(follow.getFollowing())) {
+            if (post.getUserId().equals(follow.getFollowing()) && !post.getUserId().equals(LOGGED_USER)) {
                 return true;
             }
         }
         // Check if the post is made by a user connected with the current user
         for (Connect connect : userConnects) {
             if ((post.getUserId().equals(connect.getSender()) || post.getUserId().equals(connect.getReceiver())) &&
-                    !connect.isPending()) {
+                    !post.getUserId().equals(LOGGED_USER) && !connect.isPending()) {
                 return true;
             }
         }
@@ -237,6 +237,7 @@ public class NotificationController extends AbstractViewController{
 
     @FXML
     void on_profileButton_clicked(ActionEvent event){
+        ProfileController.setProfileUserEmail(ProfileController.getCurrentUserEmail());
         switchScenes("/fxml/profileView.fxml", profileButton);
     }
 

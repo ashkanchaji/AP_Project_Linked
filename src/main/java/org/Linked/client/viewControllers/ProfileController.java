@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -424,6 +425,9 @@ public class ProfileController extends AbstractViewController{
     @FXML
     private Button messageButton;
 
+    @FXML
+    private ImageView arrowIW;
+
     private ToggleGroup birthDayToggle = new ToggleGroup();
 
 
@@ -443,8 +447,8 @@ public class ProfileController extends AbstractViewController{
     ///////////////////////////////////////// ___ profile/user emails ___ //////////////////////////////////////////////
     private String avatarAddress;
     private String bannerAddress;
-    private static String currentUserEmail = JWTController.getSubjectFromJwt(JWTController.getJwtKey()).split(":")[0];
-    private static String profileUserEmail = currentUserEmail;
+    private static String currentUserEmail;
+    private static String profileUserEmail;
 
     ///////////////////////////////////////// ___ general info fields ___ //////////////////////////////////////////////
     private String firstName;
@@ -490,6 +494,12 @@ public class ProfileController extends AbstractViewController{
 
     @FXML
     public void initialize() {
+        if (currentUserEmail == null){
+            currentUserEmail = JWTController.getSubjectFromJwt(JWTController.getJwtKey()).split(":")[0];
+        }
+        if (profileUserEmail == null) {
+            profileUserEmail = currentUserEmail;
+        }
         bannerImageView.fitWidthProperty().bind(profileBP.widthProperty());
         jobRadioBtn.setToggleGroup(workStatus);
         hiringRadioBtn.setToggleGroup(workStatus);
@@ -608,20 +618,23 @@ public class ProfileController extends AbstractViewController{
             activityEduTF.setText(activityDiscription == null ? "" : activityDiscription.asText());
             additionalEduTF.setText(additionalInformation == null ? "" : additionalInformation.asText());
 
-            instituteNameEduLabel.setText(instituteName == null ? "Institute Name: -" : "Institute Name: " + instituteName.asText());
-            majorEduLabel.setText(major == null ? "Major: -" : "Major: " + major.asText());
-            RegisterDateEduLabel.setText(registerDate == null ? "Registration date: -" : "Registration date: " + registerDate.asText());
-            GraduationDateEduLabel.setText(graduationDate == null ? "Graduations date: -" : "Graduations date: " + graduationDate.asText());
-            GradeEduLabel.setText(grade == null ? "Grade: -" : "Grade: " + grade.asText());
-            activityDescriptionEduLabel.setText(activityDiscription == null ? "Activity description: -" : "Activity description: " + activityDiscription.asText());
-            addInfoEduLabel.setText(additionalInformation == null ? "Additional info: -" : "Additional info: " + additionalInformation.asText());
-
         }
+
+        setStyledLabel(instituteNameEduLabel, "Institute Name:  ", instituteName == null ? "-" : instituteName.asText());
+        setStyledLabel(majorEduLabel, "Major:  ", major == null ? "-" : major.asText());
+        setStyledLabel(RegisterDateEduLabel, "Registration date:  ", registerDate == null ? "-" : registerDate.asText());
+        setStyledLabel(GraduationDateEduLabel, "Graduation date:  ", graduationDate == null ? "-" : graduationDate.asText());
+        setStyledLabel(GradeEduLabel, "Grade:  ", grade == null ? "-" : grade.asText());
+        setStyledLabel(activityDescriptionEduLabel, "Activity description:  ", activityDiscription == null ? "-" : activityDiscription.asText());
+        setStyledLabel(addInfoEduLabel, "Additional info:  ", additionalInformation == null ? "-" : additionalInformation.asText());
 
         // contacts info
         HttpResponse contactsResponse = getContactsInfoResponse();
 
         JsonNode contactsJson = getContactsJson(contactsResponse);
+
+        String numberVisibility = "";
+        String birthDayVisibility = null;
 
         if (contactsJson != null) {
             email = contactsJson.get("contactEmail");
@@ -657,8 +670,6 @@ public class ProfileController extends AbstractViewController{
                 }
             }
 
-            String birthDayVisibility = null;
-
             if (birthdayVisibility != null) {
                 for (Toggle toggle : birthDayToggle.getToggles()){
                     if (((RadioButton) toggle).getText().equals(birthdayVisibility.asText())){
@@ -669,14 +680,14 @@ public class ProfileController extends AbstractViewController{
                 }
             }
 
-            String selectedButtonName = phoneType == null ? "" : "(" + phoneType.asText() + ") ";
-
-            emailContactsLabel.setText(email == null ? "Email: -" : "Email: " + email.asText());
-            numberContactsLabel.setText(phoneNumber == null ? "Number: -" : "Number: " + selectedButtonName + phoneNumber.asText());
-            addressContactsLabel.setText(address == null ? "Address: -" : "Address: " + address.asText());
-            checkBirthdayShow(birthDayVisibility, birthday);
-            otherAccContactsLabel.setText(otherAccounts == null ? "Other accounts: -" : "Other accounts: " + otherAccounts.asText());
+            numberVisibility = phoneType == null ? "" : "(" + phoneType.asText() + ") ";
         }
+        setStyledLabel(emailContactsLabel, "Email:  ", email == null ? "-" : email.asText());
+        setStyledLabel(numberContactsLabel, "Number:  ", phoneNumber == null ? "-" : numberVisibility + phoneNumber.asText());
+        setStyledLabel(addressContactsLabel, "Address:  ", address == null ? "-" : address.asText());
+        checkBirthdayShow(birthDayVisibility, birthday);
+        setStyledLabel(otherAccContactsLabel, "Other accounts:  ", otherAccounts == null ? "-" : otherAccounts.asText());
+
 
         // skills
 
@@ -696,24 +707,29 @@ public class ProfileController extends AbstractViewController{
             skill3SkillsTF.setText(eduSkill3 == null ? "" : eduSkill3.asText());
             skill4SkillsTF.setText(eduSkill4 == null ? "" : eduSkill4.asText());
             skill5SkillsTF.setText(eduSkill5 == null ? "" : eduSkill5.asText());
-
-            skill1SkillsLabel.setText(eduSkill1 == null ? "" : "Skill 1: " + eduSkill1.asText());
-            skill1SkillsLabel1.setText(eduSkill2 == null ? "" : "Skill 2: " + eduSkill2.asText());
-            skill1SkillsLabel2.setText(eduSkill3 == null ? "" : "Skill 3: " + eduSkill3.asText());
-            skill1SkillsLabel3.setText(eduSkill4 == null ? "" : "Skill 4: " + eduSkill4.asText());
-            skill1SkillsLabel4.setText(eduSkill5 == null ? "" : "Skill 5: " + eduSkill5.asText());
         }
+        setStyledLabel(skill1SkillsLabel, "Skill 1:  ", eduSkill1 == null ? "-" : eduSkill1.asText());
+        setStyledLabel(skill1SkillsLabel1, "Skill 2:  ", eduSkill2 == null ? "-" : eduSkill2.asText());
+        setStyledLabel(skill1SkillsLabel2, "Skill 3:  ", eduSkill3 == null ? "-" : eduSkill3.asText());
+        setStyledLabel(skill1SkillsLabel3, "Skill 4:  ", eduSkill4 == null ? "-" : eduSkill4.asText());
+        setStyledLabel(skill1SkillsLabel4, "Skill 5:  ", eduSkill5 == null ? "-" : eduSkill5.asText());
 
         if (profileUserEmail.equals(currentUserEmail)) {
             followButton.setVisible(false);
             connectButton.setVisible(false);
             messageButton.setVisible(false);
+            showAllEduLabel.setTranslateY(200);
+            arrowIW.setTranslateY(195);
         } else {
             editInfoButton.setVisible(false);
             editContactButton.setVisible(false);
             editEduButton.setVisible(false);
+            addEduButton.setVisible(false);
             editSkillsButton.setVisible(false);
             messageButton.setVisible(false);
+
+            showAllEduLabel.setTranslateY(15);
+            arrowIW.setTranslateY(10);
 
             try {
                 HttpResponse httpResponse = HttpController.sendRequest(SERVER_ADDRESS + "/follow/" + currentUserEmail +
@@ -759,9 +775,22 @@ public class ProfileController extends AbstractViewController{
         }
     }
 
+    private void setStyledLabel(Label label, String lblText, String additionalInformation) {
+        Text labelText = new Text(lblText);
+        labelText.setFont(Font.font("System", FontWeight.BOLD, FontPosture.ITALIC, 13)); // Set the font size and boldness
+
+        Text infoText = new Text(additionalInformation == null || additionalInformation.isEmpty() ? "-" : additionalInformation);
+        infoText.setFont(Font.font("System", FontPosture.ITALIC, 14)); // Set the font size for the additional information
+
+        TextFlow textFlow = new TextFlow(labelText, infoText);
+        label.setText("");
+        label.setGraphic(textFlow); // Set the TextFlow as the graphic of the Label
+    }
+
+
     private void checkBirthdayShow(String birthDayVisibility, JsonNode birthday) {
         if (birthDayVisibility == null || birthDayVisibility.equals("Everyone")) {
-            birthdayContactsLabel.setText(birthday == null ? "Birthday: -" : "Birthday: " + birthday.asText());
+            setStyledLabel(birthdayContactsLabel, "Birthday: ", birthday == null ? "-" : birthday.asText());
         } else if (birthDayVisibility.equals("Contact Network")) {
             try {
                 // Fetch first level connections
@@ -786,9 +815,9 @@ public class ProfileController extends AbstractViewController{
 
                 // Check if the current user is within third-level connections
                 if (allConnections.contains(currentUserEmail)) {
-                    birthdayContactsLabel.setText(birthday == null ? "Birthday: -" : "Birthday: " + birthday.asText());
+                    setStyledLabel(birthdayContactsLabel, "Birthday:  ", birthday == null ? "-" : birthday.asText());
                 } else {
-                    birthdayContactsLabel.setText("Birthday: -");
+                    setStyledLabel(birthdayContactsLabel, "Birthday:  ", "-");
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -799,19 +828,19 @@ public class ProfileController extends AbstractViewController{
 
                 for (Connect connect : connects) {
                     if ((connect.getSender().equals(profileUserEmail) || connect.getReceiver().equals(profileUserEmail)) && !connect.isPending()) {
-                        birthdayContactsLabel.setText(birthday == null ? "Birthday: -" : "Birthday: " + birthday.asText());
+                        setStyledLabel(birthdayContactsLabel, "Birthday:  ", birthday == null ? "-" : birthday.asText());
                         return;
                     }
                 }
-                birthdayContactsLabel.setText("Birthday: -");
+                setStyledLabel(birthdayContactsLabel, "Birthday:  ", "-");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         } else {
             if (profileUserEmail.equals(currentUserEmail)) {
-                birthdayContactsLabel.setText(birthday == null ? "Birthday: -" : "Birthday: " + birthday.asText());
+                setStyledLabel(birthdayContactsLabel, "Birthday:  ", birthday == null ? "-" : birthday.asText());
             } else {
-                birthdayContactsLabel.setText("Birthday: -");
+                setStyledLabel(birthdayContactsLabel, "Birthday:  ", "-");
             }
         }
     }
@@ -862,6 +891,7 @@ public class ProfileController extends AbstractViewController{
 
     @FXML
     void on_profileButton_clicked(ActionEvent event){
+        ProfileController.setProfileUserEmail(currentUserEmail);
         switchScenes("/fxml/profileView.fxml", profileButton);
     }
 

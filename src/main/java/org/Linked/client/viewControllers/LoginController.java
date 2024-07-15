@@ -123,6 +123,8 @@ public class LoginController extends AbstractViewController {
                     JWTController.setJwtKey(tokenResponse);
                     System.out.println(JWTController.getJwtKey());
                 }
+                ProfileController.setCurrentUserEmail(email);
+                ProfileController.setProfileUserEmail(email);
                 switchScenes("/fxml/profileView.fxml", loginButton);
             } else if (responseCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 // Unauthorized (401) - Handle invalid credentials

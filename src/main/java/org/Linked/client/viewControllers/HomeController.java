@@ -272,6 +272,7 @@ public class HomeController extends AbstractViewController{
 
     @FXML
     void on_profileButton_clicked(ActionEvent event){
+        ProfileController.setProfileUserEmail(ProfileController.getCurrentUserEmail());
         switchScenes("/fxml/profileView.fxml", profileButton);
     }
 
