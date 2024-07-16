@@ -3,7 +3,7 @@
 ## Description
 
 Project Linked is an application built using Java, JavaFX and some CSS. The application follows an MVC (Model-View-Controller) architecture and interacts with a MySQL database through RESTful API endpoints. The server handles incoming requests, delegates them to the appropriate controllers, which in turn interact with the data access layer to process and retrieve data from the database.
-This was the final project for the Advances Programming course at Amir Kabir University of Technology(@AUT-CE). 
+This was the final project for the Advanced Programming course at Amir Kabir University of Technology(@AUT-CE). 
 
 ## Table of Contents
 
