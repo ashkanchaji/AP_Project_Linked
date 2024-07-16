@@ -84,7 +84,7 @@ public abstract class AbstractPostDAO<T extends Post> extends GenericDAO<T> {
         CommentDAO commentDAO = new CommentDAO();
 
         for (String tableName : tableNames){
-            String query = "SELECT * FROM " + MySqlDB.getDBName() + "." + tableName;
+            String query = "SELECT * FROM " + MySqlDB.getDB_Name() + "." + tableName;
 
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 ResultSet resultSet = statement.executeQuery();

@@ -13,6 +13,7 @@ module ProjectLinked {
     requires GNAvatarView;
     requires de.jensd.fx.glyphs.fontawesome;
     requires java.desktop;
+    requires mysql.connector.j;
 
     opens org.Linked.client to javafx.fxml;
     opens org.Linked.client.viewControllers to javafx.fxml;

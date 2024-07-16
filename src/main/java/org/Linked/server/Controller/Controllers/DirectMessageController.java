@@ -30,9 +30,6 @@ public class DirectMessageController extends Controller {
         if (dmDAO.getDirectMessageById(dm.getDmId()) == null) {
             dmDAO.saveDirectMessage(dm);
         }
-//        else {
-//            dmDAO.updateDirectMessage(dm);
-//        }
     }
 
     public static void deleteDirectMessageById(String dmId) throws SQLException {

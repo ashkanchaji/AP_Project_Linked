@@ -17,7 +17,7 @@ public abstract class GenericDAO<T> {
 
     protected GenericDAO(String tableName) {
         this.tableName = tableName;
-        this.tablePath = MySqlDB.getDBName() + "." + tableName;
+        this.tablePath = MySqlDB.getDB_Name() + "." + tableName;
     }
 
     protected abstract T mapResultSetToEntity(ResultSet resultSet) throws SQLException;

@@ -2,12 +2,10 @@ package org.Linked.server.Controller.DB;
 
 import java.sql.*;
 
-// maybe database shouldn't be singleton only if we need to change the schema...
-// if we only need to word with new 'table' s then the singleton is fine.
 public class MySqlDB {
-    private static final String DBName = "projectlinked";
-    private static final String userName = "root";
-    private static final String password = "projectLinked";
+    private static final String DB_Name = "projectlinked";
+    private static final String USER_NAME = "root";
+    private static final String PASSWORD = "projectLinked";
     private static MySqlDB dataBase = null;
     private static Connection connection;
 
@@ -19,8 +17,7 @@ public class MySqlDB {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + DBName,
-                    userName, password);
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + DB_Name, USER_NAME, PASSWORD);
 
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
@@ -45,7 +42,7 @@ public class MySqlDB {
         }
     }
 
-    public static String getDBName(){
-        return DBName;
+    public static String getDB_Name(){
+        return DB_Name;
     }
 }
