@@ -22,7 +22,7 @@ To run the application, follow these steps:
 1. Clone the repository to your local machine.
 
    ```bash
-   git clone git@github.com:ashkanchaji/AP_Project.git
+   git clone git@github.com:ashkanchaji/AP_Project_Linked.git
    ```
 
 2. Set up your MySQL database and configure the connection details in the application. Open the `MySqlDB.java` file located at `src/main/java/org/Linked/server/Controller/DB/MySqlDB.java`.
