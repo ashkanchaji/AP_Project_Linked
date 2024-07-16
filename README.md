@@ -209,9 +209,9 @@ DELETE /api/likes/:postID
 
 ## Screenshots
 
-| Login | Signup |
+| Signup | Login |
 | :---: | :----: |
-|<img width="2560" alt="login" src="https://github.com/ashkanchaji/AP_Project_Linked/blob/a57800001a6903adb42a6c9375b4fc1779cb750e/Documents/Screenshots/login.png"> | <img width="2560" alt="signup" src="https://github.com/ashkanchaji/AP_Project_Linked/blob/a57800001a6903adb42a6c9375b4fc1779cb750e/Documents/Screenshots/signup.png"> |
+|<img width="2560" alt="signup" src="https://github.com/ashkanchaji/AP_Project_Linked/blob/a57800001a6903adb42a6c9375b4fc1779cb750e/Documents/Screenshots/signup.png"> | <img width="2560" alt="login" src="https://github.com/ashkanchaji/AP_Project_Linked/blob/a57800001a6903adb42a6c9375b4fc1779cb750e/Documents/Screenshots/login.png"> |
 |  |  |
 | <img width="2560" alt="profile1" src="https://github.com/ashkanchaji/AP_Project_Linked/blob/a57800001a6903adb42a6c9375b4fc1779cb750e/Documents/Screenshots/profile1.png"> | <img width="2560" alt="profile2" src="https://github.com/ashkanchaji/AP_Project_Linked/blob/a57800001a6903adb42a6c9375b4fc1779cb750e/Documents/Screenshots/profile2.png"> |
 | <img width="2560" alt="infoFill" src="https://github.com/ashkanchaji/AP_Project_Linked/blob/a57800001a6903adb42a6c9375b4fc1779cb750e/Documents/Screenshots/infoFill.png"> | <img width="2560" alt="follows" src="https://github.com/ashkanchaji/AP_Project_Linked/blob/a57800001a6903adb42a6c9375b4fc1779cb750e/Documents/Screenshots/follows.png"> |
