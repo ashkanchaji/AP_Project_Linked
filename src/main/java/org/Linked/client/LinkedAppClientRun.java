@@ -6,17 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.Linked.client.viewControllers.Utils.JWTController;
-import org.Linked.server.Controller.Parsers.JwtUtil;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Scanner;
 
-public class LinkedApp extends Application {
+public class LinkedAppClientRun extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {

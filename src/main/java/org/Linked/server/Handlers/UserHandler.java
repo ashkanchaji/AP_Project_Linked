@@ -36,7 +36,6 @@ public class UserHandler extends Handler {
                 case "POST":
                 case "PUT":
                     String userJson = readRequestBody(exchange);
-                    System.out.println(userJson);
                     if ("POST".equals(method)) {
                         UserController.createUser(userJson);
                     } else {
